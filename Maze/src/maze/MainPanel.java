@@ -4,16 +4,10 @@
  */
 package maze;
 
-import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Stack;
 
 public class MainPanel extends javax.swing.JPanel {
 
@@ -28,10 +22,12 @@ public class MainPanel extends javax.swing.JPanel {
         generateMaze(10, 15);
     }
 
+    @Override
     public Dimension getPreferredSize() {
         return new Dimension(640, 640);
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -47,10 +43,10 @@ public class MainPanel extends javax.swing.JPanel {
             for (int j = 0; j < mAze[i].length; j++) {
                 if (mAze[i][j].legal) {
                     g.setColor(Color.WHITE);
-                    g.fillRect(mAze[i][j].xPosition, mAze[i][j].yPosition, blockSize, blockSize);
+                    g.drawRect(mAze[i][j].xPosition, mAze[i][j].yPosition, blockSize, blockSize);
                 } else if (!mAze[i][j].legal) {
                     g.setColor(Color.BLACK);
-                    g.fillRect(mAze[i][j].xPosition, mAze[i][j].yPosition, blockSize, blockSize);
+                    g.drawRect(mAze[i][j].xPosition, mAze[i][j].yPosition, blockSize, blockSize);
                 }
                 xpos = xpos + blockSize;
             }
@@ -60,14 +56,8 @@ public class MainPanel extends javax.swing.JPanel {
     }
 
     // Under Construction
-    public void generateMaze(int width, int height) {
+    private void generateMaze(int width, int height) {
         Block[][] maze = new Block[height][width];
-        Stack lastPoint = new Stack();
-        int north = 1;
-        int south = 2;
-        int east = 3;
-        int west = 4;
-
         int xPosition = 0;
         int yPosition = 0;
         for (int i = 0; i < maze.length; i++) {
@@ -78,28 +68,12 @@ public class MainPanel extends javax.swing.JPanel {
             yPosition = yPosition + blockSize;
             xPosition = 0;
         }
-        Random rand = new Random();
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
                 System.out.println(maze[i][j].xPosition + " " + maze[i][j].yPosition);
             }
             System.out.println();
         }
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[i].length; j++) {
-                int randomDirection = rand.nextInt(4);
-                if (randomDirection == 1 && i < maze[j].length) {
-                    maze[i + 1][j].legal = true;
-                } else if (randomDirection == 2 && i > 0) {
-                    maze[i - 1][j].legal = true;
-                } else if (randomDirection == 3 && j < maze.length) {
-                    maze[i][j + 1].legal = true;
-                } else if (randomDirection == 4 && j > 0) {
-                    maze[i + 1][j - 1].legal = true;
-                }
-            }
-        }
-
         mAze = maze;
     }
 
