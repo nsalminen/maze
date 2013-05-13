@@ -4,6 +4,8 @@
  */
 package maze;
 
+import java.awt.Point;
+
 /**
  *
  * @author Nels
@@ -13,22 +15,19 @@ public class Block {
     public int blockID;
     public boolean visited;
     public boolean legal;
-    public int xPosition;
-    public int yPosition;
+    public Point position;
     
     public Block(){
         blockID = 0;
         visited = false;
         legal = false;
-        xPosition = 100;
-        yPosition = 100;
     }
     
     public Block ( int xPosition, int yPosition, int blockID){
         this.blockID = blockID;
         visited = false;
         legal = false;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+        this.position.x = xPosition;
+        this.position.y = yPosition;
     }
 }
