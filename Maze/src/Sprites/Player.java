@@ -3,8 +3,6 @@ package Sprites;
 import java.awt.Color;
 import java.awt.Graphics;
 import maze.MazePanelForm;
-import MazeLevel.*;
-import maze.*;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
