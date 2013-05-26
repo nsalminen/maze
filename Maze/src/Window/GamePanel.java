@@ -23,12 +23,17 @@ public class GamePanel extends javax.swing.JPanel {
     public Player player;
     public Maze maze;
     public Cursor cursor;
-    public int[][] hardMaze = {{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1},
-        {1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1},
+    
+    /** The size of each block in pixels */
+    public final int blockSize = 40;
+    
+    public int[][] hardMaze = {
+        {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+        {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1},
         {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+        {1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
+        {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
         {1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
         {1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1},
         {1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1},
@@ -38,8 +43,8 @@ public class GamePanel extends javax.swing.JPanel {
 
     public GamePanel() {
         initComponents();
-
-        maze = new Maze(this);
+        this.setSize(hardMaze.length*blockSize, hardMaze.length*blockSize);
+        maze = new Maze(hardMaze,this);
         player = new Player(0, 0, this);
         cursor = new Cursor(hardMaze.length, 0, this);
         MazeKeyListener listener = new MazeKeyListener(this);

@@ -4,6 +4,7 @@
  */
 package Game;
 
+import Sprites.*;
 /**
  *
  * @author Yasen
@@ -11,7 +12,8 @@ package Game;
 public class Node {
     
     public int id;
-    private char occupant;
+   
+    private Sprite occupant;
     public int xInd;
     public int yInd;
     
@@ -22,17 +24,17 @@ public class Node {
         id = nodeId;
     }
         
-    public char getOccupant(){
+    public Sprite getOccupant(){
         return occupant;
     }
     
-    public void setOccupant(char occ){
+    public void setOccupant(Sprite occ){
         occupant = occ;
     }
 
     @Override
     public String toString() {
-        String string = "x= "+xInd+"; y= "+yInd+"; occupied by: "+ occupant; 
+        String string = "x= "+xInd+"; y= "+yInd+"; occupied by: "+ occupant.getClass().getCanonicalName(); 
         return string;
     }
     

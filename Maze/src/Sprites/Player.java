@@ -3,101 +3,64 @@ package Sprites;
 import java.awt.Color;
 import java.awt.Graphics;
 import Window.GamePanel;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
  *
  * @author Yasen
  */
-public class Player{
-    
-    public boolean moving = false;    
-    private int xPos;
-    private int yPos;    
-    private GamePanel panel;    
-    public int direction;    
-    private int xInd;
-    private int yInd;    
-    private char[] neighbours = new char[4];   
+public class Player extends Sprite{
+
+    public int direction;
     
     public Player(int x, int y, GamePanel p){      
        xInd = x;
        yInd = y;       
        panel = p;       
-       xPos = xInd * panel.maze.gridSize;
-       yPos = yInd * panel.maze.gridSize;
+       xPos = xInd * panel.blockSize;
+       yPos = yInd * panel.blockSize;
     }
      
       public void paintSelf(Graphics g){
         g.setColor(Color.blue);
-        g.fillRect(xPos, yInd*panel.maze.gridSize, panel.maze.gridSize, panel.maze.gridSize);
+        g.fillRect(xPos, yInd*panel.blockSize, panel.blockSize, panel.blockSize);
         g.setColor(Color.CYAN);
         
         
         if(getDirection() == 0){
-            g.drawLine((xPos)+(panel.maze.gridSize/2),
-                        (yPos)+(panel.maze.gridSize/2),
+            g.drawLine((xPos)+(panel.blockSize/2),
+                        (yPos)+(panel.blockSize/2),
                         //This second vertex shows the direction
-                        (xPos)+(panel.maze.gridSize/2),
+                        (xPos)+(panel.blockSize/2),
                         yPos);
         }
         else if(getDirection() == 1){
-            g.drawLine((xPos)+(panel.maze.gridSize/2),
-                        (yPos)+(panel.maze.gridSize/2),
+            g.drawLine((xPos)+(panel.blockSize/2),
+                        (yPos)+(panel.blockSize/2),
                         //This second vertex shows the direction
-                        (xPos)+(panel.maze.gridSize),
-                        yPos+(panel.maze.gridSize/2));
+                        (xPos)+(panel.blockSize),
+                        yPos+(panel.blockSize/2));
         }
         else if(getDirection() == 2){
-            g.drawLine((xPos)+(panel.maze.gridSize/2),
-                        (yPos)+(panel.maze.gridSize/2),
+            g.drawLine((xPos)+(panel.blockSize/2),
+                        (yPos)+(panel.blockSize/2),
                         //This second vertex shows the direction
-                        (xPos)+(panel.maze.gridSize/2),
-                        yPos+(panel.maze.gridSize));
+                        (xPos)+(panel.blockSize/2),
+                        yPos+(panel.blockSize));
         }
         else if(getDirection() == 3){
-            g.drawLine((xPos)+(panel.maze.gridSize/2),
-                        (yPos)+(panel.maze.gridSize/2),
+            g.drawLine((xPos)+(panel.blockSize/2),
+                        (yPos)+(panel.blockSize/2),
                         //This second vertex shows the direction
                         (xPos),
-                        yPos+(panel.maze.gridSize/2));
+                        yPos+(panel.blockSize/2));
         }
         getNeighbours();
     }
       
-      private  void getNeighbours(){
-          
-          if(yInd-1 >= 0){ 
-            neighbours[0] = panel.maze.nodes[yInd-1][xInd].getOccupant(); // NORTH NEIGHBOUR at Index:0;
-          }
-          if(xInd+1 < (panel.hardMaze[0].length)){ 
-            neighbours[1] = panel.maze.nodes[yInd][xInd+1].getOccupant(); // EAST NEIGHBOUR at Index:1;
-          }
-          if(yInd+1 < (panel.hardMaze.length)){
-          neighbours[2] = panel.maze.nodes[yInd+1][xInd].getOccupant(); // SOUTH NEIGHBOUR at Index:2;
-          }
-          if(xInd-1 >= 0){ 
-          neighbours[3] = panel.maze.nodes[yInd][xInd-1].getOccupant(); // WEST NEIGHBOUR at Index:3;
-          }
-          for (char n :neighbours){
-              System.out.println(n);
-          }
-              
-          
-    }
       
-      public int getX(){          
-          System.out.print(xPos);
-          return xPos;           
-      }
       
-      public int getY(){
-          System.out.print(yPos);
-          return yPos;
-      }
+   
       
       public int getDirection(){
           return direction;
@@ -107,10 +70,6 @@ public class Player{
             direction = dir;
       }
       
-      public void updatePos(){
-          xPos = xInd*panel.maze.gridSize;          
-          yPos = yInd*panel.maze.gridSize;
-      }
       
       public void move(int key){
                   
@@ -120,7 +79,7 @@ public class Player{
             //Check for top border
             if(yInd-1 >= 0){ 
               //Check for open NORTH neighbour
-              if(neighbours[0]!='w'){
+              if(!neighbours[0].getClass().getCanonicalName().equals("Sprites.Wall")){
                   yInd = yInd - 1;
                   updatePos();
               }
@@ -132,7 +91,7 @@ public class Player{
             //Check for right border
             if(xInd+1 < (panel.hardMaze[0].length)){ 
               //Check for open Index
-              if(neighbours[1]!='w'){
+              if(!neighbours[1].getClass().getCanonicalName().equals("Sprites.Wall")){
                 xInd = xInd + 1;
                   updatePos();
               }
@@ -144,7 +103,7 @@ public class Player{
               //Check for bottom border
               if(yInd+1 < (panel.hardMaze.length)){
                 //Check for open Index
-                if(neighbours[2]!='w'){
+                if(!neighbours[2].getClass().getCanonicalName().equals("Sprites.Wall")){
                   yInd = yInd + 1;
                   updatePos();
                 }
@@ -156,13 +115,13 @@ public class Player{
             //Check for left border
             if(xInd-1 >= 0){ 
                 //Check for open Index
-                if(neighbours[3]!='w'){
+                if(!neighbours[3].getClass().getCanonicalName().equals("Sprites.Wall")){
                     xInd = xInd - 1;
                   updatePos();
                 }
             }
         }
-        panel.maze.nodes[yInd][xInd].setOccupant('p');
+        panel.maze.nodes[yInd][xInd].setOccupant(this);
      }
 }
 

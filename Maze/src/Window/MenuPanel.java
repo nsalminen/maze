@@ -56,8 +56,11 @@ public class MenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        
         MainWindow.mazeFrame.setContentPane(MainWindow.mazeFrame.game);
+        
         MainWindow.mazeFrame.setVisible(true);
+        
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
