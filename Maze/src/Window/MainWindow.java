@@ -1,4 +1,4 @@
-package maze;
+package Window;
 
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -11,15 +11,15 @@ import javax.swing.JFrame;
  *
  * @author Nels
  */
-public class MazeFrame extends JFrame {
+public class MainWindow extends JFrame {
 
     private int width = 522;
-    static MazeFrame mazeFrame = new MazeFrame();
+    static MainWindow mazeFrame = new MainWindow();
     MenuPanel menu = new MenuPanel();
-    MazePanelForm game = new MazePanelForm();
+    GamePanel game = new GamePanel();
     private int height = 505;
 
-    public MazeFrame() {
+    public MainWindow() {
         initComponents();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
@@ -60,20 +60,20 @@ public class MazeFrame extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MazeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MazeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MazeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MazeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MazeFrame().setVisible(true);
+                new MainWindow().setVisible(true);
             }
         });
     }

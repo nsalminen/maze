@@ -1,5 +1,6 @@
-package maze;
+package Game;
 
+import Window.GamePanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -13,9 +14,9 @@ import java.awt.event.KeyListener;
  */
 public class MazeKeyListener implements KeyListener {
 
-    private MazePanelForm panel;
+    private GamePanel panel;
 
-    public MazeKeyListener(MazePanelForm p) {
+    public MazeKeyListener(GamePanel p) {
         panel = p;
     }
 

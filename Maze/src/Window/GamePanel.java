@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package maze;
+package Window;
 
+import Game.MazeKeyListener;
+import Game.Maze;
 import java.awt.Graphics;
-import MazeLevel.*;
 import Sprites.*;
      
 
@@ -13,7 +14,7 @@ import Sprites.*;
  *
  * @author Yasen
  */
-public class MazePanelForm extends javax.swing.JPanel {
+public class GamePanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MazePanelForm
@@ -35,7 +36,7 @@ public class MazePanelForm extends javax.swing.JPanel {
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
         {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1}};
 
-    public MazePanelForm() {
+    public GamePanel() {
         initComponents();
 
         maze = new Maze(this);

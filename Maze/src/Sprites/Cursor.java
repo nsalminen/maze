@@ -6,9 +6,7 @@ package Sprites;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import maze.MazePanelForm;
-import MazeLevel.*;
-import maze.*;
+import Window.GamePanel;
 /**
  *
  * @author Yasen
@@ -17,10 +15,10 @@ public class Cursor {
     
     private int xInd;
     private int yInd;
-    private MazePanelForm panel;
+    private GamePanel panel;
     
     
-    public Cursor(int x, int y, MazePanelForm p){
+    public Cursor(int x, int y, GamePanel p){
       
        xInd = x;
        yInd = y;

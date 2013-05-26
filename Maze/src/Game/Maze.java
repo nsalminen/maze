@@ -1,9 +1,9 @@
-package MazeLevel;
+package Game;
 
 
+import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import maze.*;
 import Sprites.*;
 /*
  * To change this template, choose Tools | Templates
@@ -22,11 +22,11 @@ public class Maze {
     private int yPos;
     
     private int[][] maze;
-    MazePanelForm panel;
+    GamePanel panel;
     
     public Node[][] nodes;
    
-    public Maze(MazePanelForm p){
+    public Maze(GamePanel p){
        xPos = gridSize;
        yPos = gridSize;
        panel = p;

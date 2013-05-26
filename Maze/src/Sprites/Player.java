@@ -2,9 +2,7 @@ package Sprites;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import maze.MazePanelForm;
-import MazeLevel.*;
-import maze.*;
+import Window.GamePanel;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -19,13 +17,13 @@ public class Player{
     public boolean moving = false;    
     private int xPos;
     private int yPos;    
-    private MazePanelForm panel;    
+    private GamePanel panel;    
     public int direction;    
     private int xInd;
     private int yInd;    
     private char[] neighbours = new char[4];   
     
-    public Player(int x, int y, MazePanelForm p){      
+    public Player(int x, int y, GamePanel p){      
        xInd = x;
        yInd = y;       
        panel = p;       
