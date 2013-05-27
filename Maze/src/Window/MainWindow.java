@@ -2,8 +2,9 @@ package Window;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Window;
+import java.lang.reflect.Method;
 import javax.swing.JFrame;
-import com.apple.eawt.FullScreenUtilities;
 
 /*
  * To change this template, choose Tools | Templates
@@ -16,38 +17,68 @@ import com.apple.eawt.FullScreenUtilities;
 public class MainWindow extends JFrame {
 
     private int width = 522;
+    private int height = 505;
     static MainWindow mazeFrame = new MainWindow();
     MenuPanel menu = new MenuPanel();
     GamePanel game = new GamePanel();
-    private int height = 505;
+    
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
-    private boolean fullscreenSupport = false;
 
     public MainWindow() {
         initComponents();
-        FullScreenUtilities.setWindowCanFullScreen(this, fullscreen);
+        if (System.getProperty("os.name").equals("Mac OS X")) {
+            enableOSXFullscreen(this);
+        }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
         this.setContentPane(menu);
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     * This method sets the current {@link javax.swing.JFrame} to full screen
+     * mode It determines whether full screen is supported according to
+     * {@link http://docs.oracle.com/javase/tutorial/extra/fullscreen/}
+     */
     public void toggleFullscreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         vc = ge.getDefaultScreenDevice();
-        if (fullscreenSupport) {
+        if (vc.isFullScreenSupported()) {
             if (!fullscreen) {
-                mazeFrame.setResizable(false);
                 vc.setFullScreenWindow(mazeFrame);
+                fullscreen = true;
                 setVisible(false);
                 setVisible(true);
             } else if (fullscreen) {
                 vc.setFullScreenWindow(null);
                 fullscreen = false;
+                mazeFrame.setExtendedState(MainWindow.MAXIMIZED_BOTH);
             }
         } else {
-            System.out.println("Fullscreen is not supported");
+            mazeFrame.setUndecorated(false);
+            mazeFrame.setResizable(false);
+            System.out.println("Unsupported fullscreen");
+        }
+    }
+
+    /**
+     * This method turns on the native full screen support that is shipped with
+     * OS X 10.7 or later
+     *
+     * @param window This parameter indicates which window has to be set to OS X
+     * full screen mode.
+     */
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void enableOSXFullscreen(Window window) {
+        try {
+            Class util = Class.forName("com.apple.eawt.FullScreenUtilities");
+            Class params[] = new Class[]{Window.class, Boolean.TYPE};
+            Method method = util.getMethod("setWindowCanFullScreen", params);
+            method.invoke(util, window, true);
+        } catch (ClassNotFoundException e1) {
+        } catch (Exception e) {
+            System.out.println("Failed to enable Mac Fullscreen: " + e);
         }
     }
 
