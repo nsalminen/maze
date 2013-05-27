@@ -14,13 +14,14 @@ import java.awt.Graphics;
  */
 public class PortalGun extends Sprite{
      public PortalGun(int x, int y, GamePanel p){
+       
        xIndex = x;
        yIndex = y;       
+       
        panel = p;       
+       
        xPos = xIndex * panel.blockSize;
        yPos = yIndex * panel.blockSize;
-       
-       
        
        panel.maze.nodes[yIndex][xIndex].setOccupant(this);
  }

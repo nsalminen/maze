@@ -3,7 +3,7 @@ package Window;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import com.apple.eawt.FullScreenUtilities;
+//import com.apple.eawt.FullScreenUtilities;
 
 /*
  * To change this template, choose Tools | Templates
@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         initComponents();
-        FullScreenUtilities.setWindowCanFullScreen(this, fullscreen);
+//        FullScreenUtilities.setWindowCanFullScreen(this, fullscreen);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
         this.setContentPane(menu);

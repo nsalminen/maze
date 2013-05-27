@@ -20,14 +20,13 @@ public class Player extends Sprite {
         xPos = xIndex * panel.blockSize;
         yPos = yIndex * panel.blockSize;
         
+        panel.maze.nodes[x][y].setOccupant(this);
+        
     }
     
     public void togglePortalGun(){
-        if(portalGun){
+        if(!portalGun){
             portalGun = true;
-        }
-        else if(!portalGun){
-            portalGun = false;
         }
     }
     

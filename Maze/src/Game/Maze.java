@@ -69,5 +69,21 @@ public class Maze {
                 }
             }
         }
+        for (int x = 0; x < nodes.length; x++) {
+            for (int y = 0; y < nodes[x].length; y++) {                
+                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
+                    ((Player) nodes[x][y].getOccupant()).paintSelf(g);
+                }
+                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
+                    ((Goal) nodes[x][y].getOccupant()).paintSelf(g);
+                }
+                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
+                    ((PortalGun) nodes[x][y].getOccupant()).paintSelf(g);
+                }
+            }
+        }
+       
+        panel.cursor.paintSelf(g);
+ 
     }
 }

@@ -67,6 +67,7 @@ public class GamePanel extends javax.swing.JPanel {
         keyInput(e.getKeyCode());
         repaint();
         checkGoal();
+        checkPortalGun();
     }
     
     public void gameOver(){
@@ -75,6 +76,12 @@ public class GamePanel extends javax.swing.JPanel {
     public void checkGoal(){
            if(maze.nodes[goal.yIndex][goal.xIndex].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")){
                 gameOver(); 
+            }
+    }
+     public void checkPortalGun(){
+           if(maze.nodes[portalGun.yIndex][portalGun.xIndex].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")){
+                player.togglePortalGun();
+               
             }
     }
     
@@ -122,11 +129,11 @@ public class GamePanel extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        player.paintSelf(g);
-        maze.paintMaze(g);
-        cursor.paintSelf(g);
-        goal.paintSelf(g);
-        portalGun.paintSelf(g);
+//        player.paintSelf(g);
+          maze.paintMaze(g);
+//        cursor.paintSelf(g);
+//        goal.paintSelf(g);
+//        portalGun.paintSelf(g);
     }
 
     /**
