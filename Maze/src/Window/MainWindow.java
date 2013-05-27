@@ -21,7 +21,6 @@ public class MainWindow extends JFrame {
     static MainWindow mazeFrame = new MainWindow();
     MenuPanel menu = new MenuPanel();
     GamePanel game = new GamePanel();
-    
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
 
@@ -53,12 +52,17 @@ public class MainWindow extends JFrame {
             } else if (fullscreen) {
                 vc.setFullScreenWindow(null);
                 fullscreen = false;
-                mazeFrame.setExtendedState(MainWindow.MAXIMIZED_BOTH);
             }
         } else {
-            mazeFrame.setUndecorated(false);
-            mazeFrame.setResizable(false);
-            System.out.println("Unsupported fullscreen");
+            if (!fullscreen) {
+                mazeFrame.setExtendedState(MainWindow.MAXIMIZED_BOTH);
+                mazeFrame.setUndecorated(false);
+                mazeFrame.setResizable(false);
+            } else {
+                mazeFrame.setExtendedState(MainWindow.NORMAL);
+                mazeFrame.setUndecorated(true);
+                mazeFrame.setResizable(true);
+            }
         }
     }
 
