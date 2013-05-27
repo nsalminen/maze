@@ -1,7 +1,9 @@
 package Window;
 
-import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import com.apple.eawt.FullScreenUtilities;
 
 /*
  * To change this template, choose Tools | Templates
@@ -18,13 +20,35 @@ public class MainWindow extends JFrame {
     MenuPanel menu = new MenuPanel();
     GamePanel game = new GamePanel();
     private int height = 505;
+    private static GraphicsDevice vc;
+    private boolean fullscreen = false;
+    private boolean fullscreenSupport = false;
 
     public MainWindow() {
         initComponents();
+        FullScreenUtilities.setWindowCanFullScreen(this, fullscreen);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
         this.setContentPane(menu);
         this.setLocationRelativeTo(null);
+    }
+
+    public void toggleFullscreen() {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        vc = ge.getDefaultScreenDevice();
+        if (fullscreenSupport) {
+            if (!fullscreen) {
+                mazeFrame.setResizable(false);
+                vc.setFullScreenWindow(mazeFrame);
+                setVisible(false);
+                setVisible(true);
+            } else if (fullscreen) {
+                vc.setFullScreenWindow(null);
+                fullscreen = false;
+            }
+        } else {
+            System.out.println("Fullscreen is not supported");
+        }
     }
 
     /**
