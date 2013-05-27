@@ -80,10 +80,13 @@ public class GamePanel extends javax.swing.JPanel {
     }
      public void checkPortalGun(){
            if(maze.nodes[portalGun.yIndex][portalGun.xIndex].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")){
-                player.togglePortalGun();
+                maze.nodes[portalGun.yIndex][portalGun.xIndex].setOccupant(new Floor(portalGun.xIndex, portalGun.yIndex,this));
+                player.portalGun = true;
+               }
                
             }
-    }
+           
+    
     
     public void keyInput(int key) {
         switch (key) {
@@ -99,6 +102,9 @@ public class GamePanel extends javax.swing.JPanel {
             case KeyEvent.VK_A:
                 player.move('W');
                 break;
+            case KeyEvent.VK_SPACE:
+                player.shoot();
+                break;
             case KeyEvent.VK_UP:
                 cursor.move('N');
                 break;
@@ -113,6 +119,7 @@ public class GamePanel extends javax.swing.JPanel {
                 break;
             case KeyEvent.VK_CONTROL:
                 cursor.printCurrentNode();
+                
         }       
     }
 
@@ -129,11 +136,7 @@ public class GamePanel extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-//        player.paintSelf(g);
           maze.paintMaze(g);
-//        cursor.paintSelf(g);
-//        goal.paintSelf(g);
-//        portalGun.paintSelf(g);
     }
 
     /**

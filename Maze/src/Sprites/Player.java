@@ -24,11 +24,88 @@ public class Player extends Sprite {
         
     }
     
-    public void togglePortalGun(){
-        if(!portalGun){
-            portalGun = true;
+    public void shoot(){
+        
+        if(portalGun){
+        
+        boolean shooting = true;
+        
+        int xOrigin = xIndex;
+        int yOrigin = yIndex;
+        
+        if (getDirection() == 0){
+            while(shooting){
+                
+                if((yOrigin == 0) ){
+                    shooting = false;
+                }
+                
+                if(!panel.maze.nodes[yOrigin][xOrigin].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")){
+                    yOrigin--;
+                }
+                else{
+                   panel.maze.nodes[yOrigin][xOrigin].setOccupant(new Floor(xOrigin,yOrigin,panel));
+                   shooting = false;
+                }
+            }
+        }
+        if (getDirection() == 1){          
+            while(shooting){
+                if((xOrigin == panel.maze.nodes[0].length -1) ){
+                    shooting = false;
+                }
+                if(!panel.maze.nodes[yOrigin][xOrigin].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")
+                         ){
+                    xOrigin++;
+                }
+                else{
+                   panel.maze.nodes[yOrigin][xOrigin].setOccupant(new Floor(xOrigin,yOrigin,panel));
+                   shooting = false;
+                }                
+            }
+        }if (getDirection() == 2){
+            
+             
+          
+            while(shooting){
+                if((yOrigin == panel.maze.nodes.length-1)){
+                    shooting = false;
+                }
+                if(!panel.maze.nodes[yOrigin][xOrigin].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")
+                        ){
+                    yOrigin++;
+                }
+                else{
+                   panel.maze.nodes[yOrigin][xOrigin].setOccupant(new Floor(xOrigin,yOrigin,panel));
+                   shooting = false;
+                }
+                
+            }
+        }if (getDirection() == 3){          
+            while(shooting){
+                
+                if( (xOrigin == 0)){
+                    shooting = false;
+                }
+                if(!panel.maze.nodes[yOrigin][xOrigin].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")
+                        ){
+                    xOrigin--;
+                }
+                else{
+                   panel.maze.nodes[yOrigin][xOrigin].setOccupant(new Floor(xOrigin,yOrigin,panel));
+                   shooting = false;
+                }
+                
+            }
+        }
+        else{
+            shooting=false;
+        }
+        
+         portalGun = false;
         }
     }
+    
     
     public void paintSelf(Graphics g) {
         g.setColor(Color.blue);
