@@ -5,39 +5,35 @@
 package Game;
 
 import Sprites.*;
+
 /**
  *
  * @author Yasen
  */
 public class Node {
-    
+
     public int id;
-   
     private Sprite occupant;
     public int xInd;
     public int yInd;
-    
-    
-    public Node (int x, int y, int nodeId){
+
+    public Node(int x, int y, int nodeId) {
         xInd = x;
         yInd = y;
         id = nodeId;
     }
-        
-    public Sprite getOccupant(){
+
+    public Sprite getOccupant() {
         return occupant;
     }
-    
-    public void setOccupant(Sprite occ){
+
+    public void setOccupant(Sprite occ) {
         occupant = occ;
     }
 
     @Override
     public String toString() {
-        String string = "x= "+xInd+"; y= "+yInd+"; occupied by: "+ occupant.getClass().getCanonicalName(); 
+        String string = "x = " + xInd + "; y = " + yInd + "; occupied by: " + occupant.getClass().getCanonicalName();
         return string;
     }
-    
-    
-    
 }

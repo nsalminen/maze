@@ -8,7 +8,7 @@ import Game.MazeKeyListener;
 import Game.Maze;
 import java.awt.Graphics;
 import Sprites.*;
-     
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -19,14 +19,11 @@ public class GamePanel extends javax.swing.JPanel {
     /**
      * Creates new form MazePanelForm
      */
-    public static final int CellSize = 32;
     public Player player;
     public Maze maze;
     public Cursor cursor;
-    
-    /** The size of each block in pixels */
+    //The size of each block in pixels
     public final int blockSize = 40;
-    
     public int[][] hardMaze = {
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1},
         {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1},
@@ -43,8 +40,8 @@ public class GamePanel extends javax.swing.JPanel {
 
     public GamePanel() {
         initComponents();
-        this.setSize(hardMaze.length*blockSize, hardMaze.length*blockSize);
-        maze = new Maze(hardMaze,this);
+        this.setSize(hardMaze.length * blockSize, hardMaze.length * blockSize);
+        maze = new Maze(hardMaze, this);
         player = new Player(0, 0, this);
         cursor = new Cursor(hardMaze.length, 0, this);
         MazeKeyListener listener = new MazeKeyListener(this);
@@ -52,13 +49,42 @@ public class GamePanel extends javax.swing.JPanel {
         this.setFocusable(true);
     }
 
-    public void move(int key) {
-
-        player.move(key);
-        cursor.move(key);
-        //while(player.moving){
+    /**
+     * Determines which action has to be executed after the user activated a
+     * key.
+     *
+     * @param key A variable that passes the key code of the active key
+     */
+    public void keyInput(int key) {
+        switch (key) {
+            case KeyEvent.VK_W:
+                player.move('N');
+                break;
+            case KeyEvent.VK_D:
+                player.move('E');
+                break;
+            case KeyEvent.VK_S:
+                player.move('S');
+                break;
+            case KeyEvent.VK_A:
+                player.move('W');
+                break;
+            case KeyEvent.VK_UP:
+                cursor.move('N');
+                break;
+            case KeyEvent.VK_RIGHT:
+                cursor.move('E');
+                break;
+            case KeyEvent.VK_DOWN:
+                cursor.move('S');
+                break;
+            case KeyEvent.VK_LEFT:
+                cursor.move('W');
+                break;
+            case KeyEvent.VK_CONTROL:
+                cursor.printCurrentNode();
+        }
         repaint();
-        //}
     }
 
     @Override
@@ -77,7 +103,6 @@ public class GamePanel extends javax.swing.JPanel {
         player.paintSelf(g);
         maze.paintMaze(g);
         cursor.paintSelf(g);
-        //grid.buildMaze(g);
     }
 
     /**

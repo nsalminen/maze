@@ -26,8 +26,7 @@ public class MazeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        panel.move(e.getKeyCode());
-        //System.out.println(e.getKeyCode());
+        panel.keyInput(e.getKeyCode());
     }
 
     @Override

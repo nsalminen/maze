@@ -12,11 +12,11 @@ import Window.GamePanel;
 public class Wall extends Sprite{
     public Wall(int x, int y, GamePanel p){
 
-       xInd = x;
-       yInd = y;       
+       xIndex = x;
+       yIndex = y;       
        panel = p;       
-       xPos = xInd * panel.blockSize;
-       yPos = yInd * panel.blockSize;
+       xPos = xIndex * panel.blockSize;
+       yPos = yIndex * panel.blockSize;
        
     }
      

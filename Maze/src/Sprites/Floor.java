@@ -16,11 +16,11 @@ public class Floor extends Sprite {
     
 
     public Floor(int x, int y, GamePanel p){
-       xInd = x;
-       yInd = y;       
+       xIndex = x;
+       yIndex = y;       
        panel = p;       
-       xPos = xInd * panel.blockSize;
-       yPos = yInd * panel.blockSize;
+       xPos = xIndex * panel.blockSize;
+       yPos = yIndex * panel.blockSize;
        
     }
      
