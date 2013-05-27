@@ -11,6 +11,7 @@ import Window.GamePanel;
 public class Player extends Sprite {
 
     public int direction;
+    public boolean portalGun = false;
 
     public Player(int x, int y, GamePanel p) {
         xIndex = x;
@@ -18,11 +19,30 @@ public class Player extends Sprite {
         panel = p;
         xPos = xIndex * panel.blockSize;
         yPos = yIndex * panel.blockSize;
+        
     }
-
+    
+    public void togglePortalGun(){
+        if(portalGun){
+            portalGun = true;
+        }
+        else if(!portalGun){
+            portalGun = false;
+        }
+    }
+    
     public void paintSelf(Graphics g) {
         g.setColor(Color.blue);
         g.fillRect(xPos, yIndex * panel.blockSize, panel.blockSize, panel.blockSize);
+        
+        if(portalGun){
+            int[] xp = {xPos+panel.blockSize, xPos+panel.blockSize, xPos};
+            int[] yp = {yPos, yPos+panel.blockSize, yPos+panel.blockSize};
+            
+            g.setColor(Color.green);
+            g.fillPolygon(xp, yp, 3);
+        }
+        
         g.setColor(Color.CYAN);
 
         if (getDirection() == 0) {

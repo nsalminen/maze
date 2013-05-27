@@ -4,11 +4,11 @@
  */
 package Window;
 
-import Game.MazeKeyListener;
-import Game.Maze;
+import Game.*;
 import java.awt.Graphics;
 import Sprites.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,9 +19,12 @@ public class GamePanel extends javax.swing.JPanel {
     /**
      * Creates new form MazePanelForm
      */
+    
+    public Goal goal;
     public Player player;
     public Maze maze;
     public Cursor cursor;
+    public PortalGun portalGun;
     //The size of each block in pixels
     public final int blockSize = 40;
     public int[][] hardMaze = {
@@ -36,14 +39,18 @@ public class GamePanel extends javax.swing.JPanel {
         {1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1},
         {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1}};
+        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1}};
 
     public GamePanel() {
         initComponents();
-        this.setSize(hardMaze.length * blockSize, hardMaze.length * blockSize);
+        this.setSize (hardMaze.length * blockSize, hardMaze.length * blockSize);
+        
         maze = new Maze(hardMaze, this);
+        
+        goal = new Goal((hardMaze.length), (hardMaze.length-1), this);
         player = new Player(0, 0, this);
         cursor = new Cursor(hardMaze.length, 0, this);
+        portalGun = new PortalGun(4,2,this);
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
@@ -55,6 +62,22 @@ public class GamePanel extends javax.swing.JPanel {
      *
      * @param key A variable that passes the key code of the active key
      */
+    
+    public void updateGame(KeyEvent e){
+        keyInput(e.getKeyCode());
+        repaint();
+        checkGoal();
+    }
+    
+    public void gameOver(){
+        System.out.println("GAME OVER! YOU WIN!");
+    }    
+    public void checkGoal(){
+           if(maze.nodes[goal.yIndex][goal.xIndex].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")){
+                gameOver(); 
+            }
+    }
+    
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_W:
@@ -83,8 +106,7 @@ public class GamePanel extends javax.swing.JPanel {
                 break;
             case KeyEvent.VK_CONTROL:
                 cursor.printCurrentNode();
-        }
-        repaint();
+        }       
     }
 
     @Override
@@ -103,6 +125,8 @@ public class GamePanel extends javax.swing.JPanel {
         player.paintSelf(g);
         maze.paintMaze(g);
         cursor.paintSelf(g);
+        goal.paintSelf(g);
+        portalGun.paintSelf(g);
     }
 
     /**
