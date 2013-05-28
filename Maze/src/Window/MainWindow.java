@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
 
     private int width = 522;
     private int height = 505;
-    static MainWindow mazeFrame = new MainWindow();
+    static MainWindow mazeWindow = new MainWindow();
     MenuPanel menu = new MenuPanel();
     GamePanel game = new GamePanel();
     private static GraphicsDevice vc;
@@ -26,8 +26,9 @@ public class MainWindow extends JFrame {
 
     public MainWindow() {
         initComponents();
+        mazeWindow = this;
         if (System.getProperty("os.name").equals("Mac OS X")) {
-            enableOSXFullscreen(this);
+            enableOSXFullscreen(mazeWindow);
         }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
@@ -45,7 +46,7 @@ public class MainWindow extends JFrame {
         vc = ge.getDefaultScreenDevice();
         if (vc.isFullScreenSupported()) {
             if (!fullscreen) {
-                vc.setFullScreenWindow(mazeFrame);
+                vc.setFullScreenWindow(mazeWindow);
                 fullscreen = true;
                 setVisible(false);
                 setVisible(true);
@@ -55,13 +56,13 @@ public class MainWindow extends JFrame {
             }
         } else {
             if (!fullscreen) {
-                mazeFrame.setExtendedState(MainWindow.MAXIMIZED_BOTH);
-                mazeFrame.setUndecorated(false);
-                mazeFrame.setResizable(false);
+                mazeWindow.setExtendedState(MainWindow.MAXIMIZED_BOTH);
+                mazeWindow.setUndecorated(false);
+                mazeWindow.setResizable(false);
             } else {
-                mazeFrame.setExtendedState(MainWindow.NORMAL);
-                mazeFrame.setUndecorated(true);
-                mazeFrame.setResizable(true);
+                mazeWindow.setExtendedState(MainWindow.NORMAL);
+                mazeWindow.setUndecorated(true);
+                mazeWindow.setResizable(true);
             }
         }
     }
@@ -97,7 +98,9 @@ public class MainWindow extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Maze");
+        setAlwaysOnTop(true);
         getContentPane().setLayout(new java.awt.CardLayout());
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
