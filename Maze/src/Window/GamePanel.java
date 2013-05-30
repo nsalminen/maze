@@ -79,13 +79,18 @@ public class GamePanel extends javax.swing.JPanel {
             }
     }
      public void checkPortalGun(){
-           if(maze.nodes[portalGun.yIndex][portalGun.xIndex].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")){
+         
+        String portalnode = maze.nodes[portalGun.yIndex][portalGun.xIndex].getOccupant().getClass().getCanonicalName();
+         
+            if(portalnode.equals("Sprites.Player"))
+               {
                 maze.nodes[portalGun.yIndex][portalGun.xIndex].setOccupant(new Floor(portalGun.xIndex, portalGun.yIndex,this));
                 player.portalGun = true;
+                portalGun.xIndex=99;
+                portalGun.yIndex=99;
                }
                
-            }
-           
+            }   
     
     
     public void keyInput(int key) {
