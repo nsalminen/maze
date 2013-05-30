@@ -40,7 +40,6 @@ public class GamePanel extends javax.swing.JPanel {
 
     public GamePanel() {
         initComponents();
-        this.setSize(hardMaze.length * blockSize, hardMaze.length * blockSize);
         maze = new Maze(hardMaze, this);
         player = new Player(0, 0, this);
         cursor = new Cursor(hardMaze.length, 0, this);

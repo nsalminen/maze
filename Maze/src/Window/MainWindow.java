@@ -15,20 +15,19 @@ import javax.swing.JFrame;
  * @author Nels
  */
 public class MainWindow extends JFrame {
-
+    
+    public static MainWindow mazeWindow;
     private int width = 522;
     private int height = 505;
-    static MainWindow mazeWindow = new MainWindow();
-    MenuPanel menu = new MenuPanel();
-    GamePanel game = new GamePanel();
+    public MenuPanel menu = new MenuPanel();
+    public GamePanel game = new GamePanel();
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
-
+    
     public MainWindow() {
         initComponents();
-        mazeWindow = this;
         if (System.getProperty("os.name").equals("Mac OS X")) {
-            enableOSXFullscreen(mazeWindow);
+            enableOSXFullscreen(this);
         }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
@@ -109,14 +108,14 @@ public class MainWindow extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the default look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("null".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -135,7 +134,8 @@ public class MainWindow extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                mazeWindow = new MainWindow();
+                mazeWindow.setVisible(true);
             }
         });
     }
