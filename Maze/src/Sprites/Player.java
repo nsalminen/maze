@@ -147,7 +147,23 @@ public class Player extends Sprite {
                     yPos + (panel.blockSize / 2));
         }
         getNeighbors();
+        
+        checkPortalGun();
     }
+    
+    public void checkPortalGun(){
+         
+        String portalnode = panel.maze.nodes[panel.portalGun.yIndex][panel.portalGun.xIndex].getOccupant().getClass().getCanonicalName();
+         
+            if(portalnode.equals("Sprites.Player") &&  !panel.portalGun.taken)
+               {
+                panel.maze.nodes[panel.portalGun.yIndex][panel.portalGun.xIndex].setOccupant(new Floor(panel.portalGun.xIndex, panel.portalGun.yIndex,panel));
+                this.portalGun = true;
+                panel.portalGun.taken = true;
+                
+               }
+               
+            }   
 
     /**
      * A method that determines what kind of movement is requested of

@@ -13,6 +13,10 @@ import java.awt.Graphics;
  * @author Yasen
  */
 public class PortalGun extends Sprite{
+    
+    
+     public boolean taken;
+       
      public PortalGun(int x, int y, GamePanel p){
        
        xIndex = x;
@@ -22,6 +26,7 @@ public class PortalGun extends Sprite{
        
        xPos = xIndex * panel.blockSize;
        yPos = yIndex * panel.blockSize;
+       
        
        panel.maze.nodes[yIndex][xIndex].setOccupant(this);
  }

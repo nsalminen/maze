@@ -67,7 +67,7 @@ public class GamePanel extends javax.swing.JPanel {
         keyInput(e.getKeyCode());
         repaint();
         checkGoal();
-        checkPortalGun();
+        //checkPortalGun();
     }
     
     public void gameOver(){
@@ -78,19 +78,7 @@ public class GamePanel extends javax.swing.JPanel {
                 gameOver(); 
             }
     }
-     public void checkPortalGun(){
-         
-        String portalnode = maze.nodes[portalGun.yIndex][portalGun.xIndex].getOccupant().getClass().getCanonicalName();
-         
-            if(portalnode.equals("Sprites.Player"))
-               {
-                maze.nodes[portalGun.yIndex][portalGun.xIndex].setOccupant(new Floor(portalGun.xIndex, portalGun.yIndex,this));
-                player.portalGun = true;
-                portalGun.xIndex=99;
-                portalGun.yIndex=99;
-               }
-               
-            }   
+     
     
     
     public void keyInput(int key) {
