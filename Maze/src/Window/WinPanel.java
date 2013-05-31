@@ -1,15 +1,15 @@
-package maze;
+package Window;
 
 /**
  *
  * @author Nels
  */
-public class MenuPanel extends javax.swing.JPanel {
+public class WinPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MenuPanel
      */
-    public MenuPanel() {
+    public WinPanel() {
         initComponents();
     }
 
@@ -24,20 +24,34 @@ public class MenuPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        startButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        menuButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
+        jPanel1.setLayout(new java.awt.GridLayout(4, 0, 0, 10));
 
-        startButton.setText("Start Game");
-        startButton.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Congratulations");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(jLabel1);
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("You won!");
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanel1.add(jLabel2);
+
+        menuButton.setText("Back to menu");
+        menuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startButtonActionPerformed(evt);
+                menuButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(startButton);
+        jPanel1.add(menuButton);
 
         exitButton.setText("Exit");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -50,22 +64,25 @@ public class MenuPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 180;
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        MazeFrame.mazeFrame.setContentPane(MazeFrame.mazeFrame.game);
-        MazeFrame.mazeFrame.setVisible(true);
-    }//GEN-LAST:event_startButtonActionPerformed
+    private void menuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButtonActionPerformed
+        MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.menu);
+        MainWindow.mazeWindow.setVisible(true);
+    }//GEN-LAST:event_menuButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton startButton;
+    private javax.swing.JButton menuButton;
     // End of variables declaration//GEN-END:variables
 }
