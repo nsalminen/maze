@@ -11,7 +11,7 @@ public class MenuPanel extends javax.swing.JPanel {
      */
     public MenuPanel() {
         initComponents();
-        if(System.getProperty("os.name").equals("Mac OS X")){
+        if (System.getProperty("os.name").equals("Mac OS X")) {
             fullScreenButton.setVisible(false);
         }
     }
@@ -78,8 +78,8 @@ public class MenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        MainWindow.mazeFrame.setContentPane(MainWindow.mazeFrame.game);
-        MainWindow.mazeFrame.setVisible(true);     
+        MainWindow.mazeWindow.setContentPane(new GamePanel());
+        MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -87,9 +87,8 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
-        MainWindow.mazeFrame.toggleFullscreen();
+        MainWindow.mazeWindow.toggleFullscreen();
     }//GEN-LAST:event_fullScreenButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
     private javax.swing.JButton fullScreenButton;
