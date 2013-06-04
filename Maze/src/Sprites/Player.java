@@ -80,7 +80,6 @@ public class Player extends Sprite {
             }
             if (getDirection() == 3) {
                 while (shooting) {
-
                     if ((xOrigin == 0)) {
                         shooting = false;
                     }
@@ -90,7 +89,6 @@ public class Player extends Sprite {
                         panel.maze.nodes[yOrigin][xOrigin].setOccupant(new Floor(xOrigin, yOrigin, panel));
                         shooting = false;
                     }
-
                 }
             } else {
                 shooting = false;
@@ -163,7 +161,15 @@ public class Player extends Sprite {
 
         if(tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
             panel.maze.nodes[panel.timeMachine.yIndex][panel.timeMachine.xIndex].setOccupant(new Floor(panel.timeMachine.xIndex, panel.timeMachine.yIndex, panel));
-            stepsTaken = stepsTaken - 20;
+            
+            for ( int n  = 0; n < panel.timeMachine.stepsReduced; n++)
+            {
+                if(stepsTaken > 0 )
+                {
+                    stepsTaken--;
+                }
+                
+            }
             panel.timeMachine.taken = true;
 
         }

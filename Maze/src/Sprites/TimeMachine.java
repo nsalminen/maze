@@ -15,6 +15,7 @@ import java.awt.Graphics;
 public class TimeMachine extends Sprite{
     
      public boolean taken;
+     public int stepsReduced = 20;
        
      public TimeMachine(int x, int y, GamePanel p){
        
@@ -27,6 +28,7 @@ public class TimeMachine extends Sprite{
        yPos = yIndex * panel.blockSize;
        
        panel.maze.nodes[yIndex][xIndex].setOccupant(this);
+       
        
      }
      
