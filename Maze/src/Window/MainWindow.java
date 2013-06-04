@@ -17,12 +17,12 @@ import javax.swing.JFrame;
  */
 public class MainWindow extends JFrame {
 
-    private int width = 522;
+    private int width = 622;
     static MainWindow mazeWindow = new MainWindow();
     MenuPanel menu = new MenuPanel();
     GamePanel game = new GamePanel();
     WinPanel win = new WinPanel();
-    private int height = 505;
+    private int height = 605;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
 
@@ -46,6 +46,7 @@ public class MainWindow extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         vc = ge.getDefaultScreenDevice();
         if (vc.isFullScreenSupported()) {
+            System.out.println("supported");
             if (!fullscreen) {
                 vc.setFullScreenWindow(mazeWindow);
                 fullscreen = true;
@@ -56,13 +57,14 @@ public class MainWindow extends JFrame {
                 fullscreen = false;
             }
         } else {
+            System.out.println("Unsupportgnjdfsgred");
             if (!fullscreen) {
                 mazeWindow.setExtendedState(MainWindow.MAXIMIZED_BOTH);
-                mazeWindow.setUndecorated(false);
+                mazeWindow.setUndecorated(true);
                 mazeWindow.setResizable(false);
             } else {
                 mazeWindow.setExtendedState(MainWindow.NORMAL);
-                mazeWindow.setUndecorated(true);
+                mazeWindow.setUndecorated(false);
                 mazeWindow.setResizable(true);
             }
         }

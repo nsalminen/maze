@@ -12,6 +12,7 @@ public class Player extends Sprite {
 
     public int direction;
     public boolean portalGun = false;
+    public int stepsTaken = 0;
 
     public Player(int x, int y, GamePanel p) {
         xIndex = x;
@@ -141,6 +142,7 @@ public class Player extends Sprite {
         getNeighbors();
 
         checkPortalGun();
+        checkTimeMachine();
     }
 
     public void checkPortalGun() {
@@ -151,6 +153,18 @@ public class Player extends Sprite {
             panel.maze.nodes[panel.portalGun.yIndex][panel.portalGun.xIndex].setOccupant(new Floor(panel.portalGun.xIndex, panel.portalGun.yIndex, panel));
             this.portalGun = true;
             panel.portalGun.taken = true;
+        }
+
+    }
+    
+    public void checkTimeMachine() {
+
+        String tmnode = panel.maze.nodes[panel.timeMachine.yIndex][panel.timeMachine.xIndex].getOccupant().getClass().getCanonicalName();
+
+        if(tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
+            panel.maze.nodes[panel.timeMachine.yIndex][panel.timeMachine.xIndex].setOccupant(new Floor(panel.timeMachine.xIndex, panel.timeMachine.yIndex, panel));
+            stepsTaken = stepsTaken - 20;
+            panel.timeMachine.taken = true;
 
         }
 
@@ -171,6 +185,7 @@ public class Player extends Sprite {
                         //Check for open NORTH neighbour
                         if (!neighbors[0].getClass().getCanonicalName().equals("Sprites.Wall")) {
                             yIndex = yIndex - 1;
+                            stepsTaken++;
                             updatePos();
                         }
                     }
@@ -185,6 +200,7 @@ public class Player extends Sprite {
                         //Check for open Index
                         if (!neighbors[1].getClass().getCanonicalName().equals("Sprites.Wall")) {
                             xIndex = xIndex + 1;
+                            stepsTaken++;
                             updatePos();
                         }
                     }
@@ -200,6 +216,7 @@ public class Player extends Sprite {
                         //Check for open Index
                         if (!neighbors[2].getClass().getCanonicalName().equals("Sprites.Wall")) {
                             yIndex = yIndex + 1;
+                            stepsTaken++;
                             updatePos();
                         }
                     }
@@ -214,6 +231,7 @@ public class Player extends Sprite {
                         //Check for open Index
                         if (!neighbors[3].getClass().getCanonicalName().equals("Sprites.Wall")) {
                             xIndex = xIndex - 1;
+                            stepsTaken++;
                             updatePos();
                         }
                     }
@@ -223,6 +241,7 @@ public class Player extends Sprite {
                 break;
         }
         panel.maze.nodes[yIndex][xIndex].setOccupant(this);
+        
     }
 
     public int getDirection() {

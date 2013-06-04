@@ -29,8 +29,8 @@ public class Maze {
      * @param p The parent panel of the maze object
      * @author Yasen
      */
-    public Maze(int[][] maze, GamePanel p) {
-        panel = p;
+    public Maze(int[][] maze, GamePanel panel) {
+        this.panel = panel;
         //maze = mazeArray;
         nodes = new Node[maze.length][maze[0].length];
         buildMaze(maze);
@@ -85,6 +85,9 @@ public class Maze {
                 }
                 if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
                     ((PortalGun) nodes[x][y].getOccupant()).paintSelf(g);
+                }
+                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
+                    ((TimeMachine) nodes[x][y].getOccupant()).paintSelf(g);
                 }
             }
         }

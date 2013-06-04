@@ -6,10 +6,10 @@ package Window;
 
 import Game.*;
 import Sprites.*;
+import UserInterface.StepCounter;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
-import java.util.Random;
 /**
  *
  * @author Yasen
@@ -24,6 +24,9 @@ public class GamePanel extends javax.swing.JPanel {
     public Maze maze;
     public Cursor cursor;
     public PortalGun portalGun;
+    public StepCounter counter;
+    
+    public TimeMachine timeMachine;
     //The size of each block in pixels
     public final int blockSize = 40;
     public int[][] hardMaze = {
@@ -32,6 +35,7 @@ public class GamePanel extends javax.swing.JPanel {
         {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
         {1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
+        {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
         {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
         {1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
         {1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1},
@@ -43,7 +47,7 @@ public class GamePanel extends javax.swing.JPanel {
     public GamePanel() {
         initComponents();
         this.setSize(hardMaze.length * blockSize, hardMaze.length * blockSize);
-        addStuff();
+        prepGame();
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
@@ -52,19 +56,25 @@ public class GamePanel extends javax.swing.JPanel {
     
         
     
-    public void addStuff(){
+    public void prepGame(){
         maze = new Maze(hardMaze, this);
-        goal = new Goal((hardMaze.length), (hardMaze.length - 1), this);
+        goal = new Goal((hardMaze.length-1), (hardMaze[0].length-1), this);
         player = new Player(0, 0, this);
-        cursor = new Cursor(hardMaze.length, 0, this);
+        cursor = new Cursor(hardMaze[0].length-1, 0, this);
+        counter = new StepCounter(hardMaze.length*blockSize, 0 , this);
         
-       Collections.shuffle(maze.floors); 
-       
+        
+       Collections.shuffle(maze.floors);        
             int porty = maze.floors.get(0).xInd;
-            int portx = maze.floors.get(0).yInd;
-            
-            
+            int portx = maze.floors.get(0).yInd;           
         portalGun = new PortalGun(portx, porty, this);
+        
+        Collections.shuffle(maze.floors); 
+       
+            porty = maze.floors.get(0).xInd;
+            portx = maze.floors.get(0).yInd;
+                  
+        timeMachine = new TimeMachine(portx, porty, this);
     }
 
     /**
@@ -135,11 +145,15 @@ public class GamePanel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g);
     }
+    
+    
 
     @Override
+    
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         maze.paintMaze(g);
+        counter.drawSteps(g);
     }
 
     /**

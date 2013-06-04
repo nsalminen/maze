@@ -10,8 +10,11 @@ import Window.GamePanel;
  * @author Yasen
  */
 public class Wall extends Sprite{
+   
+    public boolean portal;
+       
     public Wall(int x, int y, GamePanel p){
-
+    
        xIndex = x;
        yIndex = y;       
        panel = p;       
