@@ -67,6 +67,6 @@ public class Cursor {
     }
 
     public void printCurrentNode() {
-        System.out.println(panel.maze.nodes[yInd][xInd].toString());
+        System.out.println(panel.maze.getNodes()[yInd][xInd].toString());
     }
 }

@@ -25,16 +25,16 @@ public abstract class Sprite {
     public void getNeighbors() {
 
         if (yIndex - 1 >= 0) {
-            neighbors[0] = panel.maze.nodes[yIndex - 1][xIndex].getOccupant(); // NORTH NEIGHBOUR at Index:0;
+            neighbors[0] = panel.maze.getNodes()[yIndex - 1][xIndex].getOccupant(); // NORTH NEIGHBOUR at Index:0;
         }
         if (xIndex + 1 < (panel.hardMaze[0].length)) {
-            neighbors[1] = panel.maze.nodes[yIndex][xIndex + 1].getOccupant(); // EAST NEIGHBOUR at Index:1;
+            neighbors[1] = panel.maze.getNodes()[yIndex][xIndex + 1].getOccupant(); // EAST NEIGHBOUR at Index:1;
         }
         if (yIndex + 1 < (panel.hardMaze.length)) {
-            neighbors[2] = panel.maze.nodes[yIndex + 1][xIndex].getOccupant(); // SOUTH NEIGHBOUR at Index:2;
+            neighbors[2] = panel.maze.getNodes()[yIndex + 1][xIndex].getOccupant(); // SOUTH NEIGHBOUR at Index:2;
         }
         if (xIndex - 1 >= 0) {
-            neighbors[3] = panel.maze.nodes[yIndex][xIndex - 1].getOccupant(); // WEST NEIGHBOUR at Index:3;
+            neighbors[3] = panel.maze.getNodes()[yIndex][xIndex - 1].getOccupant(); // WEST NEIGHBOUR at Index:3;
         }
     }
 

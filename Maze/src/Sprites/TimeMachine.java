@@ -26,7 +26,7 @@ public class TimeMachine extends Sprite{
        xPos = xIndex * panel.blockSize;
        yPos = yIndex * panel.blockSize;
        
-       panel.maze.nodes[yIndex][xIndex].setOccupant(this);
+        panel.maze.getNodes()[yIndex][xIndex].setOccupant(this);
        
      }
      
