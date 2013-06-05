@@ -28,7 +28,7 @@ public class PortalGun extends Sprite{
        yPos = yIndex * panel.blockSize;
        
        
-       panel.maze.nodes[yIndex][xIndex].setOccupant(this);
+       panel.maze.nodes[yIndex][xIndex].addOccupant(this);
  }
      public void paintSelf(Graphics g){   
        g.setColor(Color.GREEN);

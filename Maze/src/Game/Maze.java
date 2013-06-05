@@ -18,7 +18,9 @@ public class Maze {
      * The parent panel of this maze
      */
     GamePanel panel;
+    
     public ArrayList<Node> floors = new ArrayList<Node>();
+    
     /**
      * The array of Node objects that makeup the maze's structure
      */
@@ -49,12 +51,16 @@ public class Maze {
         for (int x = 0; x < maze.length; x++) {
             for (int y = 0; y < maze[0].length; y++) {
                 nodes[x][y] = new Node(x, y, id);
+                
+                nodes[x][y].addOccupant(new Floor(x,y,panel));
+                floors.add(nodes[x][y]);
+                
+                
                 if (maze[x][y] == 0) {
-                    nodes[x][y].setOccupant(new Wall(x, y, panel));
-                } else {
-                    nodes[x][y].setOccupant(new Floor(x, y, panel));
-                    floors.add(nodes[x][y]);                    
-                }
+                nodes[x][y].addOccupant(new Wall(x, y, panel));
+                } 
+                
+                
                 id++;
             }
         }
@@ -69,25 +75,25 @@ public class Maze {
     public void paintMaze(Graphics g) {
         for (int x = 0; x < nodes.length; x++) {
             for (int y = 0; y < nodes[x].length; y++) {
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
-                    ((Wall) nodes[x][y].getOccupant()).paintSelf(y, x, g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                    ((Wall) nodes[x][y].popOccupant()).paintSelf(y, x, g);
                 }
                
             }
         }
         for (int x = 0; x < nodes.length; x++) {
             for (int y = 0; y < nodes[x].length; y++) {                
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
-                    ((Player) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
+                    ((Player) nodes[x][y].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
-                    ((Goal) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
+                    ((Goal) nodes[x][y].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
-                    ((PortalGun) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
+                    ((PortalGun) nodes[x][y].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
-                    ((TimeMachine) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
+                    ((TimeMachine) nodes[x][y].popOccupant()).paintSelf(g);
                 }
             }
         }

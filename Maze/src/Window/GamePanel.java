@@ -96,7 +96,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void checkGoal() {
-        if (maze.nodes[goal.yIndex][goal.xIndex].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
+        if (maze.nodes[goal.yIndex][goal.xIndex].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
             gameOver();
         }
     }
