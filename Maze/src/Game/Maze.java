@@ -1,18 +1,15 @@
 package Game;
 
-import Game.Node;
+import Sprites.*;
 import Window.GamePanel;
 import java.awt.Graphics;
-import Sprites.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
- * This class builds an array of Nodes based on a given 2D int Array. It also
- * sets the occupants of these nodes to create the maze.
+ * This class builds an array of Nodes based on a given 2D integer Array. It
+ * also sets the occupants of these nodes to create the maze.
  *
- * @author Yasen
+ * @author Yasen Dinkov and Nels Salminen
  */
 public class Maze {
 
@@ -22,33 +19,32 @@ public class Maze {
     public GamePanel panel;
     public ArrayList<Node> floors = new ArrayList<>();
     public Node[][] nodes;
-    private Queue<Node> queue = new LinkedList<>();
-    private int width, height;
+    private int pathFindertotalSteps;
+    private int width;
+    private int height;
 
     /**
-     * @param maze A 2D int Array that is used as a blueprint for the maze
+     * @param maze A 2D integer Array that is used as a blueprint for the maze
      * @param p The parent panel of the maze object
-     * @author Yasen
      */
     public Maze(int[][] maze, GamePanel panel) {
         this.panel = panel;
-        //maze = mazeArray;
         nodes = new Node[maze.length][maze[0].length];
         buildMaze(maze);
+        findPath(nodes[0][0]);
         width = nodes[0].length;
         height = nodes.length;
-        solveMaze();
     }
 
     /**
-     * Takes a given 2D int array and sets the occupants for the 2D Node array
-     * accordingly. 0 = wall 'w' `1 = empty 'e'
+     * Takes a given 2D integer array and sets the occupants for the 2D Node
+     * array accordingly. 0 = wall 'w' `1 = empty 'e'
      *
-     * @param maze A 2D int Array that is used as a blueprint for the maze
+     * @param maze A 2D integer Array that is used as a blueprint for the maze
      */
     private void buildMaze(int[][] maze) {
         int id = 0;
-        
+
         for (int x = 0; x < maze.length; x++) {
             for (int y = 0; y < maze[0].length; y++) {
                 nodes[x][y] = new Node(x, y, id);
@@ -64,44 +60,69 @@ public class Maze {
             }
         }
     }
-    
-    private void solveMaze() {
-        solveMaze(0, 0);
-    }
-    
-    public void solveMaze(int x, int y) {
-        queue.add(nodes[y][x]);
-        while (!queue.isEmpty()) {
-            Node visitedNode = queue.remove();
-            if (isExit(visitedNode)) {
-                System.out.println("Exit found");
-            } else {
-                ArrayList<Node> adjacentNodes = getAdjacentNodes(visitedNode.xInd, visitedNode.yInd);
-                for (Node node : adjacentNodes) {
-                    if (!node.isVisited() && !node.isWall()) {
-                        if (adjacentNodes.size() == 3 | adjacentNodes.size() == 4) {
-                            queue.add(node);
-                        }
-                    }
+
+    /**
+     * @param current
+     * @return
+     * @author Nels Salminen
+     */
+    private boolean findPath(Node current) {
+        if (isExit(current)) {
+            return true;
+        }
+        ArrayList<Node> adjacentNodes = getAdjacentNodes(current);
+        for (Node potentialMove : adjacentNodes) {
+            if (nodeClear(potentialMove)) {
+                markNode(potentialMove);
+                potentialMove.setVisited(true);
+                if (findPath(potentialMove)) {
+                    return true;
                 }
-                visitedNode.setVisited(true);
+                exitNode(potentialMove);
             }
         }
+        return false;
     }
-    
-    public ArrayList<Node> getAdjacentNodes(int x, int y) {
+
+    private boolean isExit(Node node) {
+        if (node.getxInd() == 12 && node.getyInd() == 12) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void markNode(Node node) {
+        nodes[node.getxInd()][node.getyInd()].path = true;
+        pathFindertotalSteps++;
+    }
+
+    private void exitNode(Node node) {
+        nodes[node.getxInd()][node.getyInd()].path = false;
+        pathFindertotalSteps--;
+    }
+
+    private boolean nodeClear(Node node) {
+        if (node.getxInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getyInd() >= nodes[node.getxInd()].length || node.isVisited()) {
+            return false;
+        }
+
+        return (!(nodes[node.getxInd()][node.getyInd()]).isWall() || nodes[node.getxInd()][node.getyInd()].isExit());
+    }
+
+    public ArrayList<Node> getAdjacentNodes(Node node) {
         ArrayList<Node> adjacencies = new ArrayList<>();
-        if (y != 0) {
-            adjacencies.add(nodes[x][y - 1]);
+        if (node.getyInd() != 0) {
+            adjacencies.add(nodes[node.getxInd()][node.getyInd() - 1]);
         }
-        if (y < nodes[x].length - 1) {
-            adjacencies.add(nodes[x][y + 1]);
+        if (node.getyInd() < nodes[node.getxInd()].length - 1) {
+            adjacencies.add(nodes[node.getxInd()][node.getyInd() + 1]);
         }
-        if (x != 0) {
-            adjacencies.add(nodes[x - 1][y]);
+        if (node.getxInd() != 0) {
+            adjacencies.add(nodes[node.getxInd() - 1][node.getyInd()]);
         }
-        if (x < nodes.length - 1) {
-            adjacencies.add(nodes[x + 1][y]);
+        if (node.getxInd() < nodes.length - 1) {
+            adjacencies.add(nodes[node.getxInd() + 1][node.getyInd()]);
         }
         return adjacencies;
     }
@@ -118,7 +139,9 @@ public class Maze {
                 if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
                     ((Wall) nodes[x][y].getOccupant()).paintSelf(y, x, g);
                 }
-                
+                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
+                    ((Floor) nodes[x][y].getOccupant()).paintSelf(y, x, g, nodes[x][y].path);
+                }
             }
         }
         for (int x = 0; x < nodes.length; x++) {
@@ -138,14 +161,6 @@ public class Maze {
             }
         }
         panel.cursor.paintSelf(g);
-    }
-    
-    private boolean isExit(Node node) {
-        if (node.getxInd() == 0 && node.getyInd() == nodes.length) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**

@@ -20,8 +20,8 @@ public class Node {
     private boolean east;
     private boolean south;
     private boolean west;
-    private boolean visited;
-    public boolean correctPath;
+    private boolean visited = false;
+    public boolean path;
 
     public boolean isNorth() {
         return north;
@@ -29,6 +29,14 @@ public class Node {
 
     public void setNorth(boolean north) {
         this.north = north;
+    }
+    
+        public boolean isExit() {
+        if (occupant instanceof Goal){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean isEast() {
