@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.Random;
+
 /**
  *
  * @author Yasen
@@ -30,20 +31,20 @@ public class GamePanel extends javax.swing.JPanel {
     //The size of each block in pixels
     public final int blockSize = 40;
     public int[][] hardMaze = {
-        {1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1},
-        {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-        {0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
-        {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
-        {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1},
-        {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1}};
-
+        {1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1},
+        {1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0},
+        {0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0},
+        {0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1},
+        {1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
+        {1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1},
+        {1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1},
+        {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1}};
+    public Helper helper;
 
     public GamePanel() {
         initComponents();
@@ -52,37 +53,37 @@ public class GamePanel extends javax.swing.JPanel {
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
-    }        
-    
-    private int random(){
+    }
+
+    private int random() {
         Random random = new Random();
         return Math.abs(random.nextInt());
     }
-    
-    public void prepGame(Graphics g){
+
+    public void prepGame(Graphics g) {
         maze = new Maze(hardMaze, this);
-        goal = new Goal((hardMaze.length-1), (hardMaze[0].length-1), this);
-        player = new Player(0, 0, this,getGraphics());
-        cursor = new Cursor(hardMaze[0].length-1, 0, this);
-        counter = new StepCounter(hardMaze.length*blockSize, 0 , this);
-        
-        
-            int porty;
-            int portx ;
-        
-       //Collections.shuffle(maze.floors);
-       
-            portx = maze.floors.get(random()% maze.floors.size()).yIndex;
-            porty = maze.floors.get(random()% maze.floors.size()).xIndex;
-            
+        goal = new Goal((hardMaze.length - 1), (hardMaze[0].length - 1), this);
+        player = new Player(0, 0, this, getGraphics());
+        cursor = new Cursor(hardMaze[0].length - 1, 0, this);
+        counter = new StepCounter(hardMaze.length * blockSize, 0, this);
+
+        int porty;
+        int portx;
+
+        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
+        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
+
         portalGun = new PortalGun(portx, porty, this);
-        
-        //Collections.shuffle(maze.floors); 
-            portx = maze.floors.get(random()% maze.floors.size()).yIndex;
-            porty = maze.floors.get(random()% maze.floors.size()).xIndex;
-       
-                           
+
+        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
+        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
+
         timeMachine = new TimeMachine(portx, porty, this);
+
+        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
+        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
+
+        helper = new Helper(portx, porty, this);
     }
 
     /**
@@ -160,8 +161,6 @@ public class GamePanel extends javax.swing.JPanel {
         maze.paintMaze(g);
         counter.drawSteps(g);
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

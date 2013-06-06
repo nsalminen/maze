@@ -112,6 +112,7 @@ public class Player extends Sprite {
 
         checkPortalGun();
         checkTimeMachine();
+        checkHelper();
     }
 
     public void checkPortalGun() {
@@ -145,6 +146,17 @@ public class Player extends Sprite {
 
         }
 
+    }
+    
+    private void checkHelper() {
+        String hnode = panel.maze.getNodes()[panel.helper.yIndex][panel.helper.xIndex].popOccupant().getClass().getCanonicalName();
+
+        if (hnode.equals("Sprites.Player") && !panel.helper.taken) {
+            panel.maze.getNodes()[panel.helper.yIndex][panel.helper.xIndex].addOccupant(new Floor(panel.helper.xIndex, panel.helper.yIndex, panel));
+            panel.maze.findPath(panel.maze.nodes[yIndex][xIndex]);
+            panel.maze.showPath = true;
+            panel.repaint();
+        }
     }
 
     /**

@@ -17,16 +17,13 @@ public class Maze {
      * The parent panel of this maze
      */
     GamePanel panel;
-    
     public ArrayList<Floor> floors = new ArrayList<Floor>();
-    
     /**
      * The array of Node objects that makeup the maze's structure
      */
     public Node[][] nodes;
     private int pathFindertotalSteps;
-    private int width;
-    private int height;
+    public boolean showPath;
 
     /**
      * @param maze A 2D integer Array that is used as a blueprint for the maze
@@ -36,9 +33,6 @@ public class Maze {
         this.panel = panel;
         nodes = new Node[maze.length][maze[0].length];
         buildMaze(maze);
-        findPath(nodes[0][0]);
-        width = nodes[0].length;
-        height = nodes.length;
     }
 
     /**
@@ -53,27 +47,34 @@ public class Maze {
         for (int y = 0; y < maze.length; y++) {
             for (int x = 0; x < maze[0].length; x++) {
                 nodes[x][y] = new Node(x, y, id);
-                
-                nodes[x][y].addOccupant(new Floor(x,y,panel));
-                floors.add((Floor)nodes[x][y].popOccupant());
-                
-                
+
+                nodes[x][y].addOccupant(new Floor(x, y, panel));
+                floors.add((Floor) nodes[x][y].popOccupant());
+
+
                 if (maze[x][y] == 0) {
-                nodes[x][y].addOccupant(new Wall(x, y, panel));
-                } 
-                
-                
+                    nodes[x][y].addOccupant(new Wall(x, y, panel));
+                }
+
+
                 id++;
             }
         }
     }
 
     /**
+     * This recursive backtracker finds paths through mazes. Given a location in
+     * the maze, it tries all possible values for the next location. If any of
+     * these values is valid, it moves and recursively calls this method with a
+     * new location in the maze. This recursive algorithm finishes when the
+     * current location in the maze is the exit or if the algorithm exhausted
+     * all possible paths in the maze.
+     *
      * @param current
      * @return
      * @author Nels Salminen
      */
-    private boolean findPath(Node current) {
+    public boolean findPath(Node current) {
         if (isExit(current)) {
             return true;
         }
@@ -92,7 +93,7 @@ public class Maze {
     }
 
     private boolean isExit(Node node) {
-        if (node.getxInd() == 12 && node.getyInd() == 12) {
+        if (node.getxInd() == nodes.length - 1 && node.getyInd() == nodes[0].length - 1) {
             return true;
         } else {
             return false;
@@ -100,12 +101,12 @@ public class Maze {
     }
 
     private void markNode(Node node) {
-        nodes[node.getxInd()][node.getyInd()].path = true;
+        nodes[node.getxInd()][node.getyInd()].setPath(true);
         pathFindertotalSteps++;
     }
 
     private void exitNode(Node node) {
-        nodes[node.getxInd()][node.getyInd()].path = false;
+        nodes[node.getxInd()][node.getyInd()].setPath(false);
         pathFindertotalSteps--;
     }
 
@@ -113,7 +114,7 @@ public class Maze {
         if (node.getxInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getyInd() >= nodes[node.getxInd()].length || node.isVisited()) {
             return false;
         }
-        return (!(nodes[node.getxInd()][node.getyInd()]).isWall() || nodes[node.getxInd()][node.getyInd()].isExit());
+        return (!(nodes[node.getxInd()][node.getyInd()]).isWall() || isExit(nodes[node.getxInd()][node.getyInd()]));
     }
 
     public ArrayList<Node> getAdjacentNodes(Node node) {
@@ -146,12 +147,12 @@ public class Maze {
                     ((Wall) nodes[x][y].popOccupant()).paintSelf(y, x, g);
                 }
                 if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
-                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g, nodes[x][y].path);
+                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g, nodes[x][y].isPath(), showPath);
                 }
             }
         }
         for (int x = 0; x < nodes.length; x++) {
-            for (int y = 0; y < nodes[x].length; y++) {                
+            for (int y = 0; y < nodes[x].length; y++) {
                 if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
                     ((Player) nodes[x][y].popOccupant()).paintSelf(g);
                 }
@@ -163,6 +164,9 @@ public class Maze {
                 }
                 if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
                     ((TimeMachine) nodes[x][y].popOccupant()).paintSelf(g);
+                }
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
+                    ((Helper) nodes[x][y].popOccupant()).paintSelf(g);
                 }
             }
         }
