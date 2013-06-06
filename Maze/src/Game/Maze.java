@@ -113,7 +113,6 @@ public class Maze {
         if (node.getxInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getyInd() >= nodes[node.getxInd()].length || node.isVisited()) {
             return false;
         }
-
         return (!(nodes[node.getxInd()][node.getyInd()]).isWall() || nodes[node.getxInd()][node.getyInd()].isExit());
     }
 
@@ -147,10 +146,7 @@ public class Maze {
                     ((Wall) nodes[x][y].popOccupant()).paintSelf(y, x, g);
                 }
                 if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
-                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g);
-                }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
-                    ((Floor) nodes[x][y].getOccupant()).paintSelf(y, x, g, nodes[x][y].path);
+                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g, nodes[x][y].path);
                 }
             }
         }
@@ -204,14 +200,14 @@ public class Maze {
     /**
      * @return the floors
      */
-    public ArrayList<Node> getFloors() {
+    public ArrayList<Floor> getFloors() {
         return floors;
     }
 
     /**
      * @param floors the floors to set
      */
-    public void setFloors(ArrayList<Node> floors) {
+    public void setFloors(ArrayList<Floor> floors) {
         this.floors = floors;
     }
 }
