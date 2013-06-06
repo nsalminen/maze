@@ -22,7 +22,7 @@ public class Goal extends Sprite {
        xPos = xIndex * panel.blockSize;
        yPos = yIndex * panel.blockSize;
        
-        panel.maze.getNodes()[yIndex][xIndex].setOccupant(this);
+       panel.maze.nodes[yIndex][xIndex].addOccupant(this);
        
     }
      

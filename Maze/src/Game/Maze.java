@@ -16,8 +16,13 @@ public class Maze {
     /**
      * The parent panel of this maze
      */
-    public GamePanel panel;
-    public ArrayList<Node> floors = new ArrayList<>();
+    GamePanel panel;
+    
+    public ArrayList<Floor> floors = new ArrayList<Floor>();
+    
+    /**
+     * The array of Node objects that makeup the maze's structure
+     */
     public Node[][] nodes;
     private int pathFindertotalSteps;
     private int width;
@@ -45,17 +50,19 @@ public class Maze {
     private void buildMaze(int[][] maze) {
         int id = 0;
 
-        for (int x = 0; x < maze.length; x++) {
-            for (int y = 0; y < maze[0].length; y++) {
+        for (int y = 0; y < maze.length; y++) {
+            for (int x = 0; x < maze[0].length; x++) {
                 nodes[x][y] = new Node(x, y, id);
+                
+                nodes[x][y].addOccupant(new Floor(x,y,panel));
+                floors.add((Floor)nodes[x][y].popOccupant());
+                
+                
                 if (maze[x][y] == 0) {
-                    nodes[x][y].setOccupant(new Wall(x, y, panel));
-                } else {
-                    nodes[x][y].setOccupant(new Floor(x, y, panel));
-                    floors.add(nodes[x][y]);
-                }
-                nodes[x][y].setxInd(x);
-                nodes[x][y].setyInd(y);
+                nodes[x][y].addOccupant(new Wall(x, y, panel));
+                } 
+                
+                
                 id++;
             }
         }
@@ -136,8 +143,11 @@ public class Maze {
     public void paintMaze(Graphics g) {
         for (int x = 0; x < nodes.length; x++) {
             for (int y = 0; y < nodes[x].length; y++) {
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
-                    ((Wall) nodes[x][y].getOccupant()).paintSelf(y, x, g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                    ((Wall) nodes[x][y].popOccupant()).paintSelf(y, x, g);
+                }
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
+                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g);
                 }
                 if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
                     ((Floor) nodes[x][y].getOccupant()).paintSelf(y, x, g, nodes[x][y].path);
@@ -145,18 +155,18 @@ public class Maze {
             }
         }
         for (int x = 0; x < nodes.length; x++) {
-            for (int y = 0; y < nodes[x].length; y++) {
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
-                    ((Player) nodes[x][y].getOccupant()).paintSelf(g);
+            for (int y = 0; y < nodes[x].length; y++) {                
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
+                    ((Player) nodes[x][y].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
-                    ((Goal) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
+                    ((Goal) nodes[x][y].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
-                    ((PortalGun) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
+                    ((PortalGun) nodes[x][y].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
-                    ((TimeMachine) nodes[x][y].getOccupant()).paintSelf(g);
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
+                    ((TimeMachine) nodes[x][y].popOccupant()).paintSelf(g);
                 }
             }
         }
