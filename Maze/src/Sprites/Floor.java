@@ -25,13 +25,10 @@ public class Floor extends Sprite {
 
     }
 
-    public void paintSelf(int x, int y, Graphics g, boolean path) {
+    public void paintSelf(int x, int y, Graphics g, boolean path, boolean showPath) {
         if (path) {
             g.setColor(Color.darkGray);
-            g.fillRect(x * panel.blockSize, y * panel.blockSize, panel.blockSize, panel.blockSize);
-        } else {
-            g.setColor(Color.YELLOW);
-            g.fillRect(x * panel.blockSize, y * panel.blockSize, panel.blockSize, panel.blockSize);
+            g.fillOval(x * panel.blockSize+15, y * panel.blockSize+15, panel.blockSize - 30, panel.blockSize - 30);
         }
     }
 }

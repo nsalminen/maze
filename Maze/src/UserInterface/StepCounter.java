@@ -25,8 +25,7 @@ public class StepCounter {
         player = p.player;
         blockSize = p.blockSize;
         x = xPos;
-        y = yPos;
-            
+        y = yPos;  
     }
     public void drawSteps(Graphics g)
     {

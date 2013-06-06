@@ -22,6 +22,9 @@ public class Maze {
     private int pathFindertotalSteps;
     private int width;
     private int height;
+    public boolean showPath = false;
+
+    ;
 
     /**
      * @param maze A 2D integer Array that is used as a blueprint for the maze
@@ -31,7 +34,6 @@ public class Maze {
         this.panel = panel;
         nodes = new Node[maze.length][maze[0].length];
         buildMaze(maze);
-        findPath(nodes[0][0]);
         width = nodes[0].length;
         height = nodes.length;
     }
@@ -62,11 +64,18 @@ public class Maze {
     }
 
     /**
+     * This recursive backtracker finds paths through mazes. Given a location in
+     * the maze, it tries all possible values for the next location. If any of
+     * these values is valid, it moves and recursively calls this method with a
+     * new location in the maze. This recursive algorithm finishes when the
+     * current location in the maze is the exit or if the algorithm exhausted
+     * all possible paths in the maze.
+     *
      * @param current
      * @return
      * @author Nels Salminen
      */
-    private boolean findPath(Node current) {
+    public boolean findPath(Node current) {
         if (isExit(current)) {
             return true;
         }
@@ -80,12 +89,13 @@ public class Maze {
                 }
                 exitNode(potentialMove);
             }
+            panel.repaint();
         }
         return false;
     }
 
     private boolean isExit(Node node) {
-        if (node.getxInd() == 12 && node.getyInd() == 12) {
+        if (node.getxInd() == nodes.length - 1 && node.getyInd() == nodes[0].length - 1) {
             return true;
         } else {
             return false;
@@ -106,10 +116,13 @@ public class Maze {
         if (node.getxInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getyInd() >= nodes[node.getxInd()].length || node.isVisited()) {
             return false;
         }
-
         return (!(nodes[node.getxInd()][node.getyInd()]).isWall() || nodes[node.getxInd()][node.getyInd()].isExit());
     }
 
+    /**
+     * @param node
+     * @return Returns an array of adjacent nodes.
+     */
     public ArrayList<Node> getAdjacentNodes(Node node) {
         ArrayList<Node> adjacencies = new ArrayList<>();
         if (node.getyInd() != 0) {
@@ -140,7 +153,7 @@ public class Maze {
                     ((Wall) nodes[x][y].getOccupant()).paintSelf(y, x, g);
                 }
                 if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
-                    ((Floor) nodes[x][y].getOccupant()).paintSelf(y, x, g, nodes[x][y].path);
+                    ((Floor) nodes[x][y].getOccupant()).paintSelf(y, x, g, nodes[x][y].path, showPath);
                 }
             }
         }
@@ -157,6 +170,9 @@ public class Maze {
                 }
                 if (nodes[x][y].getOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
                     ((TimeMachine) nodes[x][y].getOccupant()).paintSelf(g);
+                }
+                if (nodes[x][y].getOccupant() instanceof Helper) {
+                    ((Helper) nodes[x][y].getOccupant()).paintSelf(g);
                 }
             }
         }

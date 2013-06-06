@@ -27,22 +27,23 @@ public class GamePanel extends javax.swing.JPanel {
     public PortalGun portalGun;
     public StepCounter counter;
     public TimeMachine timeMachine;
+    public Helper helper;
     //The size of each block in pixels
     public final int blockSize = 40;
     public int[][] hardMaze = {
-        {1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1},
-        {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
-        {0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
-        {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
-        {1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-        {1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1},
-        {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1}};
+        {1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1},
+        {1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0},
+        {0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0},
+        {0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1},
+        {1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1},
+        {1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1},
+        {1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+        {1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1},
+        {1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1}};
 
 
     public GamePanel() {
@@ -54,25 +55,27 @@ public class GamePanel extends javax.swing.JPanel {
         this.setFocusable(true);
     }
 
-    public void prepGame() {
+    private void prepGame() {
         maze = new Maze(hardMaze, this);
         goal = new Goal((hardMaze.length - 1), (hardMaze[0].length - 1), this);
         player = new Player(0, 0, this);
         cursor = new Cursor(hardMaze[0].length - 1, 0, this);
         counter = new StepCounter(hardMaze.length * blockSize, 0, this);
-
-
+        
         Collections.shuffle(maze.floors);
         int porty = maze.floors.get(0).xInd;
         int portx = maze.floors.get(0).yInd;
         portalGun = new PortalGun(portx, porty, this);
 
         Collections.shuffle(maze.floors);
-
-        porty = maze.floors.get(0).xInd;
-        portx = maze.floors.get(0).yInd;
-
-        timeMachine = new TimeMachine(portx, porty, this);
+        int tmY = maze.floors.get(0).xInd;
+        int tmX = maze.floors.get(0).yInd;
+        timeMachine = new TimeMachine(tmX, tmY, this);
+        
+        Collections.shuffle(maze.floors);
+        int hY = maze.floors.get(0).xInd;
+        int hX = maze.floors.get(0).yInd;
+        helper = new Helper(hX, hY, this);
     }
 
     /**

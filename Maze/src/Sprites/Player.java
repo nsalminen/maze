@@ -140,7 +140,7 @@ public class Player extends Sprite {
                     yPos + (panel.blockSize / 2));
         }
         getNeighbors();
-
+        checkHelper();
         checkPortalGun();
         checkTimeMachine();
     }
@@ -156,12 +156,12 @@ public class Player extends Sprite {
         }
 
     }
-    
+
     public void checkTimeMachine() {
 
         String tmnode = panel.maze.getNodes()[panel.timeMachine.yIndex][panel.timeMachine.xIndex].getOccupant().getClass().getCanonicalName();
 
-        if(tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
+        if (tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
             panel.maze.getNodes()[panel.timeMachine.yIndex][panel.timeMachine.xIndex].setOccupant(new Floor(panel.timeMachine.xIndex, panel.timeMachine.yIndex, panel));
             stepsTaken = stepsTaken - 20;
             panel.timeMachine.taken = true;
@@ -241,7 +241,7 @@ public class Player extends Sprite {
                 break;
         }
         panel.maze.getNodes()[yIndex][xIndex].setOccupant(this);
-        
+
     }
 
     public int getDirection() {
@@ -250,5 +250,16 @@ public class Player extends Sprite {
 
     public void setDirection(int dir) {
         direction = dir;
+    }
+
+    private void checkHelper() {
+        String tmnode = panel.maze.getNodes()[panel.helper.yIndex][panel.helper.xIndex].getOccupant().getClass().getCanonicalName();
+
+        if (tmnode.equals("Sprites.Player") && !panel.helper.taken) {
+            panel.maze.getNodes()[panel.helper.yIndex][panel.helper.xIndex].setOccupant(new Floor(panel.helper.xIndex, panel.helper.yIndex, panel));
+            panel.maze.findPath(panel.maze.nodes[yIndex][xIndex]);
+            panel.maze.showPath = true;
+            panel.repaint();
+        }
     }
 }
