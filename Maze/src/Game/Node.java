@@ -41,10 +41,23 @@ public class Node {
     }
     
     public void trimOccupants(int trimSize){
-        for (int i = 0 ; i < trimSize; i++){
-            occupants.remove(i);
-        }   
-    }    
+        
+            occupants.remove(trimSize);
+          
+    }  
+    
+    public void removeOccupantType(char type){
+        
+           for(Sprite occu : occupants){
+               if( (occu instanceof Wall) && type == 'w'){
+                   occupants.remove(occu);
+                }
+              
+           }
+                  
+        
+       
+    }  
     
     public Sprite popOccupant(){
         Sprite sprite = occupants.get(occupants.size()-1);      

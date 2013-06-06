@@ -14,7 +14,7 @@ public class Player extends Sprite {
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
 
-    public Player(int x, int y, GamePanel p) {
+    public Player(int x, int y, GamePanel p, Graphics g) {
         xIndex = x;
         yIndex = y;
         panel = p;
@@ -22,6 +22,8 @@ public class Player extends Sprite {
         yPos = yIndex * panel.blockSize;
 
         panel.maze.nodes[x][y].addOccupant(this);
+        
+       
 
     }
 
@@ -33,73 +35,39 @@ public class Player extends Sprite {
             int xOrigin = xIndex;
             int yOrigin = yIndex;
 
-            if (getDirection() == 0) {
-                while (shooting) {
-
-                    if ((yOrigin == 0)) {
-                        shooting = false;
-                    }
-                    if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                 while (shooting) {
+                     if (getDirection() == 0) {
                         yOrigin--;
-                    } else if (panel.maze.nodes[yOrigin][xOrigin].getOccupant(1) instanceof  Wall) {
-                        panel.maze.nodes[yOrigin][xOrigin].occupants.remove(1);
-                        
-                        shooting = false;
-                    }
-                    else{
-                         shooting = false;
-                    }
-                }
-            }
-            if (getDirection() == 1) {
-                while (shooting) {
-                    if ((xOrigin == panel.maze.nodes[0].length - 1)) {
-                        shooting = false;
-                    }
-                    if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                     }
+                     if (getDirection() == 1) {
                         xOrigin++;
-                    } else {
-                        panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
-                        shooting = false;
-                    }
-                }
-            }
-            if (getDirection() == 2) {
-
-
-
-                while (shooting) {
-                    if ((yOrigin == panel.maze.nodes.length - 1)) {
-                        shooting = false;
-                    }
-                    if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                     }if (getDirection() == 2) {
                         yOrigin++;
-                    } else {
-                        panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
-                        shooting = false;
-                    }
-
-                }
-            }
-            if (getDirection() == 3) {
-                while (shooting) {
-                    if ((xOrigin == 0)) {
-                        shooting = false;
-                    }
-                    if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                     }if (getDirection() == 3) {
                         xOrigin--;
-                    } else {
+                     }
+
+                    if ((xOrigin-1 ==  0 || yOrigin-1 == 0) || yOrigin+1 == panel.maze.nodes.length || xOrigin+1 == panel.maze.nodes[0].length) {
+                        
+                        System.out.println("Fell off the deep end");
+                        shooting = false;
+                    }
+                    
+                    if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                        System.out.println("No Wall");
+                                    
+                    }
+                    
+                    if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof  Wall) {
+                        System.out.println("BOOM");                        
                         panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
                         shooting = false;
                     }
-                }
-            } else {
-                shooting = false;
-            }
-
             hasPortalGun = false;
+          }
         }
     }
+   
 
     public void paintSelf(Graphics g) {
         g.setColor(Color.blue);
@@ -186,16 +154,15 @@ public class Player extends Sprite {
      * @param direction A variable that is used to determine in which way the
      * user would like to move the player
      */
-    public void move(char direction) {
-        
-        
+    public void move(char direction) { 
+        panel.maze.nodes[yIndex][xIndex].trimOccupants(1);
         switch (direction) {
             case 'N':
                 if (getDirection() == 0) {
                     if (yIndex - 1 >= 0) {
                         //Check for open NORTH neighbour
                         if (!neighbors[0].getClass().getCanonicalName().equals("Sprites.Wall")) {
-                            panel.maze.nodes[yIndex][xIndex].addOccupant(this);
+                            //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
                             yIndex = yIndex - 1;
                             stepsTaken++;
                             updatePos();                            
@@ -211,7 +178,7 @@ public class Player extends Sprite {
                     if (xIndex + 1 < (panel.hardMaze[0].length)) {
                         //Check for open Index
                         if (!neighbors[1].getClass().getCanonicalName().equals("Sprites.Wall")) {
-                            panel.maze.nodes[yIndex][xIndex].addOccupant(this);
+                            //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
                             xIndex = xIndex + 1;
                             stepsTaken++;
                             updatePos();
@@ -228,7 +195,7 @@ public class Player extends Sprite {
                     if (yIndex + 1 < (panel.hardMaze.length)) {
                         //Check for open Index
                         if (!neighbors[2].getClass().getCanonicalName().equals("Sprites.Wall")) {
-                            panel.maze.nodes[yIndex][xIndex].addOccupant(this);
+                            //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
                             yIndex = yIndex + 1;
                             stepsTaken++;
                             updatePos();
@@ -244,7 +211,7 @@ public class Player extends Sprite {
                     if (xIndex - 1 >= 0) {
                         //Check for open Index
                         if (!neighbors[3].getClass().getCanonicalName().equals("Sprites.Wall")) {
-                            panel.maze.nodes[yIndex][xIndex].addOccupant(this);
+                            //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
                             xIndex = xIndex - 1;
                             stepsTaken++;
                             updatePos();
@@ -256,7 +223,7 @@ public class Player extends Sprite {
                 break;
         }
         panel.maze.nodes[yIndex][xIndex].addOccupant(this);
-        
+        panel.maze.paintMaze(panel.getGraphics());
     }
 
     public int getDirection() {

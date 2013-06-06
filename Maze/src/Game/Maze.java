@@ -19,7 +19,7 @@ public class Maze {
      */
     GamePanel panel;
     
-    public ArrayList<Node> floors = new ArrayList<Node>();
+    public ArrayList<Floor> floors = new ArrayList<Floor>();
     
     /**
      * The array of Node objects that makeup the maze's structure
@@ -48,12 +48,12 @@ public class Maze {
     public void buildMaze(int[][] maze) {
         int id = 0;
 
-        for (int x = 0; x < maze.length; x++) {
-            for (int y = 0; y < maze[0].length; y++) {
+        for (int y = 0; y < maze.length; y++) {
+            for (int x = 0; x < maze[0].length; x++) {
                 nodes[x][y] = new Node(x, y, id);
                 
                 nodes[x][y].addOccupant(new Floor(x,y,panel));
-                floors.add(nodes[x][y]);
+                floors.add((Floor)nodes[x][y].popOccupant());
                 
                 
                 if (maze[x][y] == 0) {
@@ -77,6 +77,9 @@ public class Maze {
             for (int y = 0; y < nodes[x].length; y++) {
                 if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
                     ((Wall) nodes[x][y].popOccupant()).paintSelf(y, x, g);
+                }
+                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
+                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g);
                 }
                
             }

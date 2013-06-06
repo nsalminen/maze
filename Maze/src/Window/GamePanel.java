@@ -10,6 +10,7 @@ import UserInterface.StepCounter;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Collections;
+import java.util.Random;
 /**
  *
  * @author Yasen
@@ -47,33 +48,40 @@ public class GamePanel extends javax.swing.JPanel {
     public GamePanel() {
         initComponents();
         this.setSize(hardMaze.length * blockSize, hardMaze.length * blockSize);
-        prepGame();
+        prepGame(getGraphics());
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
+    }        
+    
+    private int random(){
+        Random random = new Random();
+        return Math.abs(random.nextInt());
     }
     
-    
-        
-    
-    public void prepGame(){
+    public void prepGame(Graphics g){
         maze = new Maze(hardMaze, this);
         goal = new Goal((hardMaze.length-1), (hardMaze[0].length-1), this);
-        player = new Player(0, 0, this);
+        player = new Player(0, 0, this,getGraphics());
         cursor = new Cursor(hardMaze[0].length-1, 0, this);
         counter = new StepCounter(hardMaze.length*blockSize, 0 , this);
         
         
-       Collections.shuffle(maze.floors);        
-            int porty = maze.floors.get(0).xInd;
-            int portx = maze.floors.get(0).yInd;           
+            int porty;
+            int portx ;
+        
+       //Collections.shuffle(maze.floors);
+       
+            portx = maze.floors.get(random()% maze.floors.size()).yIndex;
+            porty = maze.floors.get(random()% maze.floors.size()).xIndex;
+            
         portalGun = new PortalGun(portx, porty, this);
         
-        Collections.shuffle(maze.floors); 
+        //Collections.shuffle(maze.floors); 
+            portx = maze.floors.get(random()% maze.floors.size()).yIndex;
+            porty = maze.floors.get(random()% maze.floors.size()).xIndex;
        
-            porty = maze.floors.get(0).xInd;
-            portx = maze.floors.get(0).yInd;
-                  
+                           
         timeMachine = new TimeMachine(portx, porty, this);
     }
 
@@ -155,6 +163,8 @@ public class GamePanel extends javax.swing.JPanel {
         maze.paintMaze(g);
         counter.drawSteps(g);
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
