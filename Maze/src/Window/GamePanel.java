@@ -53,6 +53,7 @@ public class GamePanel extends javax.swing.JPanel {
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
         {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1}};
 
+    public Helper helper;
     private MainWindow parent;
     
     public GamePanel(MainWindow p) {
