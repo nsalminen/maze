@@ -15,6 +15,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import java.util.Random;
+
 /**
  *
  * @author Yasen
@@ -64,15 +65,15 @@ public class GamePanel extends javax.swing.JPanel {
         
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
-       
-    }        
-    
-    private int random(){
+        this.setFocusable(true);
+    }
+
+    private int random() {
         Random random = new Random();
         return Math.abs(random.nextInt());
     }
-    
-    public void prepGame(Graphics g){
+
+    public void prepGame(Graphics g) {
         maze = new Maze(hardMaze, this);
         goal = new Goal((hardMaze.length-1), (hardMaze[0].length-1), this);
         player = new Player(0, 0, this,getGraphics());
@@ -88,13 +89,16 @@ public class GamePanel extends javax.swing.JPanel {
             porty = maze.floors.get(random()% maze.floors.size()).xIndex;
             
         portalGun = new PortalGun(portx, porty, this);
-        
-        //Collections.shuffle(maze.floors); 
-            portx = maze.floors.get(random()% maze.floors.size()).yIndex;
-            porty = maze.floors.get(random()% maze.floors.size()).xIndex;
-       
-                           
+
+        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
+        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
+
         timeMachine = new TimeMachine(portx, porty, this);
+
+        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
+        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
+
+        helper = new Helper(portx, porty, this);
     }
 
     /**
@@ -174,8 +178,6 @@ public class GamePanel extends javax.swing.JPanel {
         counter.drawSteps(g);
         scoreBoard.drawBoard(g);
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

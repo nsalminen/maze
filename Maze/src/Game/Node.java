@@ -20,52 +20,8 @@ public class Node {
     
     public int xInd;
     public int yInd; 
-    private boolean north;     // is there a wall to north of cell i, j
-    private boolean east;
-    private boolean south;
-    private boolean west;
     private boolean visited = false;
-    public boolean path;
-
-    public boolean isNorth() {
-        return north;
-    }
-
-    public void setNorth(boolean north) {
-        this.north = north;
-    }
-    
-        public boolean isExit() {
-        if (occupant instanceof Goal){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public boolean isEast() {
-        return east;
-    }
-
-    public void setEast(boolean east) {
-        this.east = east;
-    }
-
-    public boolean isSouth() {
-        return south;
-    }
-
-    public void setSouth(boolean south) {
-        this.south = south;
-    }
-
-    public boolean isWest() {
-        return west;
-    }
-
-    public void setWest(boolean west) {
-        this.west = west;
-    }
+    private boolean path;
 
     public boolean isVisited() {
         return visited;
@@ -110,16 +66,11 @@ public class Node {
     }  
     
     public void removeOccupantType(char type){
-        
            for(Sprite occu : occupants){
                if( (occu instanceof Wall) && type == 'w'){
                    occupants.remove(occu);
-                }
-              
+                }            
            }
-                  
-        
-       
     }  
     
     public Sprite popOccupant(){
@@ -135,12 +86,7 @@ public class Node {
     public String toString() {
         
         String occ = "";
-//        
-//        for (Sprite occup : occupants ){
-//            occ.concat(occup.getClass().getCanonicalName()+" + ") ;
-//          
-//        }
-        
+
         occ = occupants.toString();
         
         String string = "x = " + xInd + "; y = " + yInd + "; occupied by: " + occ;
@@ -176,5 +122,19 @@ public class Node {
      */
     public void setyInd(int yInd) {
         this.yInd = yInd;
+    }
+
+    /**
+     * @return the path
+     */
+    public boolean isPath() {
+        return path;
+    }
+
+    /**
+     * @param path the path to set
+     */
+    public void setPath(boolean path) {
+        this.path = path;
     }
 }
