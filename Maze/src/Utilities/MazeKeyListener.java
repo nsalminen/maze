@@ -1,4 +1,4 @@
-package Game;
+package Utilities;
 
 import Window.GamePanel;
 import java.awt.event.KeyEvent;
@@ -26,6 +26,7 @@ public class MazeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //System.out.println("Typed");
         panel.updateGame(e);        
     }
 

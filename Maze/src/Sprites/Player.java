@@ -155,6 +155,7 @@ public class Player extends Sprite {
      * user would like to move the player
      */
     public void move(char direction) { 
+        //System.out.println(direction);
         panel.maze.nodes[yIndex][xIndex].trimOccupants(1);
         switch (direction) {
             case 'N':
@@ -222,9 +223,20 @@ public class Player extends Sprite {
                 }
                 break;
         }
+        
         panel.maze.nodes[yIndex][xIndex].addOccupant(this);
+        //System.out.println(toString());
         panel.maze.paintMaze(panel.getGraphics());
     }
+
+    @Override
+    public String toString() {
+        String string = "X:" + this.xIndex + " Y:" + this.yIndex + " DIR:" + this.direction;
+        
+        return string;
+    }
+    
+    
 
     public int getDirection() {
         return direction;

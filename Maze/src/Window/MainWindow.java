@@ -17,26 +17,45 @@ import javax.swing.JFrame;
  */
 public class MainWindow extends JFrame {
 
-    private int width = 622;
-    static MainWindow mazeWindow = new MainWindow();
-    MenuPanel menu = new MenuPanel();
-    GamePanel game = new GamePanel();
-    WinPanel win = new WinPanel();
-    private int height = 605;
+    private int width = 720;
+    static MainWindow mazeWindow = new  MainWindow();
+    MenuPanel menu = new MenuPanel(this);
+    public GamePanel game ;
+    WinPanel win;
+    private int height = 557;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
 
-    public MainWindow() {
+    public MainWindow(){
         initComponents();
           if (System.getProperty("os.name").equals("Mac OS X")) {
             enableOSXFullscreen(this);
         }
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
-        this.setContentPane(menu);
-        this.setLocationRelativeTo(null);
+        setContentPane(menu);
+        setLocationRelativeTo(null);
     }
 
+    public void startGame(){
+        game = new GamePanel(this);
+        setContentPane(game);
+        game.setFocusable(true);
+        game.requestFocus();  
+        game.repaint();
+        game.setSize(this.getSize());
+    }
+    
+    public void gameOver(){
+        game.setVisible(false);
+        win = new WinPanel(this);
+        setContentPane(win);
+        win.setFocusable(true);
+        win.requestFocus();
+        win.repaint();
+        
+        System.out.println("GAME");
+    }
     /**
      * This method sets the current {@link javax.swing.JFrame} to full screen
      * mode It determines whether full screen is supported according to
@@ -46,9 +65,10 @@ public class MainWindow extends JFrame {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         vc = ge.getDefaultScreenDevice();
         if (vc.isFullScreenSupported()) {
-            System.out.println("supported");
+            System.out.println("Supported");
             if (!fullscreen) {
                 vc.setFullScreenWindow(mazeWindow);
+                game.setSize(this.getSize());
                 fullscreen = true;
                 setVisible(false);
                 setVisible(true);
@@ -57,7 +77,7 @@ public class MainWindow extends JFrame {
                 fullscreen = false;
             }
         } else {
-            System.out.println("Unsupportgnjdfsgred");
+            System.out.println("Unsupported");
             if (!fullscreen) {
                 mazeWindow.setExtendedState(MainWindow.MAXIMIZED_BOTH);
                 mazeWindow.setUndecorated(true);
@@ -137,6 +157,7 @@ public class MainWindow extends JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainWindow().setVisible(true);
+                
             }
         });
     }

@@ -1,7 +1,8 @@
 package Game;
 
+import Utilities.FileReaderWriter;
 import Sprites.*;
-import Window.GamePanel;
+import Window.*;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -33,6 +34,8 @@ public class Maze {
      * @param p The parent panel of the maze object
      */
     public Maze(int[][] maze, GamePanel panel) {
+        
+        
         this.panel = panel;
         nodes = new Node[maze.length][maze[0].length];
         buildMaze(maze);

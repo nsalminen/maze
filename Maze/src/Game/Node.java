@@ -76,7 +76,7 @@ public class Node {
     }
     
     public boolean isWall(){
-        if (occupant instanceof Wall){
+        if (popOccupant() instanceof Wall){
             return true;
         }else{
             return false;

@@ -1,5 +1,7 @@
 package Window;
 
+import Game.User;
+
 /**
  *
  * @author Nels
@@ -9,8 +11,14 @@ public class WinPanel extends javax.swing.JPanel {
     /**
      * Creates new form MenuPanel
      */
-    public WinPanel() {
-        initComponents();
+    
+     private MainWindow parent;
+     public int score;
+     
+    public WinPanel(MainWindow p) {
+        initComponents();        
+        parent = p;
+        score = p.game.player.stepsTaken;
     }
 
     /**
@@ -26,8 +34,8 @@ public class WinPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        nameField = new javax.swing.JTextField();
         menuButton = new javax.swing.JButton();
-        exitButton = new javax.swing.JButton();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -35,15 +43,18 @@ public class WinPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Congratulations");
+        jLabel1.setText("Congratulation!");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel1.add(jLabel1);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("You won!");
+        jLabel2.setText("You won! Please Fill in your name");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel1.add(jLabel2);
+
+        nameField.setText("jTextField1");
+        jPanel1.add(nameField);
 
         menuButton.setText("Back to menu");
         menuButton.addActionListener(new java.awt.event.ActionListener() {
@@ -52,14 +63,6 @@ public class WinPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(menuButton);
-
-        exitButton.setText("Exit");
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(exitButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -71,18 +74,23 @@ public class WinPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButtonActionPerformed
-        MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.menu);
-        MainWindow.mazeWindow.setVisible(true);
+        
+        User user = new User(nameField.getText(), score);
+        
+        parent.game.frw.compare(user);
+        
+        MainWindow main = new MainWindow();
+        main.setVisible(true);
+        main.requestFocus();
+        parent.dispose();
+        //MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_menuButtonActionPerformed
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton menuButton;
+    private javax.swing.JTextField nameField;
     // End of variables declaration//GEN-END:variables
 }

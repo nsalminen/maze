@@ -4,12 +4,16 @@
  */
 package Window;
 
+import Utilities.MazeKeyListener;
 import Game.*;
 import Sprites.*;
+import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
+import Utilities.FileReaderWriter;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.util.Collections;
+import java.util.Map;
 import java.util.Random;
 /**
  *
@@ -20,6 +24,8 @@ public class GamePanel extends javax.swing.JPanel {
     /**
      * Creates new form MazePanelForm
      */
+    
+    public FileReaderWriter frw;
     public Goal goal;
     public Player player;
     public Maze maze;
@@ -27,11 +33,13 @@ public class GamePanel extends javax.swing.JPanel {
     public PortalGun portalGun;
     public StepCounter counter;
     public TimeMachine timeMachine;
+    public ScoreBoard scoreBoard;
+    public Map<String, Integer> highscores;  
     //The size of each block in pixels
     public final int blockSize = 40;
     public int[][] hardMaze = {
         {1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1},
-        {1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1},
+        {0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1},
         {0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0},
         {0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
         {1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1},
@@ -44,14 +52,19 @@ public class GamePanel extends javax.swing.JPanel {
         {1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
         {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1}};
 
-
-    public GamePanel() {
+    private MainWindow parent;
+    
+    public GamePanel(MainWindow p) {
         initComponents();
+        parent = p;
         this.setSize(hardMaze.length * blockSize, hardMaze.length * blockSize);
+        
+        frw = new FileReaderWriter();
         prepGame(getGraphics());
+        
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
-        this.setFocusable(true);
+       
     }        
     
     private int random(){
@@ -64,9 +77,8 @@ public class GamePanel extends javax.swing.JPanel {
         goal = new Goal((hardMaze.length-1), (hardMaze[0].length-1), this);
         player = new Player(0, 0, this,getGraphics());
         cursor = new Cursor(hardMaze[0].length-1, 0, this);
-        counter = new StepCounter(hardMaze.length*blockSize, 0 , this);
-        
-        
+        counter = new StepCounter((hardMaze.length*blockSize)+blockSize, 0 , this);
+        scoreBoard = new ScoreBoard((hardMaze.length*blockSize)+blockSize, 0 , this);
             int porty;
             int portx ;
         
@@ -99,8 +111,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void gameOver() {
-        MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.win);
-        MainWindow.mazeWindow.setVisible(true);
+        parent.gameOver();;
     }
 
     public void checkGoal() {
@@ -157,8 +168,11 @@ public class GamePanel extends javax.swing.JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setColor(Color.black);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
         maze.paintMaze(g);
         counter.drawSteps(g);
+        scoreBoard.drawBoard(g);
     }
 
     

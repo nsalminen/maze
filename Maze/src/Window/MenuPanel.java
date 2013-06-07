@@ -1,5 +1,7 @@
 package Window;
 
+import java.io.FileNotFoundException;
+
 /**
  *
  * @author Nels
@@ -9,8 +11,14 @@ public class MenuPanel extends javax.swing.JPanel {
     /**
      * Creates new form MenuPanel
      */
-    public MenuPanel() {
+    MainWindow parent;
+    
+    public MenuPanel(MainWindow p)  {
         initComponents();
+        
+        parent = p;        
+        //parent.setContentPane(this);
+        
         if (System.getProperty("os.name").equals("Mac OS X")) {
             fullScreenButton.setVisible(false);
         }
@@ -78,9 +86,10 @@ public class MenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        MainWindow.mazeWindow.game = new GamePanel();
-        MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.game);
-        MainWindow.mazeWindow.setVisible(true);
+        parent.startGame();
+        
+//      MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.game);
+       // MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
