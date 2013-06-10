@@ -1,5 +1,6 @@
 package Sprites;
 
+import Utilities.SoundEffect;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,6 +14,8 @@ public class Player extends Sprite {
     public int direction;
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
+    private SoundEffect sfw;
+    private SoundEffect sfb;
 
     public Player(int x, int y, GamePanel p, Graphics g) {
         xIndex = x;
@@ -22,9 +25,9 @@ public class Player extends Sprite {
         yPos = yIndex * panel.blockSize;
 
         panel.maze.nodes[x][y].addOccupant(this);
-        
-       
 
+       sfw = new SoundEffect("content\\sounds\\walk.wav");
+       sfb = new SoundEffect("content\\sounds\\bump.wav");
     }
 
     public void shoot() {
@@ -167,6 +170,9 @@ public class Player extends Sprite {
      * user would like to move the player
      */
     public void move(char direction) { 
+        
+        
+        
         //System.out.println(direction);
         panel.maze.nodes[yIndex][xIndex].trimOccupants(1);
         switch (direction) {
@@ -178,7 +184,11 @@ public class Player extends Sprite {
                             //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
                             yIndex = yIndex - 1;
                             stepsTaken++;
-                            updatePos();                            
+                            updatePos();                             
+                            sfw.play();
+                        }
+                        else{
+                            sfb.play();
                         }
                     }
                 } else {
@@ -195,6 +205,12 @@ public class Player extends Sprite {
                             xIndex = xIndex + 1;
                             stepsTaken++;
                             updatePos();
+                            
+                           sfw.play();
+                        }
+                        else{
+                            sfb.play();
+                        
                         }
                     }
                 } else {
@@ -212,6 +228,11 @@ public class Player extends Sprite {
                             yIndex = yIndex + 1;
                             stepsTaken++;
                             updatePos();
+                            
+                           sfw.play();
+                        }
+                        else{
+                            sfb.play();
                         }
                     }
                 } else {
@@ -228,6 +249,11 @@ public class Player extends Sprite {
                             xIndex = xIndex - 1;
                             stepsTaken++;
                             updatePos();
+                            
+                            sfw.play();
+                        }
+                        else{
+                            sfb.play();
                         }
                     }
                 } else {

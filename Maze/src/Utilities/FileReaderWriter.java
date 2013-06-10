@@ -24,7 +24,7 @@ public class FileReaderWriter {
     
     public FileOutputStream writer;
     public Scanner console;
-    public File hsfile = new File("content\\highscores.txt");
+    public File hsfile = new File("content\\text\\highscores.txt");
     public Pattern hsp = Pattern.compile("XXXX\n");    
     final static Charset ENCODING = StandardCharsets.UTF_8;
     public ArrayList <String> nameList = new ArrayList<String>();
