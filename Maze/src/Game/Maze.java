@@ -1,9 +1,9 @@
 package Game;
 
-import Utilities.FileReaderWriter;
 import Sprites.*;
 import Window.*;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -38,33 +38,7 @@ public class Maze {
         buildMaze(maze);
     }
 
-    /**
-     * Takes a given 2D integer array and sets the occupants for the 2D Node
-     * array accordingly. 0 = wall 'w' `1 = empty 'e'
-     *
-     * @param maze A 2D integer Array that is used as a blueprint for the maze
-     */
-    private void buildMaze(int[][] maze) {
-        int id = 0;
-
-        for (int y = 0; y < maze.length; y++) {
-            for (int x = 0; x < maze[0].length; x++) {
-                nodes[x][y] = new Node(x, y, id);
-
-                nodes[x][y].addOccupant(new Floor(x, y, panel));
-                floors.add((Floor) nodes[x][y].popOccupant());
-
-
-                if (maze[x][y] == 0) {
-                    nodes[x][y].addOccupant(new Wall(x, y, panel));
-                }
-
-
-                id++;
-            }
-        }
-    }
-
+   
     /**
      * This recursive backtracker finds paths through mazes. Given a location in
      * the maze, it tries all possible values for the next location. If any of
@@ -136,6 +110,29 @@ public class Maze {
         }
         return adjacencies;
     }
+    
+     /**
+     * Takes a given 2D integer array and sets the occupants for the 2D Node
+     * array accordingly. 0 = wall 'w' `1 = empty 'e'
+     *
+     * @param maze A 2D integer Array that is used as a blueprint for the maze
+     */
+    private void buildMaze(int[][] maze) {
+        Point pointer = new Point(999,999);
+        
+        for (int y = 0; y < maze.length; y++) {
+            for (int x = 0; x < maze[0].length; x++) {
+                pointer.setLocation(x,y);
+                nodes[y][x] = new Node(pointer);
+                nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
+                floors.add((Floor) nodes[y][x].popOccupant());
+                if(maze[y][x] == 0){
+                    getNode(pointer).addOccupant(new Wall(getNode(pointer),panel));
+                }
+            }
+        }
+    }
+
 
     /**
      * Goes through the Node array and paints a wall for every Node occupied by
@@ -144,32 +141,33 @@ public class Maze {
      * @param g A Graphics object
      */
     public void paintMaze(Graphics g) {
-        for (int x = 0; x < nodes.length; x++) {
-            for (int y = 0; y < nodes[x].length; y++) {
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
-                    ((Wall) nodes[x][y].popOccupant()).paintSelf(y, x, g);
+        for (int y = 0; y < nodes.length; y++) {
+            for (int x = 0; x < nodes[0].length; x++) {
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {                    
+                    ((Wall)getNode(x,y).popOccupant()).paintSelf(x,y,g);
                 }
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
-                    ((Floor) nodes[x][y].popOccupant()).paintSelf(y, x, g, nodes[x][y].isPath(), showPath);
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.Floor")) {
+                    ((Floor) nodes[y][x].popOccupant()).paintSelf( g, nodes[x][y].isPath(), showPath);
+                }
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
+                    ((Player) nodes[y][x].popOccupant()).paintSelf(g);
                 }
             }
         }
-        for (int x = 0; x < nodes.length; x++) {
-            for (int y = 0; y < nodes[x].length; y++) {
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
-                    ((Player) nodes[x][y].popOccupant()).paintSelf(g);
+        for (int y = 0; y < nodes.length; y++) {
+            for (int x = 0; x < nodes[0].length; x++) {
+                
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
+                    ((Goal) nodes[y][x].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Goal")) {
-                    ((Goal) nodes[x][y].popOccupant()).paintSelf(g);
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
+                    ((PortalGun) nodes[y][x].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.PortalGun")) {
-                    ((PortalGun) nodes[x][y].popOccupant()).paintSelf(g);
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
+                    ((TimeMachine) nodes[y][x].popOccupant()).paintSelf(g);
                 }
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
-                    ((TimeMachine) nodes[x][y].popOccupant()).paintSelf(g);
-                }
-                if (nodes[x][y].popOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
-                    ((Helper) nodes[x][y].popOccupant()).paintSelf(g);
+                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
+                    ((Helper) nodes[y][x].popOccupant()).paintSelf(g);
                 }
             }
         }
@@ -211,6 +209,15 @@ public class Maze {
         return floors;
     }
 
+    public Node getNode(Point p){
+        Node node = nodes[p.y][p.x];        
+        return node;
+    }
+    
+    public Node getNode(int x, int y){
+        Node node = nodes[y][x];
+        return node;
+    }
     /**
      * @param floors the floors to set
      */

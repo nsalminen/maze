@@ -12,6 +12,7 @@ import UserInterface.StepCounter;
 import Utilities.FileReaderWriter;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import java.util.Random;
@@ -75,31 +76,27 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void prepGame(Graphics g) {
+        Point pointer = new Point(999,999);
         maze = new Maze(hardMaze, this);
-        goal = new Goal((hardMaze.length-1), (hardMaze[0].length-1), this);
-        player = new Player(0, 0, this,getGraphics());
+        goal = new Goal(hardMaze.length-1,hardMaze.length-1, this);
+        player = new Player(0, 0, this);
         cursor = new Cursor(hardMaze[0].length-1, 0, this);
         counter = new StepCounter((hardMaze.length*blockSize)+blockSize, 0 , this);
         scoreBoard = new ScoreBoard((hardMaze.length*blockSize)+blockSize, 0 , this);
-            int porty;
-            int portx ;
         
        //Collections.shuffle(maze.floors);
-       
-            portx = maze.floors.get(random()% maze.floors.size()).yIndex;
-            porty = maze.floors.get(random()% maze.floors.size()).xIndex;
+        
+        pointer = maze.floors.get(random()% maze.floors.size()).getPosition();
             
-        portalGun = new PortalGun(portx, porty, this);
+        portalGun = new PortalGun(pointer, this);
+        
+        pointer = maze.floors.get(random()% maze.floors.size()).getPosition();
 
-        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
-        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
+        timeMachine = new TimeMachine(pointer, this);
 
-        timeMachine = new TimeMachine(portx, porty, this);
+        pointer = maze.floors.get(random()% maze.floors.size()).getPosition();
 
-        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
-        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
-
-        helper = new Helper(portx, porty, this);
+        helper = new Helper(pointer, this);
     }
 
     /**
@@ -120,24 +117,24 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void checkGoal() {
-        if (maze.nodes[goal.yIndex][goal.xIndex].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
-            gameOver();
-        }
+//        if (goal.getPosition()==(player.getPosition())) {
+//            gameOver();
+//        }
     }
 
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_W:
-                player.move('N');
+                player.moveNorth();
                 break;
             case KeyEvent.VK_D:
-                player.move('E');
+                player.moveEast();
                 break;
             case KeyEvent.VK_S:
-                player.move('S');
+                player.moveSouth();
                 break;
             case KeyEvent.VK_A:
-                player.move('W');
+                player.moveWest();
                 break;
             case KeyEvent.VK_SPACE:
                 player.shoot();
