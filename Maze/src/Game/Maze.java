@@ -1,10 +1,12 @@
 package Game;
 
-import Utilities.FileReaderWriter;
 import Sprites.*;
 import Window.*;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * This class builds an array of Nodes based on a given 2D integer Array. It
@@ -23,19 +25,23 @@ public class Maze {
      * The array of Node objects that makeup the maze's structure
      */
     public Node[][] nodes;
+    public int[][] maze;
     private int pathFindertotalSteps;
     public boolean showPath;
+    private Random random;
+    private Dimension dimension;
 
     /**
      * @param maze A 2D integer Array that is used as a blueprint for the maze
      * @param p The parent panel of the maze object
      */
-    public Maze(int[][] maze, GamePanel panel) {
-        
-        
+    public Maze(GamePanel panel) {
+        dimension = new Dimension(15, 15);
+        random = new Random();
         this.panel = panel;
-        nodes = new Node[maze.length][maze[0].length];
-        buildMaze(maze);
+        maze();
+        nodes = new Node[dimension.width][dimension.height];
+        buildMaze(this.maze);
     }
 
     /**
@@ -46,23 +52,126 @@ public class Maze {
      */
     private void buildMaze(int[][] maze) {
         int id = 0;
-
-        for (int y = 0; y < maze.length; y++) {
-            for (int x = 0; x < maze[0].length; x++) {
-                nodes[x][y] = new Node(x, y, id);
-
-                nodes[x][y].addOccupant(new Floor(x, y, panel));
-                floors.add((Floor) nodes[x][y].popOccupant());
-
-
-                if (maze[x][y] == 0) {
-                    nodes[x][y].addOccupant(new Wall(x, y, panel));
+        for (int y = 0; y <= dimension.height - 1; y++) {
+            for (int x = 0; x <= dimension.width - 1; x++) {
+                nodes[y][x] = new Node(y, x, id);
+                nodes[y][x].addOccupant(new Floor(y, x, panel));
+                floors.add((Floor) nodes[y][x].popOccupant());
+                if (maze[y][x] == 0) {
+                    nodes[y][x].addOccupant(new Wall(y, x, panel));
                 }
-
-
                 id++;
             }
         }
+        System.out.println(nodes.length + " " + nodes[0].length);
+    }
+
+    private int[][] maze() {
+        maze = new int[dimension.height][dimension.width];
+        // Initialize
+        for (int i = 0; i < dimension.height; i++) {
+            for (int j = 0; j < dimension.width; j++) {
+                maze[i][j] = 0;
+            }
+        }
+
+        Random rand = new Random();
+        // r for row、c for column
+        // Generate random r
+        int r = rand.nextInt(dimension.height);
+        while (r % 2 == 0) {
+            r = rand.nextInt(dimension.height);
+        }
+        // Generate random c
+        int c = rand.nextInt(dimension.width);
+        while (c % 2 == 0) {
+            c = rand.nextInt(dimension.width);
+        }
+        // Starting cell
+        maze[r][c] = 0;
+
+        //　Allocate the mazeGrid with recursive method
+        recursion(r, c);
+
+        for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[i].length; j++) {
+                System.out.print(maze[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println(maze.length + " " + maze[0].length);
+        return maze;
+    }
+
+    public void recursion(int r, int c) {
+        // 4 random directions
+        Integer[] randDirs = generateRandomDirections();
+        // Examine each direction
+        for (int i = 0; i < randDirs.length; i++) {
+
+            switch (randDirs[i]) {
+                case 1: // Up
+                    //　Whether 2 cells up is out or not
+                    if (r - 1 <= 1) {
+                        continue;
+                    }
+                    if (maze[r - 2][c] != 1) {
+                        maze[r - 2][c] = 1;
+                        maze[r - 1][c] = 1;
+                        recursion(r - 2, c);
+                    }
+                    break;
+                case 2: // Right
+                    // Whether 2 cells to the right is out or not
+                    if (c + 1 >= dimension.width - 1) {
+                        continue;
+                    }
+                    if (maze[r][c + 2] != 1) {
+                        maze[r][c + 2] = 1;
+                        maze[r][c + 1] = 1;
+                        recursion(r, c + 2);
+                    }
+                    break;
+                case 3: // Down
+                    // Whether 2 cells down is out or not
+                    if (r + 1 >= dimension.height - 1) {
+                        continue;
+                    }
+                    if (maze[r + 2][c] != 1) {
+                        maze[r + 2][c] = 1;
+                        maze[r + 1][c] = 1;
+                        recursion(r + 2, c);
+                    }
+                    break;
+                case 4: // Left
+                    // Whether 2 cells to the left is out or not
+                    if (c - 1 <= 1) {
+                        continue;
+                    }
+                    if (maze[r][c - 2] != 1) {
+                        maze[r][c - 2] = 1;
+                        maze[r][c - 1] = 1;
+                        recursion(r, c - 2);
+                    }
+                    break;
+            }
+        }
+
+    }
+
+    /**
+     * Generate an array with random directions 1-4
+     *
+     * @return Array containing 4 directions in random order
+     */
+    public Integer[] generateRandomDirections() {
+        ArrayList<Integer> randoms = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            randoms.add(i + 1);
+        }
+        Collections.shuffle(randoms);
+
+        return randoms.toArray(new Integer[4]);
     }
 
     /**
@@ -84,7 +193,7 @@ public class Maze {
         ArrayList<Node> adjacentNodes = getAdjacentNodes(current);
         for (Node potentialMove : adjacentNodes) {
             if (nodeClear(potentialMove)) {
-                markNode(potentialMove);
+                markNodePath(potentialMove);
                 potentialMove.setVisited(true);
                 if (findPath(potentialMove)) {
                     return true;
@@ -96,14 +205,14 @@ public class Maze {
     }
 
     private boolean isExit(Node node) {
-        if (node.getxInd() == nodes.length - 1 && node.getyInd() == nodes[0].length - 1) {
+        if (node.getxInd() == nodes.length - 2 && node.getyInd() == nodes[0].length - 2) {
             return true;
         } else {
             return false;
         }
     }
 
-    private void markNode(Node node) {
+    private void markNodePath(Node node) {
         nodes[node.getxInd()][node.getyInd()].setPath(true);
         pathFindertotalSteps++;
     }
@@ -216,5 +325,13 @@ public class Maze {
      */
     public void setFloors(ArrayList<Floor> floors) {
         this.floors = floors;
+    }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
     }
 }

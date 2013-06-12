@@ -22,8 +22,8 @@ public class Player extends Sprite {
         yPos = yIndex * panel.blockSize;
 
         panel.maze.nodes[x][y].addOccupant(this);
-        
-       
+
+
 
     }
 
@@ -35,39 +35,40 @@ public class Player extends Sprite {
             int xOrigin = xIndex;
             int yOrigin = yIndex;
 
-                 while (shooting) {
-                     if (getDirection() == 0) {
-                        yOrigin--;
-                     }
-                     if (getDirection() == 1) {
-                        xOrigin++;
-                     }if (getDirection() == 2) {
-                        yOrigin++;
-                     }if (getDirection() == 3) {
-                        xOrigin--;
-                     }
+            while (shooting) {
+                if (getDirection() == 0) {
+                    yOrigin--;
+                }
+                if (getDirection() == 1) {
+                    xOrigin++;
+                }
+                if (getDirection() == 2) {
+                    yOrigin++;
+                }
+                if (getDirection() == 3) {
+                    xOrigin--;
+                }
 
-                    if ((xOrigin-1 ==  0 || yOrigin-1 == 0) || yOrigin+1 == panel.maze.nodes.length || xOrigin+1 == panel.maze.nodes[0].length) {
-                        
-                        System.out.println("Fell off the deep end");
-                        shooting = false;
-                    }
-                    
-                    if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
-                        System.out.println("No Wall");
-                                    
-                    }
-                    
-                    if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof  Wall) {
-                        System.out.println("BOOM");                        
-                        panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
-                        shooting = false;
-                    }
-            hasPortalGun = false;
-          }
+                if ((xOrigin - 1 == 0 || yOrigin - 1 == 0) || yOrigin + 1 == panel.maze.nodes.length || xOrigin + 1 == panel.maze.nodes[0].length) {
+
+                    System.out.println("Fell off the deep end");
+                    shooting = false;
+                }
+
+                if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
+                    System.out.println("No Wall");
+
+                }
+
+                if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof Wall) {
+                    System.out.println("BOOM");
+                    panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
+                    shooting = false;
+                }
+                hasPortalGun = false;
+            }
         }
     }
-   
 
     public void paintSelf(Graphics g) {
         g.setColor(Color.blue);
@@ -126,28 +127,26 @@ public class Player extends Sprite {
         }
 
     }
-    
+
     public void checkTimeMachine() {
 
         String tmnode = panel.maze.nodes[panel.timeMachine.yIndex][panel.timeMachine.xIndex].popOccupant().getClass().getCanonicalName();
 
-        if(tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
+        if (tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
             panel.maze.nodes[panel.timeMachine.yIndex][panel.timeMachine.xIndex].trimOccupants(1);
-            
-            for ( int n  = 0; n < panel.timeMachine.stepsReduced; n++)
-            {
-                if(stepsTaken > 0 )
-                {
+
+            for (int n = 0; n < panel.timeMachine.stepsReduced; n++) {
+                if (stepsTaken > 0) {
                     stepsTaken--;
                 }
-                
+
             }
             panel.timeMachine.taken = true;
 
         }
 
     }
-    
+
     private void checkHelper() {
         String hnode = panel.maze.getNodes()[panel.helper.yIndex][panel.helper.xIndex].popOccupant().getClass().getCanonicalName();
 
@@ -166,7 +165,7 @@ public class Player extends Sprite {
      * @param direction A variable that is used to determine in which way the
      * user would like to move the player
      */
-    public void move(char direction) { 
+    public void move(char direction) {
         //System.out.println(direction);
         panel.maze.nodes[yIndex][xIndex].trimOccupants(1);
         switch (direction) {
@@ -178,7 +177,7 @@ public class Player extends Sprite {
                             //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
                             yIndex = yIndex - 1;
                             stepsTaken++;
-                            updatePos();                            
+                            updatePos();
                         }
                     }
                 } else {
@@ -188,7 +187,7 @@ public class Player extends Sprite {
             case 'E':
                 if (getDirection() == 1) {
                     //Check for right border
-                    if (xIndex + 1 < (panel.hardMaze[0].length)) {
+                    if (xIndex + 1 < (panel.maze.getDimension().width - 1)) {
                         //Check for open Index
                         if (!neighbors[1].getClass().getCanonicalName().equals("Sprites.Wall")) {
                             //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
@@ -205,7 +204,7 @@ public class Player extends Sprite {
 
                 if (getDirection() == 2) {
                     //Check for bottom border
-                    if (yIndex + 1 < (panel.hardMaze.length)) {
+                    if (yIndex + 1 < (panel.maze.getDimension().height - 1)) {
                         //Check for open Index
                         if (!neighbors[2].getClass().getCanonicalName().equals("Sprites.Wall")) {
                             //panel.maze.nodes[yIndex][xIndex].addOccupant(this);
@@ -235,7 +234,7 @@ public class Player extends Sprite {
                 }
                 break;
         }
-        
+
         panel.maze.nodes[yIndex][xIndex].addOccupant(this);
         //System.out.println(toString());
         panel.maze.paintMaze(panel.getGraphics());
@@ -244,11 +243,9 @@ public class Player extends Sprite {
     @Override
     public String toString() {
         String string = "X:" + this.xIndex + " Y:" + this.yIndex + " DIR:" + this.direction;
-        
+
         return string;
     }
-    
-    
 
     public int getDirection() {
         return direction;

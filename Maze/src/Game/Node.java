@@ -15,13 +15,25 @@ public class Node {
 
     public int id;
     private Sprite occupant;
-    
     public ArrayList<Sprite> occupants = new ArrayList<Sprite>();
-    
     public int xInd;
-    public int yInd; 
+    public int yInd;
     private boolean visited = false;
+    private boolean generationVisited = false;
+    private boolean open;
     private boolean path;
+
+    
+    
+    public boolean removeWall() {
+        for (Sprite p : occupants) {
+            if (p instanceof Wall) {
+                occupants.remove(p);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean isVisited() {
         return visited;
@@ -30,15 +42,14 @@ public class Node {
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
-    
-    public boolean isWall(){
-        if (popOccupant() instanceof Wall){
+
+    public boolean isWall() {
+        if (popOccupant() instanceof Wall) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-            
 
     public Node(int x, int y, int nodeId) {
         xInd = x;
@@ -47,10 +58,9 @@ public class Node {
     }
 
     public Sprite getOccupant(int index) {
-        if(index > occupants.size()){
-                return occupants.get(index);
-        }
-        else{
+        if (index > occupants.size()) {
+            return occupants.get(index);
+        } else {
             return null;
         }
     }
@@ -58,41 +68,41 @@ public class Node {
     public void setOccupant(int index, Sprite occupant) {
         occupants.set(index, occupant);
     }
-    
-    public void trimOccupants(int trimSize){
-        
-            occupants.remove(trimSize);
-          
-    }  
-    
-    public void removeOccupantType(char type){
-           for(Sprite occu : occupants){
-               if( (occu instanceof Wall) && type == 'w'){
-                   occupants.remove(occu);
-                }            
-           }
-    }  
-    
-    public Sprite popOccupant(){
-        Sprite sprite = occupants.get(occupants.size()-1);      
-        return sprite;    
+
+    public void trimOccupants(int trimSize) {
+
+        occupants.remove(trimSize);
+
     }
-    
-    public void addOccupant(Sprite sprite){
+
+    public void removeOccupantType(char type) {
+        for (Sprite occu : occupants) {
+            if ((occu instanceof Wall) && type == 'w') {
+                occupants.remove(occu);
+            }
+        }
+    }
+
+    public Sprite popOccupant() {
+        Sprite sprite = occupants.get(occupants.size() - 1);
+        return sprite;
+    }
+
+    public void addOccupant(Sprite sprite) {
         occupants.add(sprite);
     }
 
     @Override
     public String toString() {
-        
+
         String occ = "";
 
         occ = occupants.toString();
-        
+
         String string = "x = " + xInd + "; y = " + yInd + "; occupied by: " + occ;
-          
-        
-        
+
+
+
         return string;
     }
 
@@ -136,5 +146,13 @@ public class Node {
      */
     public void setPath(boolean path) {
         this.path = path;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }

@@ -26,6 +26,7 @@ public class Floor extends Sprite {
     }
 
     public void paintSelf(int x, int y, Graphics g, boolean path, boolean showPath) {
+        System.out.println(panel.blockSize);
             g.setColor(Color.lightGray);
             g.fillRect(yPos, xPos, panel.blockSize, panel.blockSize);
       

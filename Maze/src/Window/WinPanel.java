@@ -77,7 +77,6 @@ public class WinPanel extends javax.swing.JPanel {
         
         User user = new User(nameField.getText(), score);
         
-        parent.game.frw.compare(user);
         
         MainWindow main = new MainWindow();
         main.setVisible(true);

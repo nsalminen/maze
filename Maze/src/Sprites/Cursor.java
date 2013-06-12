@@ -49,12 +49,12 @@ public class Cursor {
                 }
                 break;
             case 'E':
-                if (xInd + 1 < (panel.hardMaze[0].length)) {
+                if (xInd + 1 < (panel.maze.getDimension().width)) {
                     xInd = xInd + 1;
                 }
                 break;
             case 'S':
-                if (yInd + 1 < (panel.hardMaze.length)) {
+                if (yInd + 1 < (panel.maze.getDimension().height)) {
                     yInd = yInd + 1;
                 }
                 break;

@@ -27,10 +27,10 @@ public abstract class Sprite {
         if (yIndex - 1 >= 0) {
             neighbors[0] = panel.maze.nodes[yIndex - 1][xIndex].popOccupant(); // NORTH NEIGHBOUR at Index:0;
         }
-        if (xIndex + 1 < (panel.hardMaze[0].length)) {
+        if (xIndex + 1 < (panel.maze.getDimension().width)) {
             neighbors[1] = panel.maze.nodes[yIndex][xIndex + 1].popOccupant(); // EAST NEIGHBOUR at Index:1;
         }
-        if (yIndex + 1 < (panel.hardMaze.length)) {
+        if (yIndex + 1 < (panel.maze.getDimension().height)) {
             neighbors[2] = panel.maze.nodes[yIndex + 1][xIndex].popOccupant(); // SOUTH NEIGHBOUR at Index:2;
         }
         if (xIndex - 1 >= 0) {

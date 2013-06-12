@@ -4,7 +4,6 @@
  */
 package UserInterface;
 
-import Sprites.Player;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -31,8 +30,6 @@ public class ScoreBoard {
 
     public ScoreBoard(int xPos, int yPos, GamePanel p){
         
-        nameList = p.frw.nameList;
-        scoreList = p.frw.scoreList;
         blockSize = p.blockSize;
         x = xPos;
         y = yPos;
