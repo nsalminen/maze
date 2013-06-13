@@ -28,6 +28,9 @@ public class Player extends Sprite {
         panel = pan;
         setDirection(1);
         panel.maze.nodes[position.y][position.x].addOccupant(this);
+        
+       sfw = new SoundEffect("content\\sounds\\walk.wav");
+       sfb = new SoundEffect("content\\sounds\\bump.wav");
     }
 
     public void shoot() {
