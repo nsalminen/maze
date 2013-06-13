@@ -4,10 +4,10 @@
  */
 package Sprites;
 
+import Game.Node;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
 /**
  *
@@ -18,15 +18,15 @@ public class TimeMachine extends Sprite{
      public boolean taken;
      public int stepsReduced = 20;
        
-     public TimeMachine(Point p, GamePanel pan) {
-        position = p;
+     public TimeMachine(Node n, GamePanel pan) {
+        parent = n;
         panel = pan;
-        panel.maze.nodes[position.y][position.y].addOccupant(this);
+        parent.addOccupant(this);
     }
      
        public void paintSelf(Graphics g){   
        g.setColor(Color.MAGENTA);
-       g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
+       g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);
       }    
     
 }

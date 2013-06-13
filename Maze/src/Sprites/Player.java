@@ -1,10 +1,12 @@
 package Sprites;
 
-import Game.Node;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -17,15 +19,8 @@ public class Player extends Sprite {
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
 
-    public Player(int x, int y, GamePanel p) {
-        position.setLocation(x, y);
-        panel = p;
-        setDirection(1);
-        panel.maze.nodes[y][x].addOccupant(this);
-        parent = panel.maze.nodes[y][x];
-    }
     
-    public Player(Point p, GamePanel pan) {
+    public Player(Point p, GamePanel pan) {        
         position = p;
         panel = pan;
         setDirection(1);
@@ -72,9 +67,13 @@ public class Player extends Sprite {
         }
     }
     public void paintSelf(Graphics g) {
+        
+        
         g.setColor(Color.blue);
         g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
 
+       
+        
         g.setColor(Color.blue);
         g.drawRect(facing.x * panel.blockSize, facing.y * panel.blockSize, panel.blockSize, panel.blockSize);
         
@@ -113,50 +112,38 @@ public class Player extends Sprite {
                     (getX()),
                     getY() + (panel.blockSize / 2));
         }
-        checkPortalGun();
-        checkTimeMachine();
-        checkHelper();
+          checkPortalGun();
+          checkTimeMachine();
+          checkHelper();
     }
 
     public void checkPortalGun() {
-
-        String portalnode = panel.maze.nodes[panel.portalGun.position.y][panel.portalGun.position.x].popOccupant().getClass().getCanonicalName();
-
-        if (portalnode.equals("Sprites.Player") && !panel.portalGun.taken) {
-            panel.maze.nodes[panel.portalGun.position.y][panel.portalGun.position.x].trimOccupants(1);
+        if ((panel.maze.getNode(position).occupants.contains(panel.portalGun) ) && !panel.portalGun.taken) {
+            System.out.println("Found PortalGun!");
+            panel.maze.getNode(position).trimOccupants(1);
             this.hasPortalGun = true;
             panel.portalGun.taken = true;
+            panel.repaint();
         }
-
-    }
-    
-    public void checkTimeMachine() {
-
-        String tmnode = panel.maze.nodes[panel.timeMachine.position.y][panel.timeMachine.position.x].popOccupant().getClass().getCanonicalName();
-
-        if(tmnode.equals("Sprites.Player") && !panel.timeMachine.taken) {
-            panel.maze.nodes[panel.timeMachine.position.y][panel.timeMachine.position.x].trimOccupants(1);
-            
-            for ( int n  = 0; n < panel.timeMachine.stepsReduced; n++)
-            {
-                if(stepsTaken > 0 )
-                {
+    }    
+    public void checkTimeMachine() {       
+        if ((panel.maze.getNode(position).occupants.contains(panel.timeMachine) ) && !panel.timeMachine.taken) {
+            System.out.println("Found TimeMachine!");
+            panel.maze.getNode(position).trimOccupants(1);            
+            for ( int n  = 0; n < panel.timeMachine.stepsReduced; n++){
+                if(stepsTaken > 0 ){
                     stepsTaken--;
                 }
-                
             }
             panel.timeMachine.taken = true;
-
+            panel.repaint();
         }
-
-    }
-    
+    }    
     private void checkHelper() {
-        String hnode = panel.maze.getNodes()[panel.helper.position.y][panel.helper.position.x].popOccupant().getClass().getCanonicalName();
-
-        if (hnode.equals("Sprites.Player") && !panel.helper.taken) {
-            panel.maze.nodes[panel.helper.position.y][panel.helper.position.x].trimOccupants(1);
-            panel.maze.findPath(panel.maze.nodes[position.y][position.x]);
+        if ((panel.maze.getNode(position).occupants.contains(panel.helper) ) && !panel.helper.taken) {
+            System.out.println("Found Helper!");
+            panel.maze.getNode(position).trimOccupants(1);      
+            panel.maze.findPath(parent);
             panel.maze.showPath = true;
             panel.repaint();
         }
@@ -221,6 +208,7 @@ public class Player extends Sprite {
      * user would like to move the player
      */
     public void move() {
+        
         if(canMove()){
             panel.maze.getNode(position).trimOccupants(1);
             System.out.println("MOVING");            
@@ -229,6 +217,7 @@ public class Player extends Sprite {
             position.setLocation(parent.xInd,parent.yInd);            
             System.out.println("Player"+position);
             System.out.println("STOPPED");
+            stepsTaken++;
             updateFacing();
             
         }

@@ -4,10 +4,10 @@
  */
 package Sprites;
 
+import Game.Node;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
 /**
  *
@@ -17,14 +17,14 @@ public class Helper extends Sprite {
 
     public boolean taken;
 
-    public Helper(Point p, GamePanel pan) {
-        position = p;
+    public Helper(Node n, GamePanel pan) {
+        parent = n;
         panel = pan;
-        panel.maze.nodes[position.y][position.y].addOccupant(this);
+        parent.addOccupant(this);
     }
 
     public void paintSelf(Graphics g) {
         g.setColor(Color.orange);
-        g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
+        g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);
     }
 }

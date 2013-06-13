@@ -6,6 +6,7 @@ package Sprites;
 
 import Game.Node;
 import Window.GamePanel;
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -17,6 +18,7 @@ public abstract class Sprite {
     public Sprite[] neighbors = new Sprite[4];
     public Point position = new Point(999,999);
     public Node parent;
+    public Image tileset;
     
     public Sprite() {
     }

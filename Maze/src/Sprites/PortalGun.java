@@ -4,10 +4,11 @@
  */
 package Sprites;
 
+import Game.Node;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.Image;
 
 /**
  *
@@ -16,17 +17,17 @@ import java.awt.Point;
 public class PortalGun extends Sprite{
     
     
+     public Image tileset;
      public boolean taken;
        
-     public PortalGun(Point p, GamePanel pan) {
-        position = p;
+     public PortalGun(Node n, GamePanel pan) {
+        parent = n;
         panel = pan;
-        panel.maze.nodes[position.y][position.y].addOccupant(this);
+        parent.addOccupant(this);
     }
      
      public void paintSelf(Graphics g){   
        g.setColor(Color.GREEN);
-       g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
-      
+       g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);      
       }    
 }

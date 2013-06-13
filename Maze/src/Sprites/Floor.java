@@ -16,7 +16,6 @@ import java.awt.Graphics;
 public class Floor extends Sprite {
 
     boolean path;
-    Node parent;
 
     public Floor(Node n, GamePanel pan) {
         parent = n;
@@ -26,11 +25,11 @@ public class Floor extends Sprite {
 
     public void paintSelf(Graphics g, boolean path, boolean showPath) {
             g.setColor(Color.lightGray);
-            g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
+            g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);
       
          if (path && showPath) {
             g.setColor(Color.darkGray);
-            g.fillOval(getX() + panel.blockSize/2-7, getY() + panel.blockSize/2-7, 15, 15);
+            g.fillOval(parent.xInd*panel.blockSize + panel.blockSize/2-7, parent.yInd*panel.blockSize + panel.blockSize/2-7, 15, 15);
          }
     }
 }

@@ -4,10 +4,10 @@
  */
 package Sprites;
 
+import Game.Node;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 
 /**
  *
@@ -16,22 +16,17 @@ import java.awt.Point;
 public class Goal extends Sprite {
     
 
-    public Goal(Point p, GamePanel pan) {
-        position = p;
+    public Goal(Node n, GamePanel pan) {
+        parent = n;
         panel = pan;
-        panel.maze.nodes[position.y][position.y].addOccupant(this);
-    }
-      public Goal(int x, int y, GamePanel pan) {
-        position.setLocation(x,y);
-        panel = pan;
-        panel.maze.nodes[position.y][position.x].addOccupant(this);
+        parent.addOccupant(this);
     }
        
        
      
       public void paintSelf(Graphics g){   
        g.setColor(Color.YELLOW);
-       g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
+       g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);
       
       }    
 }
