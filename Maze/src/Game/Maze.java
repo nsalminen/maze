@@ -51,21 +51,7 @@ public class Maze {
      *
      * @param maze A 2D integer Array that is used as a blueprint for the maze
      */
-    private void buildMaze(int[][] maze) {
-        int id = 0;
-        for (int y = 0; y <= dimension.height - 1; y++) {
-            for (int x = 0; x <= dimension.width - 1; x++) {
-                nodes[y][x] = new Node(y, x, id);
-                nodes[y][x].addOccupant(new Floor(y, x, panel));
-                floors.add((Floor) nodes[y][x].popOccupant());
-                if (maze[y][x] == 0) {
-                    nodes[y][x].addOccupant(new Wall(y, x, panel));
-                }
-                id++;
-            }
-        }
-        System.out.println(nodes.length + " " + nodes[0].length);
-    }
+    
 
     private int[][] maze() {
         maze = new int[dimension.height][dimension.width];

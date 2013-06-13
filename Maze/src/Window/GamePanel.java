@@ -9,7 +9,6 @@ import Game.*;
 import Sprites.*;
 import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
-import Utilities.FileReaderWriter;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -39,6 +38,7 @@ public class GamePanel extends javax.swing.JPanel {
     public final int blockSize = 40;
     public Helper helper;
     private MainWindow parent;
+    
 
     public GamePanel(MainWindow p) {
         initComponents();
@@ -57,17 +57,17 @@ public class GamePanel extends javax.swing.JPanel {
 
     public void prepGame(Graphics g) {
         Point pointer = new Point(999,999);
-        maze = new Maze(hardMaze, this);
-        pointer.setLocation(hardMaze.length-1,hardMaze.length-1);        
+        maze = new Maze(this);
+        pointer.setLocation(maze.maze.length-1,maze.maze.length-1);        
         goal = new Goal(maze.getNode(pointer), this);
-        pointer.setLocation(0,0);
+        pointer.setLocation(1,1);
         player = new Player(pointer, this);
-        portalGun = new PortalGun(maze.getNode(4, 0), this);
+        portalGun = new PortalGun(maze.floors.get(random()% maze.floors.size()), this);
         timeMachine = new TimeMachine(maze.floors.get(random()% maze.floors.size()), this);
         helper = new Helper(maze.floors.get(random()% maze.floors.size()), this);
-        counter = new StepCounter((hardMaze.length*blockSize)+blockSize, 0 , this);
-        scoreBoard = new ScoreBoard((hardMaze.length*blockSize)+blockSize, 0 , this);
-        cursor = new Cursor(hardMaze[0].length-1, 0, this);        
+        counter = new StepCounter((maze.maze.length*blockSize)+blockSize, 0 , this);
+        scoreboard = new ScoreBoard((maze.maze.length*blockSize)+blockSize, 0 , this);
+        cursor = new Cursor(maze.maze[0].length-1, 0, this);        
     }
 
     /**
