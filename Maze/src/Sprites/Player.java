@@ -115,7 +115,17 @@ public class Player extends Sprite {
           checkPortalGun();
           checkTimeMachine();
           checkHelper();
+          checkGoal();
     }
+    
+    public void checkGoal() {
+        if ((panel.maze.getNode(position).occupants.contains(panel.goal) )) {
+            System.out.println("GAME!");           
+            panel.maze.getNode(position).trimOccupants(1);
+            panel.repaint();
+            panel.gameOver();
+        }
+    }    
 
     public void checkPortalGun() {
         if ((panel.maze.getNode(position).occupants.contains(panel.portalGun) ) && !panel.portalGun.taken) {

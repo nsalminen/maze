@@ -100,17 +100,17 @@ public class Maze {
 
     public ArrayList<Node> getAdjacentNodes(Node node) {
         ArrayList<Node> adjacencies = new ArrayList<>();
-        if (node.getxInd() > 0) {
-            adjacencies.add(nodes[node.getyInd()][node.getxInd() - 1]);
-        }
-        if (node.getxInd() < nodes[node.getxInd()].length - 1) {
-            adjacencies.add(nodes[node.getyInd()][node.getxInd() + 1]);
-        }
         if (node.getyInd() > 0) {
-            adjacencies.add(nodes[node.getyInd() - 1][node.getxInd()]);
+            adjacencies.add(nodes[node.getxInd()][node.getyInd() - 1]);
         }
-        if (node.getyInd() < nodes.length - 1) {
-            adjacencies.add(nodes[node.getyInd() + 1][node.getxInd()]);
+        if (node.getyInd() < nodes[node.getxInd()].length - 1) {
+            adjacencies.add(nodes[node.getxInd()][node.getyInd() + 1]);
+        }
+        if (node.getxInd() > 0) {
+            adjacencies.add(nodes[node.getxInd() - 1][node.getyInd()]);
+        }
+        if (node.getxInd() < nodes.length - 1) {
+            adjacencies.add(nodes[node.getxInd() + 1][node.getyInd()]);
         }
         return adjacencies;
     }
