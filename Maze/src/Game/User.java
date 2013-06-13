@@ -16,6 +16,7 @@ public class User {
     public User(String na, int sc){
         name = na;
         score = sc;
+        
     }
     
 }

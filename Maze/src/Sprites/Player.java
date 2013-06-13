@@ -1,5 +1,6 @@
 package Sprites;
 
+import Utilities.SoundEffect;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,6 +19,8 @@ public class Player extends Sprite {
     public int direction;
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
+    private SoundEffect sfw;
+    private SoundEffect sfb;
 
     
     public Player(Point p, GamePanel pan) {        
