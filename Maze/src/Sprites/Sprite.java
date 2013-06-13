@@ -4,52 +4,37 @@
  */
 package Sprites;
 
+import Game.Node;
 import Window.GamePanel;
+import java.awt.Image;
+import java.awt.Point;
 
 /**
  *
  * @author Yasen
  */
 public abstract class Sprite {
-
-    public int xPos;
-    public int yPos;
-    public int xIndex;
-    public int yIndex;
     public GamePanel panel;
     public Sprite[] neighbors = new Sprite[4];
-
+    public Point position = new Point(999,999);
+    public Node parent;
+    public Image tileset;
+    
     public Sprite() {
     }
-
-    public void getNeighbors() {
-
-        if (yIndex - 1 >= 0) {
-            neighbors[0] = panel.maze.nodes[yIndex - 1][xIndex].popOccupant(); // NORTH NEIGHBOUR at Index:0;
-        }
-        if (xIndex + 1 < (panel.maze.getDimension().width)) {
-            neighbors[1] = panel.maze.nodes[yIndex][xIndex + 1].popOccupant(); // EAST NEIGHBOUR at Index:1;
-        }
-        if (yIndex + 1 < (panel.maze.getDimension().height)) {
-            neighbors[2] = panel.maze.nodes[yIndex + 1][xIndex].popOccupant(); // SOUTH NEIGHBOUR at Index:2;
-        }
-        if (xIndex - 1 >= 0) {
-            neighbors[3] = panel.maze.nodes[yIndex][xIndex - 1].popOccupant(); // WEST NEIGHBOUR at Index:3;
-        }
+    public Point getPosition(){
+        return position;
     }
 
     public int getX() {
-        System.out.print(xPos);
+        int xPos = position.x*panel.blockSize;
+        //System.out.print(xPos);
         return xPos;
     }
 
-    public int getY() {
-        System.out.print(yPos);
+    public int getY() {        
+        int yPos = position.y*panel.blockSize;
+       // System.out.print(yPos);
         return yPos;
-    }
-
-    public void updatePos() {
-        xPos = xIndex * panel.blockSize;
-        yPos = yIndex * panel.blockSize;
     }
 }

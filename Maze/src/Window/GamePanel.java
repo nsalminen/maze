@@ -12,6 +12,7 @@ import UserInterface.StepCounter;
 import Utilities.FileReaderWriter;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import java.util.Random;
@@ -55,31 +56,18 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void prepGame(Graphics g) {
-        maze = new Maze(this);
-        goal = new Goal(maze.getDimension().width-2, maze.getDimension().height-2, this);
-        player = new Player(1, 1, this, getGraphics());
-        cursor = new Cursor(maze.getDimension().width - 1, 0, this);
-        counter = new StepCounter((maze.getDimension().height * blockSize) + blockSize, 0, this);
-        scoreboard = new ScoreBoard(maze.getDimension().width + 10, maze.getDimension().height, this);
-        int porty;
-        int portx;
-
-        //Collections.shuffle(maze.floors);
-
-        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
-        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
-
-        portalGun = new PortalGun(portx, porty, this);
-
-        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
-        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
-
-        timeMachine = new TimeMachine(portx, porty, this);
-
-        portx = maze.floors.get(random() % maze.floors.size()).yIndex;
-        porty = maze.floors.get(random() % maze.floors.size()).xIndex;
-
-        helper = new Helper(portx, porty, this);
+        Point pointer = new Point(999,999);
+        maze = new Maze(hardMaze, this);
+        pointer.setLocation(hardMaze.length-1,hardMaze.length-1);        
+        goal = new Goal(maze.getNode(pointer), this);
+        pointer.setLocation(0,0);
+        player = new Player(pointer, this);
+        portalGun = new PortalGun(maze.getNode(4, 0), this);
+        timeMachine = new TimeMachine(maze.floors.get(random()% maze.floors.size()), this);
+        helper = new Helper(maze.floors.get(random()% maze.floors.size()), this);
+        counter = new StepCounter((hardMaze.length*blockSize)+blockSize, 0 , this);
+        scoreBoard = new ScoreBoard((hardMaze.length*blockSize)+blockSize, 0 , this);
+        cursor = new Cursor(hardMaze[0].length-1, 0, this);        
     }
 
     /**
@@ -100,24 +88,24 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void checkGoal() {
-        if (maze.nodes[goal.yIndex][goal.xIndex].popOccupant().getClass().getCanonicalName().equals("Sprites.Player")) {
-            gameOver();
-        }
+//        if (goal.getPosition()==(player.getPosition())) {
+//            gameOver();
+//        }
     }
 
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_W:
-                player.move('N');
+                player.moveNorth();
                 break;
             case KeyEvent.VK_D:
-                player.move('E');
+                player.moveEast();
                 break;
             case KeyEvent.VK_S:
-                player.move('S');
+                player.moveSouth();
                 break;
             case KeyEvent.VK_A:
-                player.move('W');
+                player.moveWest();
                 break;
             case KeyEvent.VK_SPACE:
                 player.shoot();

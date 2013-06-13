@@ -5,6 +5,7 @@
 package Game;
 
 import Sprites.*;
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -12,10 +13,9 @@ import java.util.ArrayList;
  * @author Yasen
  */
 public class Node {
-
-    public int id;
-    private Sprite occupant;
     public ArrayList<Sprite> occupants = new ArrayList<Sprite>();
+    
+    public Point position = new Point(999,999);
     public int xInd;
     public int yInd;
     private boolean visited = false;
@@ -50,11 +50,17 @@ public class Node {
             return false;
         }
     }
-
-    public Node(int x, int y, int nodeId) {
+            
+    public Node(Point p) {
+        position = p;        
+        xInd = position.x;
+        yInd = position.y;
+    }
+    
+    public Node(int x, int y) {
         xInd = x;
-        yInd = y;
-        id = nodeId;
+        yInd = y;        
+        position.setLocation(xInd, yInd);
     }
 
     public Sprite getOccupant(int index) {
@@ -118,6 +124,10 @@ public class Node {
      */
     public void setxInd(int xInd) {
         this.xInd = xInd;
+    }
+    
+    public Point getPosition(){
+        return position;
     }
 
     /**
