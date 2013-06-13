@@ -58,7 +58,7 @@ public class GamePanel extends javax.swing.JPanel {
     public void prepGame(Graphics g) {
         Point pointer = new Point(999,999);
         maze = new Maze(this);
-        pointer.setLocation(maze.maze.length-1,maze.maze.length-1);        
+        pointer.setLocation(maze.maze.length-2,maze.maze.length-2);        
         goal = new Goal(maze.getNode(pointer), this);
         pointer.setLocation(1,1);
         player = new Player(pointer, this);

@@ -53,7 +53,12 @@ public class WinPanel extends javax.swing.JPanel {
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel1.add(jLabel2);
 
-        nameField.setText("jTextField1");
+        nameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameFieldActionPerformed(evt);
+            }
+        });
         jPanel1.add(nameField);
 
         menuButton.setText("Back to menu");
@@ -84,6 +89,10 @@ public class WinPanel extends javax.swing.JPanel {
         parent.dispose();
         //MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_menuButtonActionPerformed
+
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

@@ -19,7 +19,6 @@ public class Node {
     public int xInd;
     public int yInd;
     private boolean visited = false;
-    private boolean generationVisited = false;
     private boolean open;
     private boolean path;
 

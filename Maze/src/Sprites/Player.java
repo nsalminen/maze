@@ -1,5 +1,5 @@
 package Sprites;
-
+import Game.*;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -66,9 +66,8 @@ public class Player extends Sprite {
             }
         }
     }
-    public void paintSelf(Graphics g) {
-        
-        
+    
+    public void paintSelf(Graphics g) { 
         g.setColor(Color.blue);
         g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
 
@@ -152,8 +151,8 @@ public class Player extends Sprite {
     private void checkHelper() {
         if ((panel.maze.getNode(position).occupants.contains(panel.helper) ) && !panel.helper.taken) {
             System.out.println("Found Helper!");
-            panel.maze.getNode(position).trimOccupants(1);      
-            panel.maze.findPath(parent);
+            panel.maze.getNode(position).trimOccupants(1);
+            panel.maze.findPath(new Node(parent.yInd, parent.xInd));
             panel.maze.showPath = true;
             panel.repaint();
         }
