@@ -36,6 +36,27 @@ public class MainWindow extends JFrame {
         setContentPane(menu);
         setLocationRelativeTo(null);
     }
+    
+    public void pauseGame(){
+        setContentPane(menu);
+        menu.setFocusable(true);
+        menu.requestFocus();
+        menu.setSize(this.getSize());
+    }
+        public void unPauseGame(){
+        System.out.println("Miauw");
+        setContentPane(game);
+        game.setFocusable(true);
+        game.requestFocus();
+        game.setSize(this.getSize());
+    }
+    
+    public void showHighScores(){
+        HighScorePanel scores = new HighScorePanel(this);
+        setContentPane(scores);
+        scores.setSize(this.getSize());        
+    }
+
 
     public void startGame(){
         game = new GamePanel(this);

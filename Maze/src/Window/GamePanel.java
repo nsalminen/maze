@@ -9,6 +9,7 @@ import Game.*;
 import Sprites.*;
 import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
+import Utilities.FileReader;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -48,6 +49,7 @@ public class GamePanel extends javax.swing.JPanel {
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
+        FileReader scores = new FileReader();
     }
 
     private int random() {
@@ -124,8 +126,12 @@ public class GamePanel extends javax.swing.JPanel {
                 break;
             case KeyEvent.VK_CONTROL:
                 cursor.printCurrentNode();
-
-        }
+                break;
+            case KeyEvent.VK_ESCAPE:
+                parent.pauseGame();
+                break;
+            }
+        
     }
 
     @Override
