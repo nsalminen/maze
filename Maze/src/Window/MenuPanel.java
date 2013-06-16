@@ -14,8 +14,14 @@ public class MenuPanel extends javax.swing.JPanel {
      */
     MainWindow parent;
     
+    public boolean activeGame = false;
+    
     public MenuPanel(MainWindow p)  {
-        initComponents();
+        initComponents();  
+        if(!activeGame){
+            continueGame.setVisible(false);
+            saveGame.setVisible(false);
+        }
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
@@ -37,7 +43,6 @@ public class MenuPanel extends javax.swing.JPanel {
                 parent.unPauseGame();
                 break;
             }
-        
     }
 
     /**
@@ -55,7 +60,7 @@ public class MenuPanel extends javax.swing.JPanel {
         startButton = new javax.swing.JButton();
         continueGame = new javax.swing.JButton();
         loadGameButton = new javax.swing.JButton();
-        saveGameButton = new javax.swing.JButton();
+        saveGame = new javax.swing.JButton();
         highScoreButton = new javax.swing.JButton();
         optionsButtons = new javax.swing.JButton();
         exitButton2 = new javax.swing.JButton();
@@ -105,13 +110,13 @@ public class MenuPanel extends javax.swing.JPanel {
         });
         jPanel1.add(loadGameButton);
 
-        saveGameButton.setText("Save Game");
-        saveGameButton.addActionListener(new java.awt.event.ActionListener() {
+        saveGame.setText("Save Game");
+        saveGame.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveGameButtonActionPerformed(evt);
+                saveGameActionPerformed(evt);
             }
         });
-        jPanel1.add(saveGameButton);
+        jPanel1.add(saveGame);
 
         highScoreButton.setText("High Scores");
         highScoreButton.addActionListener(new java.awt.event.ActionListener() {
@@ -160,16 +165,16 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_highScoreButtonActionPerformed
 
     private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed
-        // TODO add your handling code here:
+       parent.unPauseGame();
     }//GEN-LAST:event_continueGameActionPerformed
 
     private void exitButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButton2ActionPerformed
-        // TODO add your handling code here:
+      System.exit(0);
     }//GEN-LAST:event_exitButton2ActionPerformed
 
-    private void saveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameButtonActionPerformed
+    private void saveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameActionPerformed
 
-    }//GEN-LAST:event_saveGameButtonActionPerformed
+    }//GEN-LAST:event_saveGameActionPerformed
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
         // TODO add your handling code here:
@@ -177,6 +182,9 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         parent.startGame();
+        activeGame = true;
+        continueGame.setVisible(true);
+        saveGame.setVisible(true);
 
         //      MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.game);
         // MainWindow.mazeWindow.setVisible(true);
@@ -190,7 +198,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loadGameButton;
     private javax.swing.JButton optionsButtons;
-    private javax.swing.JButton saveGameButton;
+    private javax.swing.JButton saveGame;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }

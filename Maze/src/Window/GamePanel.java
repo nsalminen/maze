@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class GamePanel extends javax.swing.JPanel {
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
-        FileReader scores = new FileReader();
+        printLevel(maze.level);
     }
 
     private int random() {
@@ -133,7 +134,23 @@ public class GamePanel extends javax.swing.JPanel {
             }
         
     }
+    
+   
+     
+     public void printLevel(ArrayList<String[]> level){
+         
+         System.out.println(
+         level.toString());
+         
+         for(String[] line : level){             
+             for(String value : line){
+                 //System.out.print(value);
+             }
+             //System.out.print("\n");
+         }        
+     }
 
+     
     @Override
     public void repaint() {
         super.repaint();

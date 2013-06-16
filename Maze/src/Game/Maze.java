@@ -31,7 +31,7 @@ public class Maze {
     public boolean showPath;
     private Random random;
     private Dimension dimension;
-
+    public ArrayList<String[]> level = new ArrayList<String[]>();
     /**
      * @param generateMaze A 2D integer Array that is used as a blueprint for the generateMaze
      * @param p The parent panel of the generateMaze object
@@ -78,7 +78,20 @@ public class Maze {
 
         //　Allocate the mazeGrid with recursive method
         generate(r, c);
-
+         level.ensureCapacity(maze[0].length);
+         String[] line = new String[maze[0].length];
+                
+         for (int i = 0; i < maze.length; i++) {
+            for (int j = 0; j < maze[0].length; j++) {
+               // line[j]= ""+maze[i][j];
+                //System.out.print(maze[i][j]);
+                
+            }
+            //System.out.println();
+//            level.set(i, line);
+         }
+        
+        
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
                 System.out.print(maze[i][j] + " ");
@@ -86,6 +99,7 @@ public class Maze {
             System.out.println();
         }
         System.out.println(maze.length + " " + maze[0].length);
+        
         return maze;
     }
 
