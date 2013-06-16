@@ -1,5 +1,5 @@
-betty:6
-yasen:123
-marco:2
-nels:3
-jimmy:3
+nels:16
+miauw:28
+asda:30
+elmo:32
+adam:48

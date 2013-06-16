@@ -9,7 +9,7 @@ import Game.*;
 import Sprites.*;
 import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
-import Utilities.FileReader;
+import Utilities.FileLoader;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -95,6 +95,7 @@ public class GamePanel extends javax.swing.JPanel {
 //            gameOver();
 //        }
     }
+    
 
     public void keyInput(int key) {
         switch (key) {

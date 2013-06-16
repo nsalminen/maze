@@ -25,23 +25,38 @@ public class FileWriter {
     
     public PrintWriter writer;
     public Scanner reader;
-    public File hsfile = new File("content\\files\\highscores.txt");
+    public FileLoader loader;
     
+    void printData(ArrayList<String> data){
+        
+        for(int i = 0; i < data.size(); i++){ 
+                System.out.println(""+data.get(i));        
+            }
+    }
     
     public Map<String, Integer> scores = new TreeMap<>();
   
     public FileWriter()
     {   
+        loader = new FileLoader();
         try{
-            reader = new Scanner(hsfile);
+            writer = new PrintWriter(loader.getHighScoreFile());
         }
         catch(Exception e){}
     }
     
-       public void writeScores(ArrayList<String> scores){
+    public void writeScores(ArrayList<String> scores){
+        printData(scores);
+        String out ="";
         for(String line : scores){
-            writer.println(line);
+            out = ( out + line+"\n");
+            //System.out.println("reading: "+line);
+            System.out.println(out);
+            
         }
-    }
+        writer.print(out);
+        writer.close();
+        System.out.println("PRINTED");
+       }
 }
    

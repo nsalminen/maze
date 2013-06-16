@@ -25,28 +25,31 @@ public class FileReader {
     
     public PrintWriter writer;
     public Scanner reader;
-    public File hsfile = new File("content\\files\\highscores.txt");
-    
-    
+    public FileLoader loader;
     public Map<String, Integer> scores = new TreeMap<>();
   
     public FileReader()
     {   
+        loader = new FileLoader();
         try{
-            reader = new Scanner(hsfile);
+            reader = new Scanner(loader.getHighScoreFile());
         }
         catch(Exception e){}
+        
+       
     }
     
     public Map<String,Integer> getHighScores(){
         String line;
         String name;
         int score;
-            while(reader.hasNextLine()){
-                line = reader.nextLine();
-                name =  line.split(":")[0];
-                score = Integer.parseInt(line.split(":")[1]);
-                scores.put(name, score);
+            for(int i = 0; i <5; i++){
+                if(reader.hasNext()){
+                    line = reader.nextLine();
+                    name =  line.split(":")[0];
+                    score = Integer.parseInt(line.split(":")[1]);
+                    scores.put(name, score);
+                }
             }
         return sortByComparator(scores);
     }
@@ -67,18 +70,25 @@ public class FileReader {
 		return sortedMap;
 	}
     public ArrayList<String> printMap(){
+               
                 Map<String,Integer> map =getHighScores();
                 ArrayList<String> scoreList = new ArrayList<String>();
-		for (Map.Entry entry : map.entrySet()) {
+		 
+                
+                for (Map.Entry entry : map.entrySet()) {
 			System.out.println("Key : " + entry.getKey() 
                                    + " Value : " + entry.getValue());
                         
                         scoreList.add(""+entry.getKey()+":"+entry.getValue());
 		}
-                
                 if(scoreList.size()<5){
-                    for(int i = 0 ; i < (5 -scoreList.size());i++){
-                        scoreList.add("****:***");
+                    System.out.println("small list");
+                    System.out.println(scoreList.size());
+                    int remainder = 5-scoreList.size();
+                    
+                    for(int i = 0 ; i < remainder;i++){
+                        scoreList.add(i,"****:9999");
+                        System.out.println("added empty");
                     }
                 }
                 return scoreList;

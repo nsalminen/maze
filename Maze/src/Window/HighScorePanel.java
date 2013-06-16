@@ -25,24 +25,23 @@ public class HighScorePanel extends javax.swing.JPanel {
         parent=p;
         scoreReader = new FileReader();
         
-        names[0] = name5;
-        names[1] = name4;
+        names[0] = name1;
+        names[1] = name2;
         names[2] = name3;
-        names[3] = name2;
-        names[4] = name1;
-        
-        scores[0] = score5;
-        scores[1] = score4;
+        names[3] = name4;
+        names[4] = name5;
+        scores[0] = score1;
+        scores[1] = score2;
         scores[2] = score3;
-        scores[3] = score2;
-        scores[4] = score1;
+        scores[3] = score4;
+        scores[4] = score5;
         
         buildScoreBoard();
     }
     
     void buildScoreBoard(){
         ArrayList<String> data = scoreReader.printMap();        
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < data.size(); i++){
             names[i].setText(data.get(i).split(":")[0]);
             scores[i].setText(data.get(i).split(":")[1]);
         }
