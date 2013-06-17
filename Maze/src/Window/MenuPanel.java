@@ -1,5 +1,6 @@
 package Window;
 
+import Utilities.FileWriter;
 import Utilities.MazeKeyListener;
 import java.awt.event.KeyEvent;
 
@@ -173,11 +174,11 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_exitButton2ActionPerformed
 
     private void saveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameActionPerformed
-
+        parent.saveGame();
     }//GEN-LAST:event_saveGameActionPerformed
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
-        // TODO add your handling code here:
+        parent.loadGame();        // TODO add your handling code here:
     }//GEN-LAST:event_loadGameButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed

@@ -2,6 +2,7 @@ package Game;
 
 import Sprites.*;
 import Window.*;
+import Utilities.Level;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -32,10 +33,25 @@ public class Maze {
     private Random random;
     private Dimension dimension;
     public ArrayList<String[]> level = new ArrayList<String[]>();
+    
+    public Point playerPoint;
+    public Point portalGunPoint;
+    public Point timeMachinePoint;
+    public Point helperPoint;
+    public Point goalPoint;
+    
     /**
      * @param generateMaze A 2D integer Array that is used as a blueprint for the generateMaze
      * @param p The parent panel of the generateMaze object
      */
+    
+    public Maze(GamePanel panel, Level level) {
+        dimension = new Dimension(15, 15);
+        this.panel = panel;
+        nodes = new Node[level.layout.length][level.layout[0].length];
+        buildMaze(level);
+    }
+    
     public Maze(GamePanel panel) {
         dimension = new Dimension(15, 15);
         random = new Random();
@@ -256,6 +272,44 @@ public class Maze {
      *
      * @param maze A 2D integer Array that is used as a blueprint for the generateMaze
      */
+     private void buildMaze(Level level) {
+        Point pointer = new Point();
+        for (int y = 0; y < level.layout.length; y++) {     
+        
+            for (int x = 0; x < level.layout[0].length; x++) {
+                pointer.setLocation(x,y);
+                nodes[y][x] = new Node(pointer);
+                nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
+                if(level.layout[y][x] == 0){
+                    getNode(pointer).addOccupant(new Wall(getNode(pointer),panel));
+                }
+                if(level.layout[y][x] == 1){
+                    getNode(pointer).addOccupant(new Floor(getNode(pointer),panel));
+                }
+                if(level.layout[y][x] == 2){
+                    playerPoint = new Point(x,y);
+                    System.out.println("check player");
+                }
+                if(level.layout[y][x] == 3){
+                    portalGunPoint = new Point(x,y);
+                    System.out.println("check gun");
+                }
+                if(level.layout[y][x] == 4){
+                    timeMachinePoint = new Point(x,y);
+                    System.out.println("check tm");
+                }
+                if(level.layout[y][x] == 5){
+                    helperPoint = new Point(x,y);
+                    System.out.println("check helper");
+                }
+                if(level.layout[y][x] == 6){
+                    goalPoint = new Point(x,y);
+                    System.out.println("check goal");
+                }
+            }
+        }
+    }
+    
     private void buildMaze(int[][] maze) {
         Point pointer = new Point();
         
@@ -378,5 +432,41 @@ public class Maze {
 
     public void setDimension(Dimension dimension) {
         this.dimension = dimension;
+    }
+    
+    public Level buildLevel(){
+        
+        int [][] layout = new int[nodes.length][nodes[0].length];
+        
+        for(int y = 0; y < nodes.length; y++){
+            for(int x = 0; x < nodes.length; x++){
+                
+                if(nodes[y][x].popOccupant() instanceof Wall){
+                    layout[y][x] = 0;
+                }
+                if(nodes[y][x].popOccupant() instanceof Floor){
+                    layout[y][x] = 1;
+                }
+                if(nodes[y][x].popOccupant() instanceof Player){
+                    layout[y][x] = 2;
+                }
+                if(nodes[y][x].popOccupant() instanceof PortalGun){
+                    layout[y][x] = 3;
+                }
+                if(nodes[y][x].popOccupant() instanceof TimeMachine){
+                    layout[y][x] = 4;
+                }
+                if(nodes[y][x].popOccupant() instanceof Helper){
+                    layout[y][x] = 5;
+                }
+                if(nodes[y][x].popOccupant() instanceof Goal){
+                    layout[y][x] = 6;
+                }                
+            }
+        }
+        
+        Level leveler = new Level(layout,panel.player.stepsTaken, panel.player.hasPortalGun);
+        
+        return leveler;
     }
 }

@@ -41,9 +41,21 @@ public class FileWriter {
         loader = new FileLoader();
         try{
             writer = new PrintWriter(loader.getHighScoreFile());
+            
         }
         catch(Exception e){}
     }
+    
+     public void writeLevel(String name, Level level){
+        loader.newLevel(name);
+        try{
+        PrintWriter levelWriter = new PrintWriter(loader.getLevel(name));
+        levelWriter.print(level.toString());
+        levelWriter.close();
+        System.out.println("PRINTED");
+         }
+        catch(FileNotFoundException e){}
+       }
     
     public void writeScores(ArrayList<String> scores){
         printData(scores);

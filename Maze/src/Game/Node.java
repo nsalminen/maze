@@ -75,14 +75,15 @@ public class Node {
     }
 
     public void trimOccupants(int trimSize) {
-
+        //System.out.println("TRIMMING");
         occupants.remove(trimSize);
 
     }
 
     public void removeOccupantType(char type) {
         for (Sprite occu : occupants) {
-            if ((occu instanceof Wall) && type == 'w') {
+            
+            if ((occu instanceof Player) && type == 'p') {
                 occupants.remove(occu);
             }
         }

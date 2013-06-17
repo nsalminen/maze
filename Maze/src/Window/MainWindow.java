@@ -1,5 +1,6 @@
 package Window;
 
+import Utilities.Level;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
@@ -37,13 +38,31 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
     }
     
-    public void pauseGame(){
+    public void saveGame(){
+        SavePanel savepanel = new SavePanel(this);
+        setContentPane(savepanel);
+        savepanel.setVisible(true);
+        savepanel.setFocusable(true);
+        savepanel.requestFocus();
+        savepanel.setSize(this.getSize());
+    }
+    public void loadGame(){
+        
+        LoadPanel loadpanel = new LoadPanel(this);
+        setContentPane(loadpanel);
+        loadpanel.setVisible(true);
+        loadpanel.setFocusable(true);
+        loadpanel.requestFocus();
+        loadpanel.setSize(this.getSize());
+    }
+    
+    public void goToMenu(){
         setContentPane(menu);
         menu.setFocusable(true);
         menu.requestFocus();
         menu.setSize(this.getSize());
     }
-        public void unPauseGame(){
+    public void unPauseGame(){
         System.out.println("Miauw");
         setContentPane(game);
         game.setFocusable(true);
@@ -57,6 +76,15 @@ public class MainWindow extends JFrame {
         scores.setSize(this.getSize());        
     }
 
+    public void loadNewGame(Level level){
+        System.out.println("LOADING NEW GAME");
+        game = new GamePanel(level,this);
+        setContentPane(game);
+        game.setFocusable(true);
+        game.requestFocus();  
+        game.repaint();
+        game.setSize(this.getSize());
+    }
 
     public void startGame(){
         game = new GamePanel(this);

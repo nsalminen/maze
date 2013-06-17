@@ -23,8 +23,12 @@ import java.util.TreeMap;
         
 public class FileReader {
     
-    public PrintWriter writer;
-    public Scanner reader;
+    public PrintWriter scoreWriter;
+    public Scanner scoreReader;
+    
+    public PrintWriter levelWriter;
+    public Scanner levelReader;
+    
     public FileLoader loader;
     public Map<String, Integer> scores = new TreeMap<>();
   
@@ -32,11 +36,68 @@ public class FileReader {
     {   
         loader = new FileLoader();
         try{
-            reader = new Scanner(loader.getHighScoreFile());
+            
+            scoreReader = new Scanner(loader.getHighScoreFile());
         }
         catch(Exception e){}
         
        
+    }
+    
+    public Level readLevel(File f)throws FileNotFoundException{
+        int score = 0;
+        boolean portalgun;
+        Scanner lvlReader = new Scanner(f);
+        
+        String line ="";
+        
+        lvlReader.hasNextLine();
+        line = lvlReader.nextLine().split("=")[1];
+        
+        score = Integer.parseInt(line.trim());
+        line = lvlReader.nextLine().split("=")[1];       
+        if(line.contains("true")){
+            portalgun = true;
+        }
+        else{
+            portalgun = false;
+        }
+        ArrayList<String> vArray = new ArrayList<String>();
+        
+        while(lvlReader.hasNextLine()){
+            vArray.add(lvlReader.nextLine());            
+        }
+         int[][] values = new int[vArray.size()][vArray.get(0).length()];
+        
+        for(int y = 0; y < vArray.size(); y++ ){
+            for(int x = 0; x < vArray.size(); x++ ){
+                values[y][x] = Integer.parseInt(""+vArray.get(y).charAt(x));
+            }
+        }
+         
+        Level level = new Level(values, score, portalgun);
+        
+        System.out.println("GOT SOMETHING");
+        level.print();        
+        return level;
+       
+    }
+    
+    public String[] getLevelHeader(){
+        
+        String maxSize = levelReader.nextLine();
+        String filledSize= levelReader.nextLine();
+        System.out.println("Max Size: "+maxSize);
+        System.out.println("Filled Size: "+filledSize);
+        
+        String line = "";
+        
+        while(levelReader.hasNext()){
+            line = line+levelReader.nextLine();
+        }
+        
+        return line.split("-");
+        
     }
     
     public Map<String,Integer> getHighScores(){
@@ -44,8 +105,8 @@ public class FileReader {
         String name;
         int score;
             for(int i = 0; i <5; i++){
-                if(reader.hasNext()){
-                    line = reader.nextLine();
+                if(scoreReader.hasNext()){
+                    line = scoreReader.nextLine();
                     name =  line.split(":")[0];
                     score = Integer.parseInt(line.split(":")[1]);
                     scores.put(name, score);
@@ -73,12 +134,9 @@ public class FileReader {
                
                 Map<String,Integer> map =getHighScores();
                 ArrayList<String> scoreList = new ArrayList<String>();
-		 
-                
                 for (Map.Entry entry : map.entrySet()) {
 			System.out.println("Key : " + entry.getKey() 
                                    + " Value : " + entry.getValue());
-                        
                         scoreList.add(""+entry.getKey()+":"+entry.getValue());
 		}
                 if(scoreList.size()<5){

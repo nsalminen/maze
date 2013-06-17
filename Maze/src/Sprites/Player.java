@@ -217,19 +217,18 @@ public class Player extends Sprite {
      * user would like to move the player
      */
     public void move() {
-        
+               
+       
         if(canMove()){
             panel.maze.getNode(position).trimOccupants(1);
-            System.out.println("MOVING");            
+            
             panel.maze.getNode(facing).addOccupant(this);
             parent = panel.maze.nodes[facing.y][facing.x];
             position.setLocation(parent.xInd,parent.yInd);            
-            System.out.println("Player"+position);
-            System.out.println("STOPPED");
             stepsTaken++;
-            updateFacing();
             
-        }
+            updateFacing();            
+       }
     }
 
     @Override
@@ -256,9 +255,7 @@ public class Player extends Sprite {
         }
         if (getDirection() == 3 ){
             facing.setLocation(position.getX()-1, position.getY());
-        }
-        
-        System.out.println("--------------");
+        }        
     }
 
     public void setDirection(int dir) {
