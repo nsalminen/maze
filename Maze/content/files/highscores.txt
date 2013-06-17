@@ -1,5 +1,0 @@
-nels:16
-miauw:28
-asda:30
-elmo:32
-adam:48

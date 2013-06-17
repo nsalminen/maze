@@ -87,7 +87,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void gameOver() {
-        parent.gameOver();;
+        parent.gameOver();
     }
 
     public void checkGoal() {
@@ -132,6 +132,9 @@ public class GamePanel extends javax.swing.JPanel {
             case KeyEvent.VK_ESCAPE:
                 parent.pauseGame();
                 break;
+            case KeyEvent.VK_Z:
+                player.undoMove();
+                this.repaint();
             }
         
     }

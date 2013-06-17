@@ -1,7 +1,6 @@
 package Utilities;
 
-import Window.GamePanel;
-import Window.MenuPanel;
+import Window.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JPanel;
@@ -12,7 +11,7 @@ import javax.swing.JPanel;
  */
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class MazeKeyListener implements KeyListener {
 
@@ -21,6 +20,7 @@ public class MazeKeyListener implements KeyListener {
     public MazeKeyListener(GamePanel p) {
         panel = p;
     }
+
     public MazeKeyListener(MenuPanel p) {
         panel = p;
     }
@@ -31,13 +31,11 @@ public class MazeKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //System.out.println("Typed");
-       if(panel instanceof GamePanel){
-       ((GamePanel) panel).updateGame(e);
-       }
-       else if(panel instanceof MenuPanel){
-       ((MenuPanel) panel).updateGame(e);
-       }
+        if (panel instanceof GamePanel) {
+            ((GamePanel) panel).updateGame(e);
+        } else if (panel instanceof MenuPanel) {
+            ((MenuPanel) panel).updateGame(e);
+        }
     }
 
     @Override

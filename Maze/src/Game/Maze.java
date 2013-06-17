@@ -256,7 +256,7 @@ public class Maze {
      *
      * @param maze A 2D integer Array that is used as a blueprint for the generateMaze
      */
-    private void buildMaze(int[][] maze) {
+    protected void buildMaze(int[][] maze) {
         Point pointer = new Point();
         
         for (int y = 0; y < maze.length; y++) {
