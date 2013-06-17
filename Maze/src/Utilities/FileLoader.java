@@ -20,6 +20,19 @@ public class FileLoader {
            highScoreFile = getHighScoreFile();
            System.out.println(os);
     }
+        
+    public File getSoundEffect(String name){
+        
+        File effect = null;
+            
+        if(os.equals("Windows 7")){   
+        effect = new File("content\\sounds\\"+name+".wav");
+        }
+         else if(os.equals("Mac OS X")){
+        effect = new File("content/sounds/"+name+".txt");    
+        }
+        return effect;
+    }
     
     public void newLevel(String name){
         try{

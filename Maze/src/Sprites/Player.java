@@ -1,6 +1,8 @@
 package Sprites;
 
 import Game.*;
+import Utilities.FileLoader;
+import Utilities.SoundEffect;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,6 +19,8 @@ public class Player extends Sprite {
     public int direction;
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
+    private SoundEffect sfw;
+    private SoundEffect sfb;
     public Stack<Point> steps;
 
     public Player(Point p, GamePanel pan) {
@@ -26,6 +30,11 @@ public class Player extends Sprite {
         panel.maze.nodes[position.y][position.x].addOccupant(this);
         steps = new Stack<>();
         steps.push(new Point(1, 1));
+        
+        FileLoader loader = new FileLoader();
+        
+        sfw = new SoundEffect(loader.getSoundEffect("walk"));
+        sfb = new SoundEffect(loader.getSoundEffect("bump"));
     }
 
     public void shoot() {
@@ -223,6 +232,7 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
+            sfw.play();
             steps.push(new Point(position.x, position.y));
             panel.maze.getNode(position).trimOccupants(1);
             System.out.println("MOVING");
@@ -233,6 +243,9 @@ public class Player extends Sprite {
             System.out.println("STOPPED");
             stepsTaken++;
             updateFacing();
+        }
+        else{
+         sfb.play();
         }
     }
 

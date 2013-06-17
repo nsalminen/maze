@@ -16,10 +16,8 @@ import javax.sound.sampled.*;
    
    private Clip clip;
    
-   public SoundEffect(String soundFileName) {
-      try {
-        File file = new File(soundFileName);     
-        
+   public SoundEffect(File file) {
+      try {        
          AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
          // Get a clip resource.
          clip = AudioSystem.getClip();
