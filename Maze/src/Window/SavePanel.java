@@ -86,7 +86,7 @@ public class SavePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-    parent.goToMenu();       // TODO add your handling code here:
+      parent.goToMenu();       // TODO add your handling code here:
     }//GEN-LAST:event_cancelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -80,13 +80,21 @@ public class LoadPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
-        FileReader levelReader = new FileReader(); 
-        try{
-        parent.loadNewGame(levelReader.readLevel(fileChooser.getSelectedFile()));
-        System.out.println("LOADING:");
-        System.out.println(fileChooser.getSelectedFile().toURI().toString());
-        
-        }catch(FileNotFoundException e){}
+       
+        if(evt.getActionCommand().equals("ApproveSelection")){
+            parent.menu.activeGame(true); 
+            FileReader levelReader = new FileReader(); 
+            try{
+            parent.loadNewGame(levelReader.readLevel(fileChooser.getSelectedFile()));
+            System.out.println("LOADING:");
+            System.out.println(fileChooser.getSelectedFile().toURI().toString());
+                
+            }catch(FileNotFoundException e){}
+        }
+        else if(evt.getActionCommand().equals("CancelSelection")){
+            
+            parent.goToMenu();
+        }
         
     }//GEN-LAST:event_fileChooserActionPerformed
 

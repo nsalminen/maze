@@ -189,7 +189,6 @@ public class MenuPanel extends javax.swing.JPanel {
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
         parent.loadGame();        // TODO add your handling code here:
         
-        activeGame(true);
     }//GEN-LAST:event_loadGameButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
