@@ -85,6 +85,7 @@ public class LoadPanel extends javax.swing.JPanel {
         parent.loadNewGame(levelReader.readLevel(fileChooser.getSelectedFile()));
         System.out.println("LOADING:");
         System.out.println(fileChooser.getSelectedFile().toURI().toString());
+        
         }catch(FileNotFoundException e){}
         
     }//GEN-LAST:event_fileChooserActionPerformed

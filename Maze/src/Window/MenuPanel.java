@@ -14,19 +14,14 @@ public class MenuPanel extends javax.swing.JPanel {
      * Creates new form MenuPanel
      */
     MainWindow parent;
-    
-    public boolean activeGame = false;
-    
+        
     public MenuPanel(MainWindow p)  {
-        initComponents();  
-        if(!activeGame){
-            continueGame.setVisible(false);
-            saveGame.setVisible(false);
-        }
+        initComponents();
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
         
+        activeGame(false);
         parent = p;        
         //parent.setContentPane(this);
         
@@ -34,6 +29,12 @@ public class MenuPanel extends javax.swing.JPanel {
             fullScreenButton.setVisible(false);
         }
     }
+    
+    public void activeGame(boolean active){
+         continueGame.setVisible(active);
+         saveGame.setVisible(active);
+    }
+    
      public void updateGame(KeyEvent e) {
         keyInput(e.getKeyCode());
     }
@@ -179,11 +180,13 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
         parent.loadGame();        // TODO add your handling code here:
+        
+        activeGame(true);
     }//GEN-LAST:event_loadGameButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         parent.startGame();
-        activeGame = true;
+        activeGame(true);
         continueGame.setVisible(true);
         saveGame.setVisible(true);
 

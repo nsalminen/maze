@@ -56,7 +56,7 @@ public class MainWindow extends JFrame {
         loadpanel.setSize(this.getSize());
     }
     
-    public void goToMenu(){
+    public void goToMenu(){        
         setContentPane(menu);
         menu.setFocusable(true);
         menu.requestFocus();

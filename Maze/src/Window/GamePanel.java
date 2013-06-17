@@ -85,7 +85,8 @@ public class GamePanel extends javax.swing.JPanel {
         
         counter = new StepCounter((maze.nodes.length*blockSize)+blockSize, 0 , this);
         scoreboard = new ScoreBoard((maze.nodes.length*blockSize)+blockSize, 0 , this);
-        cursor = new Cursor(maze.nodes.length-1, 0, this);        
+        cursor = new Cursor(maze.nodes.length-1, 0, this);     
+        
     }
     
 
@@ -190,6 +191,7 @@ public class GamePanel extends javax.swing.JPanel {
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         maze.paintMaze(g);
         counter.drawSteps(g);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.

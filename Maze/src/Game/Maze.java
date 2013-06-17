@@ -280,11 +280,9 @@ public class Maze {
                 pointer.setLocation(x,y);
                 nodes[y][x] = new Node(pointer);
                 nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
-                if(level.layout[y][x] == 0){
-                    getNode(pointer).addOccupant(new Wall(getNode(pointer),panel));
-                }
-                if(level.layout[y][x] == 1){
-                    getNode(pointer).addOccupant(new Floor(getNode(pointer),panel));
+             
+                 if(level.layout[y][x] == 0){
+                    getNode(pointer).addOccupant(new Wall(nodes[y][x],panel));
                 }
                 if(level.layout[y][x] == 2){
                     playerPoint = new Point(x,y);
