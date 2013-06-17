@@ -37,7 +37,7 @@ public class GamePanel extends javax.swing.JPanel {
     public Map<String, Integer> highscores;
     public ScoreBoard scoreboard;
     //The size of each block in pixels
-    public int blockSize = 40;
+    public final int blockSize = 40;
     public Helper helper;
     private MainWindow parent;
     
@@ -124,9 +124,9 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void checkGoal() {
-//        if (goal.getPosition()==(player.getPosition())) {
-//            gameOver();
-//        }
+        if (goal.getPosition()==(player.getPosition())) {
+            gameOver();
+        }
     }
     public void keyInput(int key) {
         switch (key) {
@@ -190,7 +190,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
     @Override
     protected void paintComponent(Graphics g) {
-        blockSize = parent.getSize().height / maze.nodes.length;
+        //blockSize = parent.getSize().height / maze.nodes.length;
         super.paintComponent(g);
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());

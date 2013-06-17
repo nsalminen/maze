@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
     public GamePanel game;
     public OptionPanel option;
     WinPanel win;
-    private int height = 557;
+    private int height = 720;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
 
@@ -64,7 +64,6 @@ public class MainWindow extends JFrame {
         menu.setSize(this.getSize());
     }
     public void unPauseGame(){
-        System.out.println("Miauw");
         setContentPane(game);
         game.setFocusable(true);
         game.requestFocus();

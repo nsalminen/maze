@@ -71,15 +71,15 @@ public class Player extends Sprite {
         }
     }
 
-    public void paintSelf(Graphics g) {
+   public void paintSelf(Graphics g) { 
         g.setColor(Color.blue);
         g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
 
-
-
+       
+        
         g.setColor(Color.blue);
         g.drawRect(facing.x * panel.blockSize, facing.y * panel.blockSize, panel.blockSize, panel.blockSize);
-
+        
         if (hasPortalGun) {
             int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
             int[] yp = {getY(), getY() + panel.blockSize, getY() + panel.blockSize};
@@ -115,11 +115,11 @@ public class Player extends Sprite {
                     (getX()),
                     getY() + (panel.blockSize / 2));
         }
-        checkPortalGun();
-        checkTimeMachine();
-        checkHelper();
-        checkGoal();
-    }
+          checkGoal();
+          checkPortalGun();
+          checkTimeMachine();
+          checkHelper();
+   }
 
     public void checkGoal() {
         if ((panel.maze.getNode(position).occupants.contains(panel.goal))) {
