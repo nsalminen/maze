@@ -76,28 +76,31 @@ public class WinPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        congratulation = new javax.swing.JLabel();
+        congratulations = new javax.swing.JLabel();
         subtitle = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.GridLayout(4, 0, 0, 10));
 
-        congratulation.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        congratulation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        congratulation.setText("Congratulation!");
-        congratulation.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(congratulation);
+        congratulations.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        congratulations.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        congratulations.setText("Congratulations!");
+        congratulations.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(congratulations);
 
-        subtitle.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        subtitle.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
         subtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subtitle.setText("You won! Please Fill in your name");
+        subtitle.setText("You won! Please fill in your name.");
         subtitle.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jPanel1.add(subtitle);
 
         nameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        nameField.setToolTipText("Please fill in your name here");
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFieldActionPerformed(evt);
@@ -105,7 +108,7 @@ public class WinPanel extends javax.swing.JPanel {
         });
         jPanel1.add(nameField);
 
-        backButton.setText("Back to menu");
+        backButton.setText("Confirm and back to menu");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
@@ -120,6 +123,15 @@ public class WinPanel extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 180;
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        jLabel1.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(jLabel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -141,7 +153,8 @@ public class WinPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JLabel congratulation;
+    private javax.swing.JLabel congratulations;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel subtitle;

@@ -13,17 +13,15 @@ import java.util.ArrayList;
  * @author Yasen
  */
 public class Node {
+
     public ArrayList<Sprite> occupants = new ArrayList<Sprite>();
-    
-    public Point position = new Point(999,999);
+    public Point position = new Point(999, 999);
     public int xInd;
     public int yInd;
     private boolean visited = false;
     private boolean open;
     private boolean path;
 
-    
-    
     public boolean removeWall() {
         for (Sprite p : occupants) {
             if (p instanceof Wall) {
@@ -49,21 +47,21 @@ public class Node {
             return false;
         }
     }
-            
+
     public Node(Point p) {
-        position = p;        
+        position = p;
         xInd = position.x;
         yInd = position.y;
     }
-    
+
     public Node(int x, int y) {
         xInd = x;
-        yInd = y;        
+        yInd = y;
         position.setLocation(xInd, yInd);
     }
 
     public Sprite getOccupant(int index) {
-        if (index > occupants.size()) {
+        if (index <= occupants.size()) {
             return occupants.get(index);
         } else {
             return null;
@@ -125,8 +123,8 @@ public class Node {
     public void setxInd(int xInd) {
         this.xInd = xInd;
     }
-    
-    public Point getPosition(){
+
+    public Point getPosition() {
         return position;
     }
 

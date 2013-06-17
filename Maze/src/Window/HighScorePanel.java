@@ -150,7 +150,7 @@ public class HighScorePanel extends javax.swing.JPanel {
                                     .addComponent(name1)
                                     .addComponent(name2)
                                     .addComponent(name3))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 472, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(score1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(score2)
@@ -190,7 +190,7 @@ public class HighScorePanel extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(name5)
                     .addComponent(score5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );

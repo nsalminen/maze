@@ -21,7 +21,8 @@ public class MainWindow extends JFrame {
     private int width = 720;
     static MainWindow mazeWindow = new  MainWindow();
     MenuPanel menu = new MenuPanel(this);
-    public GamePanel game ;
+    public GamePanel game;
+    public OptionPanel option;
     WinPanel win;
     private int height = 557;
     private static GraphicsDevice vc;

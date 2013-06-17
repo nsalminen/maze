@@ -39,7 +39,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="134" max="32767" attributes="0"/>
+                      <EmptySpace pref="472" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="score1" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="score2" min="-2" max="-2" attributes="0"/>
@@ -90,7 +90,7 @@
                   <Component id="name5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="score5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="79" max="32767" attributes="0"/>
+              <EmptySpace pref="302" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>

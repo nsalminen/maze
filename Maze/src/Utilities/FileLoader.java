@@ -72,9 +72,10 @@ public class FileLoader {
             file = new File("content\\files\\highscores.txt");    
         }
         
-        else if(os.equals("Mac OS X")){
+        else if(os.equals("Mac OS X") || os.equals("Linux")){
             file = new File("content/files/highscores.txt");
         }
+        
         System.out.println(file.toURI().toASCIIString());
         
         return file;   

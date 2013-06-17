@@ -59,13 +59,14 @@ public class MenuPanel extends javax.swing.JPanel {
 
         fullScreenButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        startButton = new javax.swing.JButton();
         continueGame = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
         loadGameButton = new javax.swing.JButton();
         saveGame = new javax.swing.JButton();
         highScoreButton = new javax.swing.JButton();
         optionsButtons = new javax.swing.JButton();
         exitButton2 = new javax.swing.JButton();
+        mainMenuBackground = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -77,7 +78,7 @@ public class MenuPanel extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
@@ -86,15 +87,8 @@ public class MenuPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(29, 19, 19, 19);
         add(fullScreenButton, gridBagConstraints);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
-
-        startButton.setText("New Game");
-        startButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(startButton);
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.GridLayout(7, 0));
 
         continueGame.setText("Continue");
         continueGame.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +97,14 @@ public class MenuPanel extends javax.swing.JPanel {
             }
         });
         jPanel1.add(continueGame);
+
+        startButton.setText("New Game");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(startButton);
 
         loadGameButton.setText("Load Game");
         loadGameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -146,12 +148,22 @@ public class MenuPanel extends javax.swing.JPanel {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 180;
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
+
+        mainMenuBackground.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        mainMenuBackground.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        add(mainMenuBackground, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
@@ -165,10 +177,6 @@ public class MenuPanel extends javax.swing.JPanel {
     private void highScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highScoreButtonActionPerformed
         parent.showHighScores();        // TODO add your handling code here:
     }//GEN-LAST:event_highScoreButtonActionPerformed
-
-    private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed
-       parent.unPauseGame();
-    }//GEN-LAST:event_continueGameActionPerformed
 
     private void exitButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButton2ActionPerformed
       System.exit(0);
@@ -194,6 +202,10 @@ public class MenuPanel extends javax.swing.JPanel {
         // MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
 
+    private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed
+        parent.unPauseGame();
+    }//GEN-LAST:event_continueGameActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton continueGame;
     private javax.swing.JButton exitButton2;
@@ -201,6 +213,7 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JButton highScoreButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loadGameButton;
+    private javax.swing.JLabel mainMenuBackground;
     private javax.swing.JButton optionsButtons;
     private javax.swing.JButton saveGame;
     private javax.swing.JButton startButton;
