@@ -1,5 +1,6 @@
 package Window;
 
+import Utilities.Level;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
@@ -20,9 +21,10 @@ public class MainWindow extends JFrame {
     private int width = 720;
     static MainWindow mazeWindow = new  MainWindow();
     MenuPanel menu = new MenuPanel(this);
-    public GamePanel game ;
+    public GamePanel game;
+    public OptionPanel option;
     WinPanel win;
-    private int height = 557;
+    private int height = 720;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
 
@@ -35,6 +37,53 @@ public class MainWindow extends JFrame {
         setSize(width, height);
         setContentPane(menu);
         setLocationRelativeTo(null);
+    }
+    
+    public void saveGame(){
+        SavePanel savepanel = new SavePanel(this);
+        setContentPane(savepanel);
+        savepanel.setVisible(true);
+        savepanel.setFocusable(true);
+        savepanel.requestFocus();
+        savepanel.setSize(this.getSize());
+    }
+    public void loadGame(){
+        
+        LoadPanel loadpanel = new LoadPanel(this);
+        setContentPane(loadpanel);
+        loadpanel.setVisible(true);
+        loadpanel.setFocusable(true);
+        loadpanel.requestFocus();
+        loadpanel.setSize(this.getSize());
+    }
+    
+    public void goToMenu(){        
+        setContentPane(menu);
+        menu.setFocusable(true);
+        menu.requestFocus();
+        menu.setSize(this.getSize());
+    }
+    public void unPauseGame(){
+        setContentPane(game);
+        game.setFocusable(true);
+        game.requestFocus();
+        game.setSize(this.getSize());
+    }
+    
+    public void showHighScores(){
+        HighScorePanel scores = new HighScorePanel(this);
+        setContentPane(scores);
+        scores.setSize(this.getSize());        
+    }
+
+    public void loadNewGame(Level level){
+        System.out.println("LOADING NEW GAME");
+        game = new GamePanel(level,this);
+        setContentPane(game);
+        game.setFocusable(true);
+        game.requestFocus();  
+        game.repaint();
+        game.setSize(this.getSize());
     }
 
     public void startGame(){

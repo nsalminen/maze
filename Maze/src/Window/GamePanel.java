@@ -9,10 +9,12 @@ import Game.*;
 import Sprites.*;
 import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
+import Utilities.Level;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
@@ -48,17 +50,51 @@ public class GamePanel extends javax.swing.JPanel {
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
+        printLevel(maze.level);
+    }
+    
+    public GamePanel(Level level, MainWindow p) {
+        System.out.println("GAME PANEL! "+level.toString());
+        initComponents();
+        parent = p;
+        loadGame(level ,getGraphics());
+        this.setSize(maze.getDimension().height * blockSize, maze.getDimension().width * blockSize);
+        MazeKeyListener listener = new MazeKeyListener(this);
+        this.addKeyListener(listener);
+        this.setFocusable(true);
+        printLevel(maze.level);
     }
 
     private int random() {
         Random random = new Random();
         return Math.abs(random.nextInt());
     }
+    
+    public void loadGame(Level level, Graphics g) {
+       
+        maze = new Maze(this, level); 
+        
+        goal = new Goal(maze.getNode(maze.goalPoint), this);
+        player = new Player(maze.playerPoint, this);
+        
+        player.stepsTaken = level.score;
+        player.hasPortalGun = level.portalGun;
+        
+        portalGun = new PortalGun(maze.getNode(maze.portalGunPoint), this);
+        timeMachine = new TimeMachine(maze.getNode(maze.timeMachinePoint), this);
+        helper = new Helper(maze.getNode(maze.helperPoint), this);
+        
+        counter = new StepCounter((maze.nodes.length*blockSize)+blockSize, 0 , this);
+        scoreboard = new ScoreBoard((maze.nodes.length*blockSize)+blockSize, 0 , this);
+        cursor = new Cursor(maze.nodes.length-1, 0, this);     
+        
+    }
+    
 
     public void prepGame(Graphics g) {
         Point pointer = new Point(999,999);
         maze = new Maze(this);
-        pointer.setLocation(maze.maze.length-1,maze.maze.length-1);        
+        pointer.setLocation(maze.maze.length-2,maze.maze.length-2);        
         goal = new Goal(maze.getNode(pointer), this);
         pointer.setLocation(1,1);
         player = new Player(pointer, this);
@@ -84,15 +120,14 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void gameOver() {
-        parent.gameOver();;
+        parent.gameOver();
     }
 
     public void checkGoal() {
-//        if (goal.getPosition()==(player.getPosition())) {
-//            gameOver();
-//        }
+        if (goal.getPosition()==(player.getPosition())) {
+            gameOver();
+        }
     }
-
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_W:
@@ -124,29 +159,45 @@ public class GamePanel extends javax.swing.JPanel {
                 break;
             case KeyEvent.VK_CONTROL:
                 cursor.printCurrentNode();
-
-        }
-    }
-
+                break;
+            case KeyEvent.VK_ESCAPE:
+                parent.goToMenu();
+                break;
+            case KeyEvent.VK_Z:
+                player.undoMove();
+                this.repaint();
+            }
+    }     
+     public void printLevel(ArrayList<String[]> level){
+         
+         System.out.println(
+         level.toString());
+         
+         for(String[] line : level){             
+             for(String value : line){
+                 //System.out.print(value);
+             }
+             //System.out.print("\n");
+         }        
+     }
     @Override
     public void repaint() {
         super.repaint();
     }
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);
     }
-
     @Override
     protected void paintComponent(Graphics g) {
+        //blockSize = parent.getSize().height / maze.nodes.length;
         super.paintComponent(g);
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         maze.paintMaze(g);
         counter.drawSteps(g);
+        
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

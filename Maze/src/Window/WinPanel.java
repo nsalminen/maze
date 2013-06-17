@@ -1,6 +1,8 @@
 package Window;
 
-import Game.User;
+import Utilities.FileReader;
+import Utilities.FileWriter;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,14 +13,56 @@ public class WinPanel extends javax.swing.JPanel {
     /**
      * Creates new form MenuPanel
      */
-    
+     FileReader scoreReader;
+     FileWriter scoreWriter;
      private MainWindow parent;
      public int score;
+     String[] names = new String[5];
+     int[] scores = new int[5];
+     int place;
+     
+     ArrayList<String> data;
      
     public WinPanel(MainWindow p) {
         initComponents();        
         parent = p;
         score = p.game.player.stepsTaken;
+        scoreReader = new FileReader();        
+        if(!isHighScore()){
+            
+            nameField.setVisible(false);
+            subtitle.setText("Try again?");
+        }
+    }
+    void checkScore(){
+        data = scoreReader.printMap();  
+        for(int i = 0; i < scores.length; i++){
+            names[i] = data.get(i).split(":")[0];
+            scores[i] = Integer.parseInt(data.get(i).split(":")[1]);
+        }
+    }
+    
+    void printData(){
+        
+        for(int i = 0; i < data.size(); i++){ 
+                System.out.println(""+data.get(i));        
+            }
+    }
+    
+    private void insertPlayer(int p ){
+        data.set(p, nameField.getText()+":"+score);
+    }
+    private boolean isHighScore(){        
+        checkScore();
+        boolean isHighScore = false;
+        for(int i = 0; i < scores.length; i++){
+            if(scores[i] > score && !isHighScore){
+                isHighScore = true;
+                place = i;
+            }
+        }
+        System.out.println(isHighScore +" "+place+" "+score);
+        return isHighScore;
     }
 
     /**
@@ -32,37 +76,45 @@ public class WinPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        congratulations = new javax.swing.JLabel();
+        subtitle = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        menuButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.GridLayout(4, 0, 0, 10));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Congratulation!");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(jLabel1);
+        congratulations.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        congratulations.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        congratulations.setText("Congratulations!");
+        congratulations.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel1.add(congratulations);
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("You won! Please Fill in your name");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel1.add(jLabel2);
+        subtitle.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        subtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subtitle.setText("You won! Please fill in your name.");
+        subtitle.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jPanel1.add(subtitle);
 
-        nameField.setText("jTextField1");
-        jPanel1.add(nameField);
-
-        menuButton.setText("Back to menu");
-        menuButton.addActionListener(new java.awt.event.ActionListener() {
+        nameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        nameField.setToolTipText("Please fill in your name here");
+        nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuButtonActionPerformed(evt);
+                nameFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(menuButton);
+        jPanel1.add(nameField);
+
+        backButton.setText("Confirm and back to menu");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(backButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -71,25 +123,40 @@ public class WinPanel extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 180;
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        jLabel1.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(jLabel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButtonActionPerformed
-        
-        User user = new User(nameField.getText(), score);
-        
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        scoreWriter= new FileWriter();
+        insertPlayer(place);
+        //printData();
+        scoreWriter.writeScores(data);
         
         MainWindow main = new MainWindow();
         main.setVisible(true);
         main.requestFocus();
         parent.dispose();
         //MainWindow.mazeWindow.setVisible(true);
-    }//GEN-LAST:event_menuButtonActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
+    private javax.swing.JLabel congratulations;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton menuButton;
     private javax.swing.JTextField nameField;
+    private javax.swing.JLabel subtitle;
     // End of variables declaration//GEN-END:variables
 }

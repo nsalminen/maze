@@ -30,7 +30,7 @@ public class StepCounter {
     }
     public void drawSteps(Graphics g)
     {
-        String steps = ""+ player.stepsTaken;        
+        String steps = ""+player.stepsTaken;        
         g.setColor(Color.white);
         g.drawRect(x, y, blockSize, blockSize);
         g.drawString(steps, x+(blockSize/2)-(3*steps.length()), y+25);   
