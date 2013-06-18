@@ -56,10 +56,10 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            System.out.println("Moved!");
-            System.out.println("START"+start.toString());
+            //System.out.println("Moved!");
+           // System.out.println("START"+start.toString());
         }
-         System.out.println("FOUNDWALL");
+         //System.out.println("FOUNDWALL");
          expected.setLocation(1+steps, 1);
          this.assertEquals(expected, main.game.player.getPosition());
     }
@@ -75,10 +75,10 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            System.out.println("Moved!");
-            System.out.println("START"+start.toString());
+            //System.out.println("Moved!");
+           // System.out.println("START"+start.toString());
         }
-         System.out.println("FOUNDWALL");
+         //System.out.println("FOUNDWALL");
          expected.setLocation(1, 1+steps);
          this.assertEquals(expected, main.game.player.getPosition());
     }
@@ -94,10 +94,10 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            System.out.println("Moved!");
-            System.out.println("START"+start.toString());
+            //System.out.println("Moved!");
+           // System.out.println("START"+start.toString());
         }
-         System.out.println("FOUNDWALL");
+        // System.out.println("FOUNDWALL");
          expected.setLocation(1-steps, 1);
          this.assertEquals(expected, main.game.player.getPosition());
     }
@@ -112,10 +112,10 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            System.out.println("Moved!");
-            System.out.println("START"+start.toString());
+           // System.out.println("Moved!");
+            //System.out.println("START"+start.toString());
         }
-         System.out.println("FOUNDWALL");
+         //System.out.println("FOUNDWALL");
          expected.setLocation(1, 1-steps);
          this.assertEquals(expected, main.game.player.getPosition());
     }  

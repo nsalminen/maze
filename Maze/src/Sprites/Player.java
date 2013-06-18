@@ -1,7 +1,7 @@
 package Sprites;
 
 import Game.*;
-import Utilities.FileLoader;
+import Utilities.Position;
 import Utilities.SoundEffect;
 import Window.GamePanel;
 import java.awt.Color;
@@ -22,14 +22,20 @@ public class Player extends Sprite {
     private SoundEffect sfw;
     private SoundEffect sfb;
     public Stack<Point> steps;
+    public Stack<Position> steps2;
+    
+        
+        
 
     public Player(Point p, GamePanel pan) {
+        
         position = p;
         panel = pan;
         setDirection(1);
         panel.maze.nodes[position.y][position.x].addOccupant(this);
-        steps = new Stack<>();
-        steps.push(new Point(1, 1));
+        
+        steps2 = new Stack<>();
+        steps2.push(new Position (new Point(1, 1), getDirection()));
 
         sfw = new SoundEffect(panel.loader.getSoundEffect("walk"));
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
@@ -59,17 +65,17 @@ public class Player extends Sprite {
 
                 if ((xOrigin - 1 == 0 || yOrigin - 1 == 0) || yOrigin + 1 == panel.maze.nodes.length || xOrigin + 1 == panel.maze.nodes[0].length) {
 
-                    System.out.println("Fell off the deep end");
+                    //System.out.println("Fell off the deep end");
                     shooting = false;
                 }
 
                 if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
-                    System.out.println("No Wall");
+                    //System.out.println("No Wall");
 
                 }
 
                 if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof Wall) {
-                    System.out.println("BOOM");
+                    //System.out.println("BOOM");
                     panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
                     shooting = false;
                 }
@@ -231,14 +237,15 @@ public class Player extends Sprite {
     public void move() {
         if (canMove()) {
             sfw.play();
-            steps.push(new Point(position.x, position.y));
+           
+            steps2.push(new Position (new Point(position), getDirection()));
             panel.maze.getNode(position).trimOccupants(1);
-            System.out.println("MOVING");
+            //System.out.println("MOVING");
             panel.maze.getNode(facing).addOccupant(this);
             parent = panel.maze.nodes[facing.y][facing.x];
             position.setLocation(parent.xInd, parent.yInd);
-            System.out.println("Player" + position);
-            System.out.println("STOPPED");
+            //System.out.println("Player" + position);
+            //System.out.println("STOPPED");
             stepsTaken++;
             updateFacing();
         } else {
@@ -247,14 +254,16 @@ public class Player extends Sprite {
     }
 
     public void undoMove() {
-        if (!steps.isEmpty()) {
+        if (!steps2.isEmpty()) {
             panel.maze.getNode(position).trimOccupants(1);
             System.out.println("UNDO");
-            Point lastPosition = steps.pop();
+            int dir = steps2.peek().direction;
+            Point lastPosition = steps2.pop().point;
             System.out.println(lastPosition);
             panel.maze.getNode(lastPosition).addOccupant(this);
             parent = panel.maze.nodes[lastPosition.y][lastPosition.x];
             position.setLocation(parent.xInd, parent.yInd);
+            setDirection(dir);
             updateFacing();
             if (stepsTaken > 0) {
                 stepsTaken--;
@@ -288,7 +297,7 @@ public class Player extends Sprite {
             facing.setLocation(position.getX() - 1, position.getY());
         }
 
-        System.out.println("--------------");
+        //System.out.println("--------------");
     }
 
     public void setDirection(int dir) {

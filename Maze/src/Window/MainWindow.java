@@ -89,7 +89,7 @@ public class MainWindow extends JFrame {
     }
 
     public void loadNewGame(Level level) {
-        System.out.println("LOADING NEW GAME");
+       
         game = new GamePanel(level, this);
         setContentPane(game);
         game.setFocusable(true);

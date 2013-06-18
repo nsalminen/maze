@@ -155,7 +155,7 @@ public class MenuPanel extends javax.swing.JPanel {
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
 
-        mainMenuBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Window/menuBackground.png"))); // NOI18N
+        mainMenuBackground.setIcon(new javax.swing.ImageIcon("C:\\Users\\Yasen\\Desktop\\newmaze\\maze\\Maze\\content\\images\\menuBackground.png")); // NOI18N
         mainMenuBackground.setText("jLabel1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
