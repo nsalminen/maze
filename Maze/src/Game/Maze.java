@@ -33,25 +33,24 @@ public class Maze {
     private Random random;
     private Dimension dimension;
     public ArrayList<String[]> level = new ArrayList<String[]>();
-    
     public Point playerPoint;
     public Point portalGunPoint;
     public Point timeMachinePoint;
     public Point helperPoint;
     public Point goalPoint;
-    
+
     /**
-     * @param generateMaze A 2D integer Array that is used as a blueprint for the generateMaze
+     * @param generateMaze A 2D integer Array that is used as a blueprint for
+     * the generateMaze
      * @param p The parent panel of the generateMaze object
      */
-    
     public Maze(GamePanel panel, Level level) {
         dimension = new Dimension(15, 15);
         this.panel = panel;
         nodes = new Node[level.layout.length][level.layout[0].length];
         buildMaze(level);
     }
-    
+
     public Maze(GamePanel panel) {
         dimension = new Dimension(15, 15);
         random = new Random();
@@ -65,10 +64,9 @@ public class Maze {
      * Takes a given 2D integer array and sets the occupants for the 2D Node
      * array accordingly. 0 = wall 'w' `1 = empty 'e'
      *
-     * @param generateMaze A 2D integer Array that is used as a blueprint for the generateMaze
+     * @param generateMaze A 2D integer Array that is used as a blueprint for
+     * the generateMaze
      */
-    
-
     private int[][] generateMaze() {
         maze = new int[dimension.height][dimension.width];
         for (int i = 0; i < dimension.height; i++) {
@@ -94,20 +92,19 @@ public class Maze {
 
         //　Allocate the mazeGrid with recursive method
         generate(r, c);
-         level.ensureCapacity(maze[0].length);
-         String[] line = new String[maze[0].length];
-                
-         for (int i = 0; i < maze.length; i++) {
+        level.ensureCapacity(maze[0].length);
+        String[] line = new String[maze[0].length];
+
+        for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[0].length; j++) {
-               // line[j]= ""+maze[i][j];
+                // line[j]= ""+maze[i][j];
                 //System.out.print(maze[i][j]);
-                
             }
             //System.out.println();
 //            level.set(i, line);
-         }
-        
-        
+        }
+
+
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
                 System.out.print(maze[i][j] + " ");
@@ -115,7 +112,7 @@ public class Maze {
             System.out.println();
         }
         System.out.println(maze.length + " " + maze[0].length);
-        
+
         return maze;
     }
 
@@ -191,18 +188,18 @@ public class Maze {
     }
 
     /**
-     * This recursive backtracker finds paths through mazes. Given the current location in
-     * the generateMaze, it tries all possible values for the next location. If any of
-     * these values are valid, it moves and recursively calls this method with a
-     * new location. This recursive algorithm finishes when the
-     * current location in the generateMaze is the exit or if the algorithm exhausted
-     * all possible paths in the maze.
+     * This recursive backtracker finds paths through mazes. Given the current
+     * location in the generateMaze, it tries all possible values for the next
+     * location. If any of these values are valid, it moves and recursively
+     * calls this method with a new location. This recursive algorithm finishes
+     * when the current location in the generateMaze is the exit or if the
+     * algorithm exhausted all possible paths in the maze.
      *
      * @param current
      * @return
      * @author Nels Salminen
      */
-  public boolean findPath(Node current) {
+    public boolean findPath(Node current) {
         if (isExit(current)) {
             return true;
         }
@@ -265,62 +262,63 @@ public class Maze {
         }
         return adjacencies;
     }
-    
-     /**
+
+    /**
      * Takes a given 2D integer array and sets the occupants for the 2D Node
      * array accordingly. 0 = wall 'w' `1 = empty 'e'
      *
-     * @param maze A 2D integer Array that is used as a blueprint for the generateMaze
+     * @param maze A 2D integer Array that is used as a blueprint for the
+     * generateMaze
      */
-     private void buildMaze(Level level) {
+    private void buildMaze(Level level) {
         Point pointer = new Point();
-        for (int y = 0; y < level.layout.length; y++) {     
-        
+        for (int y = 0; y < level.layout.length; y++) {
+
             for (int x = 0; x < level.layout[0].length; x++) {
-                pointer.setLocation(x,y);
+                pointer.setLocation(x, y);
                 nodes[y][x] = new Node(pointer);
                 nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
-             
-                 if(level.layout[y][x] == 0){
-                    getNode(pointer).addOccupant(new Wall(nodes[y][x],panel));
+
+                if (level.layout[y][x] == 0) {
+                    getNode(pointer).addOccupant(new Wall(nodes[y][x], panel));
                 }
-                if(level.layout[y][x] == 2){
-                    playerPoint = new Point(x,y);
+                if (level.layout[y][x] == 2) {
+                    playerPoint = new Point(x, y);
                     System.out.println("check player");
                 }
-                if(level.layout[y][x] == 3){
-                    portalGunPoint = new Point(x,y);
+                if (level.layout[y][x] == 3) {
+                    portalGunPoint = new Point(x, y);
                     System.out.println("check gun");
                 }
-                if(level.layout[y][x] == 4){
-                    timeMachinePoint = new Point(x,y);
+                if (level.layout[y][x] == 4) {
+                    timeMachinePoint = new Point(x, y);
                     System.out.println("check tm");
                 }
-                if(level.layout[y][x] == 5){
-                    helperPoint = new Point(x,y);
+                if (level.layout[y][x] == 5) {
+                    helperPoint = new Point(x, y);
                     System.out.println("check helper");
                 }
-                if(level.layout[y][x] == 6){
-                    goalPoint = new Point(x,y);
+                if (level.layout[y][x] == 6) {
+                    goalPoint = new Point(x, y);
                     System.out.println("check goal");
                 }
             }
         }
     }
-    
-    private void buildMaze(int[][] maze) {
+
+    protected void buildMaze(int[][] maze) {
         Point pointer = new Point();
-        
+
         for (int y = 0; y < maze.length; y++) {
             for (int x = 0; x < maze[0].length; x++) {
-                pointer.setLocation(x,y);
+                pointer.setLocation(x, y);
                 nodes[y][x] = new Node(pointer);
                 nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
-                if(maze[y][x] == 1){
+                if (maze[y][x] == 1) {
                     floors.add(nodes[y][x]);
                 }
-                if(maze[y][x] == 0){
-                    getNode(pointer).addOccupant(new Wall(getNode(pointer),panel));
+                if (maze[y][x] == 0) {
+                    getNode(pointer).addOccupant(new Wall(getNode(pointer), panel));
                 }
             }
         }
@@ -335,33 +333,33 @@ public class Maze {
     public void paintMaze(Graphics g) {
         for (int y = 0; y < nodes.length; y++) {
             for (int x = 0; x < nodes[0].length; x++) {
-                if ((nodes[y][x].popOccupant()) instanceof Wall) {                    
-                    ((Wall)getNode(x,y).popOccupant()).paintSelf(x,y,g);
+                if ((nodes[y][x].popOccupant()) instanceof Wall) {
+                    ((Wall) getNode(x, y).popOccupant()).paintSelf(x, y, g);
                 }
                 if ((nodes[y][x].popOccupant()) instanceof Floor) {
-                    ((Floor) nodes[y][x].popOccupant()).paintSelf( g, nodes[x][y].isPath(), showPath);
+                    ((Floor) nodes[y][x].popOccupant()).paintSelf(g, nodes[x][y].isPath(), showPath);
                 }
-                
+
             }
         }
         for (int y = 0; y < nodes.length; y++) {
             for (int x = 0; x < nodes[0].length; x++) {
-                
+
                 if ((nodes[y][x].popOccupant()) instanceof Player) {
-                    
+
                     ((Player) nodes[y][x].popOccupant()).paintSelf(g);
                 }
-                
+
                 if ((nodes[y][x].popOccupant()) instanceof PortalGun) {
                     ((PortalGun) nodes[y][x].popOccupant()).paintSelf(g);
                 }
-                
+
                 if ((nodes[y][x].popOccupant()) instanceof Goal) {
-                   
+
                     ((Goal) nodes[y][x].popOccupant()).paintSelf(g);
                 }
-                
-                
+
+
                 if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
                     ((TimeMachine) nodes[y][x].popOccupant()).paintSelf(g);
                 }
@@ -408,15 +406,18 @@ public class Maze {
         return floors;
     }
 
-    public Node getNode(Point p){
-        Node node = nodes[p.y][p.x];        
+    public Node getNode(Point p) {
+        //System.out.println(p.y+p.x);
+        
+        Node node = nodes[p.y][p.x];
         return node;
     }
-    
-    public Node getNode(int x, int y){
+
+    public Node getNode(int x, int y) {
         Node node = nodes[y][x];
         return node;
     }
+
     /**
      * @param floors the floors to set
      */
@@ -431,40 +432,40 @@ public class Maze {
     public void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
-    
-    public Level buildLevel(){
-        
-        int [][] layout = new int[nodes.length][nodes[0].length];
-        
-        for(int y = 0; y < nodes.length; y++){
-            for(int x = 0; x < nodes.length; x++){
-                
-                if(nodes[y][x].popOccupant() instanceof Wall){
+
+    public Level buildLevel() {
+
+        int[][] layout = new int[nodes.length][nodes[0].length];
+
+        for (int y = 0; y < nodes.length; y++) {
+            for (int x = 0; x < nodes.length; x++) {
+
+                if (nodes[y][x].popOccupant() instanceof Wall) {
                     layout[y][x] = 0;
                 }
-                if(nodes[y][x].popOccupant() instanceof Floor){
+                if (nodes[y][x].popOccupant() instanceof Floor) {
                     layout[y][x] = 1;
                 }
-                if(nodes[y][x].popOccupant() instanceof Player){
+                if (nodes[y][x].popOccupant() instanceof Player) {
                     layout[y][x] = 2;
                 }
-                if(nodes[y][x].popOccupant() instanceof PortalGun){
+                if (nodes[y][x].popOccupant() instanceof PortalGun) {
                     layout[y][x] = 3;
                 }
-                if(nodes[y][x].popOccupant() instanceof TimeMachine){
+                if (nodes[y][x].popOccupant() instanceof TimeMachine) {
                     layout[y][x] = 4;
                 }
-                if(nodes[y][x].popOccupant() instanceof Helper){
+                if (nodes[y][x].popOccupant() instanceof Helper) {
                     layout[y][x] = 5;
                 }
-                if(nodes[y][x].popOccupant() instanceof Goal){
+                if (nodes[y][x].popOccupant() instanceof Goal) {
                     layout[y][x] = 6;
-                }                
+                }
             }
         }
-        
-        Level leveler = new Level(layout,panel.player.stepsTaken, panel.player.hasPortalGun);
-        
+
+        Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun);
+
         return leveler;
     }
 }

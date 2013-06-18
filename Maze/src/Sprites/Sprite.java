@@ -27,13 +27,13 @@ public abstract class Sprite {
     }
 
     public int getX() {
-        int xPos = position.x*panel.blockSize;
+        int xPos = position.x*panel.getBlockSize();
         //System.out.print(xPos);
         return xPos;
     }
 
     public int getY() {        
-        int yPos = position.y*panel.blockSize;
+        int yPos = position.y*panel.getBlockSize();
        // System.out.print(yPos);
         return yPos;
     }

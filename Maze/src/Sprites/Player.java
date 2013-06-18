@@ -31,10 +31,8 @@ public class Player extends Sprite {
         steps = new Stack<>();
         steps.push(new Point(1, 1));
         
-        FileLoader loader = new FileLoader();
-        
-        sfw = new SoundEffect(loader.getSoundEffect("walk"));
-        sfb = new SoundEffect(loader.getSoundEffect("bump"));
+        sfw = new SoundEffect(panel.loader.getSoundEffect("walk"));
+        sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
     }
 
     public void shoot() {

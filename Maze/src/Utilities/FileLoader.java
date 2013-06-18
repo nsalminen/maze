@@ -12,85 +12,90 @@ import java.io.IOException;
  * @author Yasen
  */
 public class FileLoader {
-    
+
     String os = System.getProperty("os.name");
     File highScoreFile;
-    
-    public FileLoader(){       
-           highScoreFile = getHighScoreFile();
-           System.out.println(os);
+
+    public FileLoader() {
+        highScoreFile = getHighScoreFile();
+        System.out.println(os);
     }
-        
-    public File getSoundEffect(String name){
-        
-        File effect = null;
-            
-        if(os.equals("Windows 7")){   
-        effect = new File("content\\sounds\\"+name+".wav");
+    
+    public File getImageFile(String name) {
+
+        File image = null;
+
+        if (os.equals("Windows 7")) {
+            image = new File("content\\images\\"+name+".png");
+        } else if (os.equals("Mac OS X")) {
+            image = new File("content/images/"+name+".png");
         }
-         else if(os.equals("Mac OS X")){
-        effect = new File("content/sounds/"+name+".txt");    
+        return image;
+    }
+
+    public File getSoundEffect(String name) {
+
+        File effect = null;
+
+        if (os.equals("Windows 7")) {
+            effect = new File("content\\sounds\\" + name + ".wav");
+        } else if (os.equals("Mac OS X")) {
+            effect = new File("content/sounds/" + name + ".wav");
         }
         return effect;
     }
-    
-    public void newLevel(String name){
-        try{
+
+    public void newLevel(String name) {
+        try {
             File level = null;
-            
-        if(os.equals("Windows 7")){   
-        level = new File("content\\files\\saves\\"+name+".txt");
+
+            if (os.equals("Windows 7")) {
+                level = new File("content\\files\\saves\\" + name + ".txt");
+            } else if (os.equals("Mac OS X")) {
+                level = new File("content/files/saves/" + name + ".txt");
+            }
+            level.createNewFile();
+        } catch (IOException e) {
         }
-         else if(os.equals("Mac OS X")){
-         level = new File("content/files/saves/"+name+".txt");    
-        }        
-        level.createNewFile();       
-        }catch(IOException e){}
     }
-    
-    public File getLevel(String name){
-         File file = null;
-        
-        if(os.equals("Windows 7")){
-            file = new File("content\\files\\saves\\"+name+".txt");    
-        }
-        
-        else if(os.equals("Mac OS X")){
-            file = new File("content/files/saves/"+name+".txt");    
+
+    public File getLevel(String name) {
+        File file = null;
+
+        if (os.equals("Windows 7")) {
+            file = new File("content\\files\\saves\\" + name + ".txt");
+        } else if (os.equals("Mac OS X")) {
+            file = new File("content/files/saves/" + name + ".txt");
         }
         System.out.println(file.toURI().toASCIIString());
-        
+
         return file;
     }
-    
-    public File getLevelHeader(){
+
+    public File getLevelHeader() {
         File file = null;
-        
-        if(os.equals("Windows 7")){
-            file = new File("content\\files\\saves\\levelHeader.txt");    
-        }
-        
-        else if(os.equals("Mac OS X")){
-            file = new File("content/files/saves/levelHeader.txt");    
+
+        if (os.equals("Windows 7")) {
+            file = new File("content\\files\\saves\\levelHeader.txt");
+        } else if (os.equals("Mac OS X")) {
+            file = new File("content/files/saves/levelHeader.txt");
         }
         System.out.println(file.toURI().toASCIIString());
-        
+
         return file;
     }
-    
-    public File getHighScoreFile(){
+
+    public File getHighScoreFile() {
         File file = null;
-        
-        if(os.equals("Windows 7")){
-            file = new File("content\\files\\highscores.txt");    
-        }
-        
-        else if(os.equals("Mac OS X") || os.equals("Linux")){
+
+        if (os.equals("Windows 7")) {
+            file = new File("content\\files\\highscores.txt");
+        } else if (os.equals("Mac OS X") || os.equals("Linux")) {
             file = new File("content/files/highscores.txt");
         }
-        
+
         System.out.println(file.toURI().toASCIIString());
-        
-        return file;   
+
+        return file;
     }
 }

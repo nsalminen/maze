@@ -9,6 +9,7 @@ import Game.*;
 import Sprites.*;
 import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
+import Utilities.FileLoader;
 import Utilities.Level;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -37,9 +38,10 @@ public class GamePanel extends javax.swing.JPanel {
     public Map<String, Integer> highscores;
     public ScoreBoard scoreboard;
     //The size of each block in pixels
-    public final int blockSize = 40;
+    public int blockSize = 40;
     public Helper helper;
     private MainWindow parent;
+    public FileLoader loader = new FileLoader();
     
 
     public GamePanel(MainWindow p) {
@@ -80,9 +82,15 @@ public class GamePanel extends javax.swing.JPanel {
         player.stepsTaken = level.score;
         player.hasPortalGun = level.portalGun;
         
-        portalGun = new PortalGun(maze.getNode(maze.portalGunPoint), this);
-        timeMachine = new TimeMachine(maze.getNode(maze.timeMachinePoint), this);
-        helper = new Helper(maze.getNode(maze.helperPoint), this);
+        if(maze.portalGunPoint != null){
+            portalGun = new PortalGun(maze.getNode(maze.portalGunPoint), this);
+        }
+        if(maze.timeMachinePoint != null){
+            timeMachine = new TimeMachine(maze.getNode(maze.timeMachinePoint), this);
+        }
+        if(maze.helperPoint != null){
+            helper = new Helper(maze.getNode(maze.helperPoint), this);
+        }
         
         counter = new StepCounter((maze.nodes.length*blockSize)+blockSize, 0 , this);
         scoreboard = new ScoreBoard((maze.nodes.length*blockSize)+blockSize, 0 , this);
@@ -188,9 +196,13 @@ public class GamePanel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g);
     }
+    
+    public int getBlockSize(){
+        return blockSize;
+    }
     @Override
     protected void paintComponent(Graphics g) {
-        //blockSize = parent.getSize().height / maze.nodes.length;
+        blockSize = parent.getSize().height / maze.nodes.length;
         super.paintComponent(g);
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
