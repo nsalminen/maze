@@ -1,6 +1,7 @@
 package Window;
 
 import Utilities.Level;
+import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
@@ -19,14 +20,13 @@ import javax.swing.JFrame;
 public class MainWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private int width = 720;
     static MainWindow mazeWindow = new MainWindow();
     public OptionPanel setting = new OptionPanel(this);
     MenuPanel menu = new MenuPanel(this);
     public GamePanel game;
     public OptionPanel option;
     WinPanel win;
-    private int height = 720;
+    private Dimension windowDimension;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
 
@@ -35,8 +35,9 @@ public class MainWindow extends JFrame {
         if (System.getProperty("os.name").equals("Mac OS X")) {
             enableOSXFullscreen(this);
         }
+        windowDimension = new Dimension(1220, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(width, height);
+        setSize(windowDimension);
         setContentPane(menu);
         setLocationRelativeTo(null);
     }
