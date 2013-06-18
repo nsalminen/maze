@@ -4,13 +4,13 @@
  */
 package Window;
 
-import Utilities.MazeKeyListener;
 import Game.*;
 import Sprites.*;
 import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
 import Utilities.FileLoader;
 import Utilities.Level;
+import Utilities.MazeKeyListener;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -24,6 +24,7 @@ import java.util.Random;
  * @author Yasen
  */
 public class GamePanel extends javax.swing.JPanel {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates new form MazePanelForm
@@ -87,7 +88,7 @@ public class GamePanel extends javax.swing.JPanel {
         return Math.abs(random.nextInt());
     }
 
-    public void loadGame(Level level, Graphics g) {
+    public final void loadGame(Level level, Graphics g) {
 
         maze = new Maze(this, level);
 
@@ -113,7 +114,7 @@ public class GamePanel extends javax.swing.JPanel {
 
     }
 
-    public void prepGame(Graphics g) {
+    public final void prepGame(Graphics g) {
         Point pointer = new Point(999, 999);
         maze = new Maze(this);
         pointer.setLocation(maze.maze.length - 2, maze.maze.length - 2);
@@ -192,7 +193,7 @@ public class GamePanel extends javax.swing.JPanel {
         }
     }
 
-    public void printLevel(ArrayList<String[]> level) {
+    public final void printLevel(ArrayList<String[]> level) {
 
         System.out.println(
                 level.toString());

@@ -11,7 +11,7 @@ import java.util.Stack;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class Player extends Sprite {
 

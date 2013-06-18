@@ -195,9 +195,6 @@ public class MenuPanel extends javax.swing.JPanel {
         activeGame(true);
         continueGame.setVisible(true);
         saveGame.setVisible(true);
-
-        //      MainWindow.mazeWindow.setContentPane(MainWindow.mazeWindow.game);
-        // MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed

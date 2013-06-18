@@ -28,45 +28,45 @@ public class OptionPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jSlider1 = new javax.swing.JSlider();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        backButton = new javax.swing.JButton();
+        volumeSlider = new javax.swing.JSlider();
+        soundToggleButton = new javax.swing.JToggleButton();
         mainMenuBackground = new javax.swing.JLabel();
 
         setLayout(null);
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
-        add(jButton1);
-        jButton1.setBounds(400, 490, 75, 29);
+        add(backButton);
+        backButton.setBounds(400, 490, 75, 29);
 
-        jSlider1.setMajorTickSpacing(100);
-        jSlider1.setMaximum(60);
-        jSlider1.setMinimum(-800);
-        jSlider1.setPaintTicks(true);
-        jSlider1.setToolTipText("");
-        jSlider1.setValue(0);
-        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+        volumeSlider.setMajorTickSpacing(100);
+        volumeSlider.setMaximum(60);
+        volumeSlider.setMinimum(-800);
+        volumeSlider.setPaintTicks(true);
+        volumeSlider.setToolTipText("");
+        volumeSlider.setValue(0);
+        volumeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSlider1StateChanged(evt);
+                volumeSliderStateChanged(evt);
             }
         });
-        add(jSlider1);
-        jSlider1.setBounds(280, 340, 380, 38);
+        add(volumeSlider);
+        volumeSlider.setBounds(280, 340, 380, 38);
 
-        jToggleButton1.setSelected(true);
-        jToggleButton1.setText("ON");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        soundToggleButton.setSelected(true);
+        soundToggleButton.setText("ON");
+        soundToggleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                soundToggleButtonActionPerformed(evt);
             }
         });
-        add(jToggleButton1);
-        jToggleButton1.setBounds(290, 180, 140, 29);
+        add(soundToggleButton);
+        soundToggleButton.setBounds(290, 180, 140, 29);
 
         mainMenuBackground.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
         mainMenuBackground.setText("jLabel1");
@@ -74,30 +74,30 @@ public class OptionPanel extends javax.swing.JPanel {
         mainMenuBackground.setBounds(0, 0, 945, 751);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-        float value = jSlider1.getValue() / 10;
+    private void volumeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_volumeSliderStateChanged
+        float value = volumeSlider.getValue() / 10;
         parent.game.setVolume(value);
-    }//GEN-LAST:event_jSlider1StateChanged
+    }//GEN-LAST:event_volumeSliderStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         parent.goToMenu();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        System.out.println(jToggleButton1.isSelected());
-        if (jToggleButton1.isSelected()) {
-            jToggleButton1.setText("ON");
+    private void soundToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundToggleButtonActionPerformed
+        System.out.println(soundToggleButton.isSelected());
+        if (soundToggleButton.isSelected()) {
+            soundToggleButton.setText("ON");
             parent.game.volumeOn();
         } else {
-            jToggleButton1.setText("OFF");
+            soundToggleButton.setText("OFF");
             parent.game.volumeOff();
             System.out.println("False");
         }
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_soundToggleButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JButton backButton;
     private javax.swing.JLabel mainMenuBackground;
+    private javax.swing.JToggleButton soundToggleButton;
+    private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables
 }
