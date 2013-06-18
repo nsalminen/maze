@@ -165,9 +165,15 @@ public class Player extends Sprite {
         if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.taken) {
             System.out.println("Found Helper!");
             panel.maze.getNode(position).trimOccupants(1);
-            panel.maze.findPath(new Node(parent.yInd, parent.xInd));
+            panel.maze.findPath(parent);
             panel.maze.showPath = true;
             panel.repaint();
+            for (int i = 0; i < panel.maze.nodes.length; i++) {
+                for (int j = 0; j < panel.maze.nodes[i].length; j++) {
+                    System.out.print(panel.maze.nodes[i][j].isPath() + " ");
+                }
+                System.out.println();
+            }
         }
     }
 
@@ -212,7 +218,7 @@ public class Player extends Sprite {
         boolean canMove = false;
 
         if (!(facing.x < 0) && !(facing.y < 0)) {
-            if (!(facing.x + 1 > panel.maze.nodes.length) && !(facing.y + 1 > panel.maze.nodes[0].length)) {
+            if (!(facing.x + 1 > panel.maze.nodes[0].length) && !(facing.y + 1 > panel.maze.nodes.length)) {
                 if (!panel.maze.getNode(facing).isWall()) {
                     canMove = true;
                 }

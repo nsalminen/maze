@@ -31,7 +31,7 @@ public class Floor extends Sprite {
             parent = n;
             position = parent.getPosition();
             panel = pan;
-            image = ImageIO.read(panel.loader.getImageFile("Floor").toURL());
+            image = ImageIO.read(panel.loader.getImageFile("Floor"));
         } catch (MalformedURLException ex) {
             Logger.getLogger(Floor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

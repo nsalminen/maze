@@ -24,8 +24,8 @@ import java.util.Random;
  * @author Yasen
  */
 public class GamePanel extends javax.swing.JPanel {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
     /**
      * Creates new form MazePanelForm
      */
@@ -79,7 +79,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void volumeOff() {
-        player.getSfb().volumeOff(); 
+        player.getSfb().volumeOff();
         player.getSfw().volumeOff();
     }
 
@@ -117,7 +117,8 @@ public class GamePanel extends javax.swing.JPanel {
     public final void prepGame(Graphics g) {
         Point pointer = new Point(999, 999);
         maze = new Maze(this);
-        pointer.setLocation(maze.maze.length - 2, maze.maze.length - 2);
+        pointer.setLocation(maze.maze[0].length - 2, maze.maze.length - 2);
+        System.out.println("Pointer :" + pointer);
         goal = new Goal(maze.getNode(pointer), this);
         pointer.setLocation(1, 1);
         player = new Player(pointer, this);

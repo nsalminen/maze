@@ -45,18 +45,18 @@ public class Maze {
      * @param p The parent panel of the generateMaze object
      */
     public Maze(GamePanel panel, Level level) {
-        dimension = new Dimension(35, 31);
+        dimension = new Dimension(15, 21);
         this.panel = panel;
         nodes = new Node[level.layout.length][level.layout[0].length];
         buildMaze(level);
     }
 
     public Maze(GamePanel panel) {
-        dimension = new Dimension(35, 31);
+        dimension = new Dimension(15, 21);
         random = new Random();
         this.panel = panel;
         generateMaze();
-        nodes = new Node[dimension.width][dimension.height];
+        nodes = new Node[maze.length][maze[0].length];
         buildMaze(this.maze);
     }
 
@@ -236,10 +236,10 @@ public class Maze {
     }
 
     private boolean nodeClear(Node node) {
-        if (node.getyInd() < 0 || node.getxInd() >= nodes.length || node.getxInd() < 0 || node.getyInd() >= nodes[node.getyInd()].length || node.isVisited()) {
+        if (node.getyInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getxInd() >= nodes[node.getyInd()].length || node.isVisited()) {
             return false;
         }
-        return (!(nodes[node.getxInd()][node.getyInd()]).isWall() || isExit(nodes[node.getxInd()][node.getyInd()]));
+        return (!(nodes[node.getyInd()][node.getxInd()]).isWall() || isExit(nodes[node.getyInd()][node.getxInd()]));
     }
 
     public ArrayList<Node> getAdjacentNodes(Node node) {
@@ -309,8 +309,8 @@ public class Maze {
     protected void buildMaze(int[][] maze) {
         Point pointer = new Point();
 
-        for (int y = 0; y < maze.length; y++) {
-            for (int x = 0; x < maze[0].length; x++) {
+        for (int y = 0; y < dimension.height; y++) {
+            for (int x = 0; x < dimension.width; x++) {
                 pointer.setLocation(x, y);
                 nodes[y][x] = new Node(pointer);
                 nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
@@ -322,6 +322,8 @@ public class Maze {
                 }
             }
         }
+        System.out.println(nodes.length + " " + nodes[0].length);
+
     }
 
     /**
@@ -337,7 +339,7 @@ public class Maze {
                     ((Wall) getNode(x, y).popOccupant()).paintSelf(x, y, g);
                 }
                 if ((nodes[y][x].popOccupant()) instanceof Floor) {
-                    ((Floor) nodes[y][x].popOccupant()).paintSelf(g, nodes[x][y].isPath(), showPath);
+                    ((Floor) nodes[y][x].popOccupant()).paintSelf(g, nodes[y][x].isPath(), showPath);
                 }
 
             }
@@ -408,7 +410,7 @@ public class Maze {
 
     public Node getNode(Point p) {
         //System.out.println(p.y+p.x);
-        
+
         Node node = nodes[p.y][p.x];
         return node;
     }
