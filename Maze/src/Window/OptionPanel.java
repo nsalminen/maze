@@ -1,7 +1,5 @@
 package Window;
 
-import java.awt.event.KeyEvent;
-
 /**
  *
  * @author Nels
@@ -12,19 +10,13 @@ public class OptionPanel extends javax.swing.JPanel {
      * Creates new form MenuPanel
      */
     MainWindow parent;
-    
     public boolean activeGame = false;
-    
-    public OptionPanel(MainWindow p)  {
-        initComponents();  
+
+    public OptionPanel(MainWindow p) {
+        initComponents();
 
         this.setFocusable(true);
-        
-        parent = p;        
-        
-        if (System.getProperty("os.name").equals("Mac OS X")) {
-            fullScreenButton.setVisible(false);
-        }
+        parent = p;
     }
 
     /**
@@ -35,75 +27,77 @@ public class OptionPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        fullScreenButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        back = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jSlider1 = new javax.swing.JSlider();
+        jToggleButton1 = new javax.swing.JToggleButton();
         mainMenuBackground = new javax.swing.JLabel();
 
-        setLayout(new java.awt.GridBagLayout());
+        setLayout(null);
 
-        fullScreenButton.setText("Fullscreen");
-        fullScreenButton.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullScreenButtonActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.weightx = 123.0;
-        gridBagConstraints.weighty = 123.0;
-        gridBagConstraints.insets = new java.awt.Insets(29, 19, 19, 19);
-        add(fullScreenButton, gridBagConstraints);
+        add(jButton1);
+        jButton1.setBounds(400, 490, 75, 29);
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(7, 0));
-
-        back.setText("Back");
-        back.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backActionPerformed(evt);
+        jSlider1.setMajorTickSpacing(100);
+        jSlider1.setMaximum(60);
+        jSlider1.setMinimum(-800);
+        jSlider1.setPaintTicks(true);
+        jSlider1.setToolTipText("");
+        jSlider1.setValue(0);
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
             }
         });
-        jPanel1.add(back);
+        add(jSlider1);
+        jSlider1.setBounds(280, 340, 380, 38);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipadx = 180;
-        gridBagConstraints.ipady = 100;
-        add(jPanel1, gridBagConstraints);
+        jToggleButton1.setSelected(true);
+        jToggleButton1.setText("ON");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        add(jToggleButton1);
+        jToggleButton1.setBounds(290, 180, 140, 29);
 
         mainMenuBackground.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
         mainMenuBackground.setText("jLabel1");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        add(mainMenuBackground, gridBagConstraints);
+        add(mainMenuBackground);
+        mainMenuBackground.setBounds(0, 0, 945, 751);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
-        MainWindow.mazeWindow.toggleFullscreen();
-    }//GEN-LAST:event_fullScreenButtonActionPerformed
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        float value = jSlider1.getValue() / 10;
+        parent.game.setVolume(value);
+    }//GEN-LAST:event_jSlider1StateChanged
 
-    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
-        parent.unPauseGame();
-    }//GEN-LAST:event_backActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        parent.goToMenu();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        System.out.println(jToggleButton1.isSelected());
+        if (jToggleButton1.isSelected()) {
+            jToggleButton1.setText("ON");
+            parent.game.volumeOn();
+        } else {
+            jToggleButton1.setText("OFF");
+            parent.game.volumeOff();
+            System.out.println("False");
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton back;
-    private javax.swing.JButton fullScreenButton;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JSlider jSlider1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel mainMenuBackground;
     // End of variables declaration//GEN-END:variables
 }

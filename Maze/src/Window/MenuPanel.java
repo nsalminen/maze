@@ -130,7 +130,7 @@ public class MenuPanel extends javax.swing.JPanel {
         });
         jPanel1.add(highScoreButton);
 
-        optionsButtons.setText("Options");
+        optionsButtons.setText("Settings");
         optionsButtons.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 optionsButtonsActionPerformed(evt);
@@ -155,7 +155,7 @@ public class MenuPanel extends javax.swing.JPanel {
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
 
-        mainMenuBackground.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        mainMenuBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Window/menuBackground.png"))); // NOI18N
         mainMenuBackground.setText("jLabel1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -171,7 +171,7 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_fullScreenButtonActionPerformed
 
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
-        // TODO add your handling code here:
+        parent.showSettings();
     }//GEN-LAST:event_optionsButtonsActionPerformed
 
     private void highScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highScoreButtonActionPerformed
@@ -187,8 +187,7 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_saveGameActionPerformed
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
-        parent.loadGame();        // TODO add your handling code here:
-        
+        parent.loadGame();
     }//GEN-LAST:event_loadGameButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed

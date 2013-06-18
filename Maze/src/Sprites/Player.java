@@ -30,7 +30,7 @@ public class Player extends Sprite {
         panel.maze.nodes[position.y][position.x].addOccupant(this);
         steps = new Stack<>();
         steps.push(new Point(1, 1));
-        
+
         sfw = new SoundEffect(panel.loader.getSoundEffect("walk"));
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
     }
@@ -78,15 +78,15 @@ public class Player extends Sprite {
         }
     }
 
-   public void paintSelf(Graphics g) { 
+    public void paintSelf(Graphics g) {
         g.setColor(Color.blue);
         g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
 
-       
-        
+
+
         g.setColor(Color.blue);
         g.drawRect(facing.x * panel.blockSize, facing.y * panel.blockSize, panel.blockSize, panel.blockSize);
-        
+
         if (hasPortalGun) {
             int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
             int[] yp = {getY(), getY() + panel.blockSize, getY() + panel.blockSize};
@@ -122,11 +122,11 @@ public class Player extends Sprite {
                     (getX()),
                     getY() + (panel.blockSize / 2));
         }
-          checkGoal();
-          checkPortalGun();
-          checkTimeMachine();
-          checkHelper();
-   }
+        checkGoal();
+        checkPortalGun();
+        checkTimeMachine();
+        checkHelper();
+    }
 
     public void checkGoal() {
         if ((panel.maze.getNode(position).occupants.contains(panel.goal))) {
@@ -241,9 +241,8 @@ public class Player extends Sprite {
             System.out.println("STOPPED");
             stepsTaken++;
             updateFacing();
-        }
-        else{
-         sfb.play();
+        } else {
+            sfb.play();
         }
     }
 
@@ -295,5 +294,19 @@ public class Player extends Sprite {
     public void setDirection(int dir) {
         direction = dir;
         updateFacing();
+    }
+
+    /**
+     * @return the sfw
+     */
+    public SoundEffect getSfw() {
+        return sfw;
+    }
+
+    /**
+     * @return the sfb
+     */
+    public SoundEffect getSfb() {
+        return sfb;
     }
 }
