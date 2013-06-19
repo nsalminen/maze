@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.TreeMap;
 
 /**
@@ -36,25 +37,26 @@ public class FileReader {
     {   
         loader = new FileLoader();
         try{
-            
             scoreReader = new Scanner(loader.getHighScoreFile());
         }
         catch(Exception e){}
-        
-       
     }
     
     public Level readLevel(File f)throws FileNotFoundException{
         int score = 0;
         boolean portalgun;
+        boolean showPath;
         Scanner lvlReader = new Scanner(f);
-        
         String line ="";
+        Stack<Position> positions = new Stack<>();
         
+        //Get the score
         lvlReader.hasNextLine();
         line = lvlReader.nextLine().split("=")[1];
-        
         score = Integer.parseInt(line.trim());
+        
+        
+        //Get portalGun
         line = lvlReader.nextLine().split("=")[1];       
         if(line.contains("true")){
             portalgun = true;
@@ -62,22 +64,43 @@ public class FileReader {
         else{
             portalgun = false;
         }
-        ArrayList<String> vArray = new ArrayList<String>();
+        //Get showPath
+        line = lvlReader.nextLine().split("=")[1];
+        if(line.contains("true")){
+            showPath = true;
+        }
+        else{
+            showPath = false;
+        }
+        //Get stack
+        line = lvlReader.nextLine();
+        String[] stackString = new String[line.length()];
+        stackString = line.split("-");
+        String[] posString = new String[3];
+        for(String pos : stackString){
+            posString = pos.split(",");
+            positions.push(new Position(Integer.parseInt(posString[0]),
+                                       Integer.parseInt(posString[1]),
+                                       Integer.parseInt(posString[2])));   
+        }
         
+        //Getting Layout
+        ArrayList<String> vArray = new ArrayList<String>();        
         while(lvlReader.hasNextLine()){
             vArray.add(lvlReader.nextLine());            
         }
-         int[][] values = new int[vArray.size()][vArray.get(0).length()];
-        
+        int[][] values = new int[vArray.size()][vArray.get(0).length()];        
         for(int y = 0; y < vArray.size(); y++ ){
             for(int x = 0; x < vArray.size(); x++ ){
                 values[y][x] = Integer.parseInt(""+vArray.get(y).charAt(x));
             }
         }
          
-        Level level = new Level(values, score, portalgun);
+        Level level;
         
-        System.out.println("GOT SOMETHING");
+        level = new Level(values, score, portalgun, positions, showPath);
+        
+        //System.out.println("GOT SOMETHING");
         level.print();        
         return level;
        
@@ -87,8 +110,8 @@ public class FileReader {
         
         String maxSize = levelReader.nextLine();
         String filledSize= levelReader.nextLine();
-        System.out.println("Max Size: "+maxSize);
-        System.out.println("Filled Size: "+filledSize);
+        //System.out.println("Max Size: "+maxSize);
+        //.out.println("Filled Size: "+filledSize);
         
         String line = "";
         
@@ -140,13 +163,13 @@ public class FileReader {
                         scoreList.add(""+entry.getKey()+":"+entry.getValue());
 		}
                 if(scoreList.size()<5){
-                    System.out.println("small list");
+                    //.out.println("small list");
                     System.out.println(scoreList.size());
                     int remainder = 5-scoreList.size();
                     
                     for(int i = 0 ; i < remainder;i++){
                         scoreList.add(i,"****:9999");
-                        System.out.println("added empty");
+                        //.out.println("added empty");
                     }
                 }
                 return scoreList;

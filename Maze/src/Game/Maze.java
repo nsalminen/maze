@@ -107,11 +107,11 @@ public class Maze {
 
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
-                System.out.print(maze[i][j] + " ");
+                //System.out.print(maze[i][j] + " ");
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println(maze.length + " " + maze[0].length);
+        //System.out.println(maze.length + " " + maze[0].length);
 
         return maze;
     }
@@ -466,7 +466,7 @@ public class Maze {
             }
         }
 
-        Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun);
+        Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun, panel.player.steps2, showPath);
 
         return leveler;
     }

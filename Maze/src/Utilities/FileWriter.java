@@ -30,7 +30,7 @@ public class FileWriter {
     void printData(ArrayList<String> data){
         
         for(int i = 0; i < data.size(); i++){ 
-                System.out.println(""+data.get(i));        
+                //.out.println(""+data.get(i));        
             }
     }
     
@@ -52,7 +52,7 @@ public class FileWriter {
         PrintWriter levelWriter = new PrintWriter(loader.getLevel(name));
         levelWriter.print(level.toString());
         levelWriter.close();
-        System.out.println("PRINTED");
+        //.out.println("PRINTED");
          }
         catch(FileNotFoundException e){}
        }
@@ -63,12 +63,12 @@ public class FileWriter {
         for(String line : scores){
             out = ( out + line+"\n");
             //System.out.println("reading: "+line);
-            System.out.println(out);
+            //.out.println(out);
             
         }
         writer.print(out);
         writer.close();
-        System.out.println("PRINTED");
+        //.out.println("PRINTED");
        }
 }
    

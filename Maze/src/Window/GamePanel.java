@@ -10,7 +10,7 @@ import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
 import Utilities.FileLoader;
 import Utilities.Level;
-import Utilities.MazeKeyListener;
+import Utilities.Position;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  *
@@ -57,7 +58,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public GamePanel(Level level, MainWindow p) {
-        System.out.println("GAME PANEL! " + level.toString());
+      
         initComponents();
         parent = p;
         loadGame(level, getGraphics());
@@ -88,8 +89,8 @@ public class GamePanel extends javax.swing.JPanel {
         return Math.abs(random.nextInt());
     }
 
-    public final void loadGame(Level level, Graphics g) {
-
+    public void loadGame(Level level, Graphics g) {
+        Stack<Position> pos = new Stack();
         maze = new Maze(this, level);
 
         goal = new Goal(maze.getNode(maze.goalPoint), this);
@@ -107,11 +108,19 @@ public class GamePanel extends javax.swing.JPanel {
         if (maze.helperPoint != null) {
             helper = new Helper(maze.getNode(maze.helperPoint), this);
         }
-
+        
+        if(level.showPath){
+            maze.findPath(maze.getNode(player.position.y,player.position.x));
+            maze.showPath = true;
+        }
+        
+        while(!level.positions.isEmpty()){
+            pos.push(level.positions.pop());
+        }
+        player.steps2 = pos;
         counter = new StepCounter((maze.nodes.length * blockSize) + blockSize, 0, this);
         scoreboard = new ScoreBoard((maze.nodes.length * blockSize) + blockSize, 0, this);
-        cursor = new Cursor(maze.nodes.length - 1, 0, this);
-
+        cursor = new Cursor(maze.nodes.length - 1, 0, this);      
     }
 
     public final void prepGame(Graphics g) {

@@ -4,7 +4,8 @@
  */
 package Utilities;
 
-import java.util.ArrayList;
+import Utilities.Position;
+import java.util.Stack;
 
 /**
  *
@@ -16,12 +17,16 @@ public class Level {
     public int score;
     public boolean portalGun;
     public int[][] layout;
+    public Stack<Position> positions;
+    public boolean showPath;
     
-    public Level(int[][] lt, int sc, boolean pg)
+    public Level(int[][] lt, int sc, boolean pg, Stack<Position> path, boolean sp)
     {
         layout = lt;
         score = sc;
         portalGun = pg;
+        positions = path;
+        showPath = sp;
     }
 
     @Override
@@ -29,8 +34,15 @@ public class Level {
         String string;
         
         string = "Score= "+score+"\n"+
-                          "Portal Gun= "+portalGun+"\n";
-                         
+                 "Portal Gun= "+portalGun+"\n"+
+                 "Show Path="+showPath+"\n";
+        
+        while(!positions.isEmpty()){
+           string = string + positions.pop().toString();
+        }
+        
+        string = string+"\n";
+         
         for(int y = 0 ;y < layout.length; y++){
             for(int x = 0 ;x < layout.length; x++){
                 string = string+(layout[y][x]);                
@@ -44,6 +56,6 @@ public class Level {
    
     
     public void print(){
-         System.out.println(toString());
+         //System.out.println(toString());
     }
 }
