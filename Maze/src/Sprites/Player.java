@@ -26,25 +26,23 @@ public class Player extends Sprite {
     private SoundEffect sfb;
     public Stack<Point> steps;
     public Stack<Position> steps2;
-        
-        
 
     public Player(Point p, GamePanel pan) {
-        
+
         position = p;
         panel = pan;
         setDirection(1);
         panel.maze.nodes[position.y][position.x].addOccupant(this);
-        
-        steps2 = new Stack<>();
-        steps2.push(new Position (new Point(1, 1), getDirection()));
 
-       
+        steps2 = new Stack<>();
+        steps2.push(new Position(new Point(1, 1), getDirection()));
+                this.setImage(panel.playerImage);
+
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
-        portalpickup  = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
-        helperpickup  = new SoundEffect(panel.loader.getSoundEffect("helper"));
-        tmpickup  = new SoundEffect(panel.loader.getSoundEffect("timemachine"));
-        shoot  = new SoundEffect(panel.loader.getSoundEffect("shoot"));
+        portalpickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
+        helperpickup = new SoundEffect(panel.loader.getSoundEffect("helper"));
+        tmpickup = new SoundEffect(panel.loader.getSoundEffect("timemachine"));
+        shoot = new SoundEffect(panel.loader.getSoundEffect("shoot"));
     }
 
     public void shoot() {
@@ -77,7 +75,6 @@ public class Player extends Sprite {
 
                 if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
                     //System.out.println("No Wall");
-
                 }
 
                 if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof Wall) {
@@ -93,7 +90,7 @@ public class Player extends Sprite {
 
     public void paintSelf(Graphics g) {
         g.setColor(Color.blue);
-        g.fillRect(getX(), getY(), panel.blockSize, panel.blockSize);
+        g.drawImage(this.getImage(), getX(), getY(), panel.blockSize, panel.blockSize, null);
 
 
 
@@ -111,7 +108,7 @@ public class Player extends Sprite {
         g.setColor(Color.CYAN);
 
         if (getDirection() == 0) {
-            
+
             //getImage()
             g.drawLine((getX()) + (panel.blockSize / 2),
                     (getY()) + (panel.blockSize / 2),
@@ -160,7 +157,7 @@ public class Player extends Sprite {
             this.hasPortalGun = true;
             panel.portalGun.taken = true;
             panel.repaint();
-            
+
         }
     }
 
@@ -255,9 +252,9 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
-            
-           
-            steps2.push(new Position (new Point(position), getDirection()));
+
+
+            steps2.push(new Position(new Point(position), getDirection()));
             panel.maze.getNode(position).trimOccupants(1);
             //System.out.println("MOVING");
             panel.maze.getNode(facing).addOccupant(this);
@@ -323,11 +320,6 @@ public class Player extends Sprite {
         direction = dir;
         updateFacing();
     }
-
-    /**
-     * @return the sfw
-     */
-
     /**
      * @return the sfb
      */

@@ -24,6 +24,7 @@ public class PortalGun extends Sprite{
         parent = n;
         panel = pan;
         parent.addOccupant(this);
+          this.setImage(panel.portalImage);
     }
      
      public void paintSelf(Graphics g){   

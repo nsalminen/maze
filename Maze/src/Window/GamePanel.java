@@ -75,7 +75,7 @@ public class GamePanel extends javax.swing.JPanel {
     private void getGameImages() {
         try {
             floorImage = ImageIO.read(loader.getImageFile("Floor"));
-            wallImage = ImageIO.read(loader.getImageFile("Wall"));
+            wallImage = ImageIO.read(loader.getImageFile("Wall2"));
             playerImage = ImageIO.read(loader.getImageFile("Player"));
             portalImage = ImageIO.read(loader.getImageFile("Portal"));
             timeMachineImage = ImageIO.read(loader.getImageFile("TimeMachine"));
