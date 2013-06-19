@@ -288,8 +288,8 @@ public class Maze {
     protected void buildMaze(int[][] maze) {
         Point pointer = new Point();
 
-        for (int y = 0; y < dimension.height; y++) {
-            for (int x = 0; x < dimension.width; x++) {
+        for (int y = 0; y < maze.length; y++) {
+            for (int x = 0; x < maze[0].length; x++) {
                 pointer.setLocation(x, y);
                 nodes[y][x] = new Node(pointer);
                 nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
