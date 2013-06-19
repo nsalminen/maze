@@ -20,13 +20,13 @@ public class Goal extends Sprite {
         parent = n;
         panel = pan;
         parent.addOccupant(this);
+        this.setImage(panel.goalImage);
     }
        
        
      
       public void paintSelf(Graphics g){   
-       g.setColor(Color.YELLOW);
-       g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);
+       g.setColor(Color.YELLOW); g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
       
       }    
 }

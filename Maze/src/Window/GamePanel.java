@@ -53,6 +53,13 @@ public class GamePanel extends javax.swing.JPanel {
     public Image floorImage;
     public Image wallImage;
 
+    public Image playerImage;
+    public Image portalImage;
+    public Image timeMachineImage;
+    public Image goalImage;
+    public Image helperImage;
+    
+    
     public GamePanel(MainWindow p) {
         initComponents();
         parent = p;
@@ -69,6 +76,11 @@ public class GamePanel extends javax.swing.JPanel {
         try {
             floorImage = ImageIO.read(loader.getImageFile("Floor"));
             wallImage = ImageIO.read(loader.getImageFile("Wall"));
+            playerImage = ImageIO.read(loader.getImageFile("Player"));
+            portalImage = ImageIO.read(loader.getImageFile("Portal"));
+            timeMachineImage = ImageIO.read(loader.getImageFile("TimeMachine"));
+            goalImage = ImageIO.read(loader.getImageFile("Goal"));
+            helperImage = ImageIO.read(loader.getImageFile("Helper"));
         } catch (IOException ex) {
             Logger.getLogger(GamePanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

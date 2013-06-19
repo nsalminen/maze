@@ -26,7 +26,6 @@ public class Player extends Sprite {
     private SoundEffect sfb;
     public Stack<Point> steps;
     public Stack<Position> steps2;
-    
         
         
 
@@ -99,7 +98,7 @@ public class Player extends Sprite {
 
 
         g.setColor(Color.blue);
-        g.drawRect(facing.x * panel.blockSize, facing.y * panel.blockSize, panel.blockSize, panel.blockSize);
+        //g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
 
         if (hasPortalGun) {
             int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
@@ -112,6 +111,8 @@ public class Player extends Sprite {
         g.setColor(Color.CYAN);
 
         if (getDirection() == 0) {
+            
+            //getImage()
             g.drawLine((getX()) + (panel.blockSize / 2),
                     (getY()) + (panel.blockSize / 2),
                     //This second vertex shows the direction

@@ -45,7 +45,6 @@ public class MainWindow extends JFrame {
         setContentPane(menu);
         setLocationRelativeTo(null);
         button = new SoundEffect(loader.getSoundEffect("menu"));
-        
     }
 
     public void saveGame() {

@@ -26,7 +26,8 @@ public class TimeMachine extends Sprite{
      
        public void paintSelf(Graphics g){   
        g.setColor(Color.MAGENTA);
-       g.fillRect(parent.xInd*panel.blockSize, parent.yInd*panel.blockSize, panel.blockSize, panel.blockSize);
+        g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
+
       }    
     
 }
