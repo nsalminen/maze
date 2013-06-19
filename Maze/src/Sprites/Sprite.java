@@ -5,7 +5,7 @@
 package Sprites;
 
 import Game.Node;
-import Utilities.*;
+import Utilities.ImageTool;
 import Window.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.*;
@@ -15,13 +15,12 @@ import java.awt.image.BufferedImage;
  *
  * @author Yasen
  */
-public abstract class Sprite{
+public abstract class Sprite extends ImageTool{
     public GamePanel panel;
     public Sprite[] neighbors = new Sprite[4];
     public Point position = new Point(999,999);
     public Node parent;
     private Image image;
-    private int face;
     
     public Sprite() {
     }
@@ -29,6 +28,7 @@ public abstract class Sprite{
         return position;
     }
     
+
     public int getX() {
         int xPos = position.x*panel.getBlockSize();
         //System.out.print(xPos);
@@ -40,12 +40,29 @@ public abstract class Sprite{
        // System.out.print(yPos);
         return yPos;
     }
+    
+        public static Image rotate(Image img, double angle){
+    double sin = Math.abs(Math.sin(Math.toRadians(angle))), cos = Math.abs(Math.cos(Math.toRadians(angle)));
+    int w = img.getWidth(null), h = img.getHeight(null);
+    int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math.floor(h
+            * cos + w * sin);
+    BufferedImage bimg = toBufferedImage(getEmptyImage(neww, newh));
+    Graphics2D g = bimg.createGraphics();
+    g.translate((neww - w) / 2, (newh - h) / 2);
+    g.rotate(Math.toRadians(angle), w / 2, h / 2);
+    g.drawRenderedImage(toBufferedImage(img), null);
+    g.dispose();
+    return toImage(bimg);
+}
+
+
     /**
      * @return the image
      */
     public Image getImage() {
         return image;
     }
+
     /**
      * @param image the image to set
      */

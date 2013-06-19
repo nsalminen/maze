@@ -448,7 +448,7 @@ public class Maze {
             }
         }
 
-        Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun, panel.player.steps, showPath);
+        Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun, panel.player.steps2, showPath);
 
         return leveler;
     }
