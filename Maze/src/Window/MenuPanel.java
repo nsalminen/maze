@@ -1,7 +1,7 @@
 package Window;
 
-import Utilities.FileWriter;
 import Utilities.MazeKeyListener;
+import Utilities.SoundEffect;
 import java.awt.event.KeyEvent;
 
 /**
@@ -14,12 +14,15 @@ public class MenuPanel extends javax.swing.JPanel {
      * Creates new form MenuPanel
      */
     MainWindow parent;
+    SoundEffect music;
         
     public MenuPanel(MainWindow p)  {
         initComponents();
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
+        
+        
         
         activeGame(false);
         parent = p;        
@@ -33,6 +36,7 @@ public class MenuPanel extends javax.swing.JPanel {
     public void activeGame(boolean active){
          continueGame.setVisible(active);
          saveGame.setVisible(active);
+         
     }
     
      public void updateGame(KeyEvent e) {
@@ -46,6 +50,7 @@ public class MenuPanel extends javax.swing.JPanel {
                 break;
             }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,6 +200,8 @@ public class MenuPanel extends javax.swing.JPanel {
         activeGame(true);
         continueGame.setVisible(true);
         saveGame.setVisible(true);
+        music = new SoundEffect(parent.game.loader.getSoundEffect("music"));
+        music.play();
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed

@@ -1,6 +1,7 @@
 package Window;
 
 import Utilities.Level;
+import Utilities.SoundEffect;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -22,13 +23,14 @@ public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     static MainWindow mazeWindow = new MainWindow();
     public OptionPanel setting = new OptionPanel(this);
-    MenuPanel menu = new MenuPanel(this);
+    public MenuPanel menu = new MenuPanel(this);
     public GamePanel game;
     public OptionPanel option;
     WinPanel win;
     private Dimension windowDimension;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
+    SoundEffect music;
 
     public MainWindow() {
         initComponents();
@@ -40,6 +42,8 @@ public class MainWindow extends JFrame {
         setSize(windowDimension);
         setContentPane(menu);
         setLocationRelativeTo(null);
+       
+        
     }
 
     public void saveGame() {

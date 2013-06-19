@@ -38,9 +38,9 @@ public class FileLoader {
         File effect = null;
 
         if (os.equals("Windows 7")) {
-            effect = new File("content\\sounds\\" + name + ".wav");
+            effect = new File("content\\sounds\\sfx_" + name + ".wav");
         } else if (os.equals("Mac OS X")) {
-            effect = new File("content/sounds/" + name + ".wav");
+            effect = new File("content/sounds/sfx_" + name + ".wav");
         }
         return effect;
     }

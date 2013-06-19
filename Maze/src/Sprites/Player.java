@@ -19,7 +19,10 @@ public class Player extends Sprite {
     public int direction;
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
-    private SoundEffect sfw;
+    private SoundEffect portalpickup;
+    private SoundEffect helperpickup;
+    private SoundEffect tmpickup;
+    private SoundEffect shoot;
     private SoundEffect sfb;
     public Stack<Point> steps;
     public Stack<Position> steps2;
@@ -37,8 +40,12 @@ public class Player extends Sprite {
         steps2 = new Stack<>();
         steps2.push(new Position (new Point(1, 1), getDirection()));
 
-        sfw = new SoundEffect(panel.loader.getSoundEffect("walk"));
+       
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
+        portalpickup  = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
+        helperpickup  = new SoundEffect(panel.loader.getSoundEffect("helper"));
+        tmpickup  = new SoundEffect(panel.loader.getSoundEffect("timemachine"));
+        shoot  = new SoundEffect(panel.loader.getSoundEffect("shoot"));
     }
 
     public void shoot() {
@@ -75,6 +82,7 @@ public class Player extends Sprite {
                 }
 
                 if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof Wall) {
+                    shoot.play();
                     //System.out.println("BOOM");
                     panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
                     shooting = false;
@@ -145,16 +153,19 @@ public class Player extends Sprite {
 
     public void checkPortalGun() {
         if ((panel.maze.getNode(position).occupants.contains(panel.portalGun)) && !panel.portalGun.taken) {
+            portalpickup.play();
             System.out.println("Found PortalGun!");
             panel.maze.getNode(position).trimOccupants(1);
             this.hasPortalGun = true;
             panel.portalGun.taken = true;
             panel.repaint();
+            
         }
     }
 
     public void checkTimeMachine() {
         if ((panel.maze.getNode(position).occupants.contains(panel.timeMachine)) && !panel.timeMachine.taken) {
+            tmpickup.play();
             System.out.println("Found TimeMachine!");
             panel.maze.getNode(position).trimOccupants(1);
             for (int n = 0; n < panel.timeMachine.stepsReduced; n++) {
@@ -169,6 +180,7 @@ public class Player extends Sprite {
 
     private void checkHelper() {
         if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.taken) {
+            helperpickup.play();
             System.out.println("Found Helper!");
             panel.maze.getNode(position).trimOccupants(1);
             panel.maze.findPath(parent);
@@ -242,7 +254,7 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
-            sfw.play();
+            
            
             steps2.push(new Position (new Point(position), getDirection()));
             panel.maze.getNode(position).trimOccupants(1);
@@ -314,9 +326,6 @@ public class Player extends Sprite {
     /**
      * @return the sfw
      */
-    public SoundEffect getSfw() {
-        return sfw;
-    }
 
     /**
      * @return the sfb

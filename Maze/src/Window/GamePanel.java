@@ -88,17 +88,17 @@ public class GamePanel extends javax.swing.JPanel {
 
     public void setVolume(float value) {
         player.getSfb().setVolume(value);
-        player.getSfw().setVolume(value);
+        
     }
 
     public void volumeOn() {
         player.getSfb().volumeOn();
-        player.getSfw().volumeOn();
+        
     }
 
     public void volumeOff() {
         player.getSfb().volumeOff();
-        player.getSfw().volumeOff();
+       
     }
 
     private int random() {
