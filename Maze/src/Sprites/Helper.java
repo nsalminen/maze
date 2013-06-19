@@ -21,6 +21,7 @@ public class Helper extends Sprite {
         parent = n;
         panel = pan;
         parent.addOccupant(this);
+          this.setImage(panel.helperImage);
     }
 
     public void paintSelf(Graphics g) {

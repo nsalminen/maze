@@ -22,6 +22,7 @@ public class TimeMachine extends Sprite{
         parent = n;
         panel = pan;
         parent.addOccupant(this);
+        this.setImage(panel.timeMachineImage);
     }
      
        public void paintSelf(Graphics g){   

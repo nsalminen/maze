@@ -45,14 +45,15 @@ public class Maze {
      * @param p The parent panel of the generateMaze object
      */
     public Maze(GamePanel panel, Level level) {
-        dimension = new Dimension(47, 27);
+        dimension = new Dimension(level.layout.length, level.layout[0].length);
         this.panel = panel;
         nodes = new Node[level.layout.length][level.layout[0].length];
         buildMaze(level);
     }
+    
 
     public Maze(GamePanel panel) {
-        dimension = new Dimension(47, 27);
+        dimension = new Dimension(31, 19);
         random = new Random();
         this.panel = panel;
         generateMaze();
@@ -315,12 +316,13 @@ public class Maze {
     public void paintMaze(Graphics g) {
         for (int y = 0; y < nodes.length; y++) {
             for (int x = 0; x < nodes[0].length; x++) {
+                
+                ((Floor) nodes[y][x].getOccupant(0)).paintSelf(g, nodes[y][x].isPath(), showPath);
+                
                 if ((nodes[y][x].popOccupant()) instanceof Wall) {
                     ((Wall) getNode(x, y).popOccupant()).paintSelf(x, y, g);
                 }
-                if ((nodes[y][x].popOccupant()) instanceof Floor) {
-                    ((Floor) nodes[y][x].popOccupant()).paintSelf(g, nodes[y][x].isPath(), showPath);
-                }
+                
 
             }
         }
