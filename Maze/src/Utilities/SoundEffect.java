@@ -5,7 +5,6 @@
 package Utilities;
 
 import java.io.*;
-import java.net.URL;
 import javax.sound.sampled.*;
 
 /**
@@ -37,12 +36,10 @@ public class SoundEffect {
     
     public void volumeOff(){
         gainControl.setValue(gainControl.getMinimum());
-        System.out.println("Volume On!");
     }
 
     public void setVolume(float value) {
         gainControl.setValue(value);
-                System.out.println("Volume Off!");
     }
 
     public void play() {
