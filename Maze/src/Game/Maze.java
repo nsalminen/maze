@@ -50,8 +50,6 @@ public class Maze {
         nodes = new Node[level.layout.length][level.layout[0].length];
         buildMaze(level);
     }
-    
-
     public Maze(GamePanel panel) {
         dimension = new Dimension(31, 19);
         random = new Random();
