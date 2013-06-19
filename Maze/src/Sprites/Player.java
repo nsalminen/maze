@@ -66,17 +66,6 @@ public class Player extends Sprite {
                 if (getDirection() == 3) {
                     xOrigin--;
                 }
-
-                if ((xOrigin - 1 == 0 || yOrigin - 1 == 0) || yOrigin + 1 == panel.maze.nodes.length || xOrigin + 1 == panel.maze.nodes[0].length) {
-
-                    //System.out.println("Fell off the deep end");
-                    shooting = false;
-                }
-
-                if (!panel.maze.nodes[yOrigin][xOrigin].popOccupant().getClass().getCanonicalName().equals("Sprites.Wall")) {
-                    //System.out.println("No Wall");
-                }
-
                 if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof Wall) {
                     shoot.play();
                     //System.out.println("BOOM");
