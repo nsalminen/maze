@@ -94,25 +94,7 @@ public class Maze {
         generate(r, c);
         level.ensureCapacity(maze[0].length);
         String[] line = new String[maze[0].length];
-
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[0].length; j++) {
-                // line[j]= ""+maze[i][j];
-                //System.out.print(maze[i][j]);
-            }
-            //System.out.println();
-//            level.set(i, line);
-        }
-
-
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[i].length; j++) {
-                //System.out.print(maze[i][j] + " ");
-            }
-            //System.out.println();
-        }
-        //System.out.println(maze.length + " " + maze[0].length);
-
+        
         return maze;
     }
 
@@ -277,7 +259,6 @@ public class Maze {
                 pointer.setLocation(x, y);
                 nodes[y][x] = new Node(pointer);
                 nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
-
                 if (level.layout[y][x] == 0) {
                     getNode(pointer).addOccupant(new Wall(nodes[y][x], panel));
                 }

@@ -18,7 +18,7 @@ public abstract class Sprite {
     public Sprite[] neighbors = new Sprite[4];
     public Point position = new Point(999,999);
     public Node parent;
-    public Image tileset;
+    private Image image;
     
     public Sprite() {
     }
@@ -36,5 +36,19 @@ public abstract class Sprite {
         int yPos = position.y*panel.getBlockSize();
        // System.out.print(yPos);
         return yPos;
+    }
+
+    /**
+     * @return the image
+     */
+    public Image getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(Image image) {
+        this.image = image;
     }
 }
