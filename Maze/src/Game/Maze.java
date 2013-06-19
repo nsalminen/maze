@@ -273,7 +273,6 @@ public class Maze {
     private void buildMaze(Level level) {
         Point pointer = new Point();
         for (int y = 0; y < level.layout.length; y++) {
-
             for (int x = 0; x < level.layout[0].length; x++) {
                 pointer.setLocation(x, y);
                 nodes[y][x] = new Node(pointer);
@@ -440,7 +439,7 @@ public class Maze {
         int[][] layout = new int[nodes.length][nodes[0].length];
 
         for (int y = 0; y < nodes.length; y++) {
-            for (int x = 0; x < nodes.length; x++) {
+            for (int x = 0; x < nodes[0].length; x++) {
 
                 if (nodes[y][x].popOccupant() instanceof Wall) {
                     layout[y][x] = 0;

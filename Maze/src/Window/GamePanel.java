@@ -10,6 +10,7 @@ import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
 import Utilities.FileLoader;
 import Utilities.Level;
+import Utilities.MazeKeyListener;
 import Utilities.Position;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -93,7 +94,7 @@ public class GamePanel extends javax.swing.JPanel {
         Stack<Position> pos = new Stack();
         maze = new Maze(this, level);
 
-        goal = new Goal(maze.getNode(maze.goalPoint), this);
+       
         player = new Player(maze.playerPoint, this);
 
         player.stepsTaken = level.score;
@@ -107,6 +108,9 @@ public class GamePanel extends javax.swing.JPanel {
         }
         if (maze.helperPoint != null) {
             helper = new Helper(maze.getNode(maze.helperPoint), this);
+        }
+        if (maze.goalPoint != null) {
+           goal = new Goal(maze.getNode(maze.goalPoint), this);
         }
         
         if(level.showPath){

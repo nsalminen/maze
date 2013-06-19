@@ -44,7 +44,7 @@ public class Level {
         string = string+"\n";
          
         for(int y = 0 ;y < layout.length; y++){
-            for(int x = 0 ;x < layout.length; x++){
+            for(int x = 0 ;x < layout[0].length; x++){
                 string = string+(layout[y][x]);                
             }
            string = string+"\n";

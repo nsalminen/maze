@@ -91,7 +91,7 @@ public class FileReader {
         }
         int[][] values = new int[vArray.size()][vArray.get(0).length()];        
         for(int y = 0; y < vArray.size(); y++ ){
-            for(int x = 0; x < vArray.size(); x++ ){
+            for(int x = 0; x < vArray.get(0).length(); x++ ){
                 values[y][x] = Integer.parseInt(""+vArray.get(y).charAt(x));
             }
         }

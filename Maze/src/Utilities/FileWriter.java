@@ -40,8 +40,7 @@ public class FileWriter {
     {   
         loader = new FileLoader();
         try{
-            writer = new PrintWriter(loader.getHighScoreFile());
-            
+            writer = new PrintWriter(loader.getHighScoreFile());            
         }
         catch(Exception e){}
     }
@@ -49,10 +48,9 @@ public class FileWriter {
      public void writeLevel(String name, Level level){
         loader.newLevel(name);
         try{
-        PrintWriter levelWriter = new PrintWriter(loader.getLevel(name));
-        levelWriter.print(level.toString());
-        levelWriter.close();
-        //.out.println("PRINTED");
+            PrintWriter levelWriter = new PrintWriter(loader.getLevel(name));
+            levelWriter.print(level.toString());
+            levelWriter.close();
          }
         catch(FileNotFoundException e){}
        }
