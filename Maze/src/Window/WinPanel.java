@@ -13,55 +13,57 @@ public class WinPanel extends javax.swing.JPanel {
     /**
      * Creates new form MenuPanel
      */
-     FileReader scoreReader;
-     FileWriter scoreWriter;
-     private MainWindow parent;
-     public int score;
-     String[] names = new String[5];
-     int[] scores = new int[5];
-     int place;
-     
-     ArrayList<String> data;
-     
+    FileReader scoreReader;
+    FileWriter scoreWriter;
+    private MainWindow parent;
+    public int score;
+    String[] names = new String[5];
+    int[] scores = new int[5];
+    int place;
+    ArrayList<String> data;
+
     public WinPanel(MainWindow p) {
-        initComponents();        
+        initComponents();
         parent = p;
         score = p.game.player.stepsTaken;
-        scoreReader = new FileReader();        
-        if(!isHighScore()){
-            
+        scoreReader = new FileReader();
+        if (!isHighScore()) {
+
             nameField.setVisible(false);
             subtitle.setText("Try again?");
         }
+        this.setSize(parent.getSize());
     }
-    void checkScore(){
-        data = scoreReader.printMap();  
-        for(int i = 0; i < scores.length; i++){
+
+    void checkScore() {
+        data = scoreReader.printMap();
+        for (int i = 0; i < scores.length; i++) {
             names[i] = data.get(i).split(":")[0];
             scores[i] = Integer.parseInt(data.get(i).split(":")[1]);
         }
     }
-    
-    void printData(){
-        
-        for(int i = 0; i < data.size(); i++){ 
-                System.out.println(""+data.get(i));        
-            }
+
+    void printData() {
+
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println("" + data.get(i));
+        }
     }
-    
-    private void insertPlayer(int p ){
-        data.set(p, nameField.getText()+":"+score);
+
+    private void insertPlayer(int p) {
+        data.set(p, nameField.getText() + ":" + score);
     }
-    private boolean isHighScore(){        
+
+    private boolean isHighScore() {
         checkScore();
         boolean isHighScore = false;
-        for(int i = 0; i < scores.length; i++){
-            if(scores[i] > score && !isHighScore){
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] > score && !isHighScore) {
                 isHighScore = true;
                 place = i;
             }
         }
-        System.out.println(isHighScore +" "+place+" "+score);
+        System.out.println(isHighScore + " " + place + " " + score);
         return isHighScore;
     }
 
@@ -80,24 +82,26 @@ public class WinPanel extends javax.swing.JPanel {
         subtitle = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
+        jPanel1.setMinimumSize(new java.awt.Dimension(700, 380));
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(4, 0, 0, 10));
+        jPanel1.setPreferredSize(new java.awt.Dimension(700, 380));
 
-        congratulations.setFont(new java.awt.Font("Helvetica Neue", 0, 24)); // NOI18N
+        congratulations.setFont(new java.awt.Font("Myriad Pro", 0, 24)); // NOI18N
+        congratulations.setForeground(new java.awt.Color(51, 51, 51));
         congratulations.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         congratulations.setText("Congratulations!");
         congratulations.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(congratulations);
 
-        subtitle.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        subtitle.setFont(new java.awt.Font("Myriad Pro", 0, 14)); // NOI18N
+        subtitle.setForeground(new java.awt.Color(51, 51, 51));
         subtitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subtitle.setText("You won! Please fill in your name.");
+        subtitle.setText("You got a new high score! Please enter your name below.");
         subtitle.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jPanel1.add(subtitle);
 
         nameField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nameField.setToolTipText("Please fill in your name here");
@@ -106,7 +110,6 @@ public class WinPanel extends javax.swing.JPanel {
                 nameFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(nameField);
 
         backButton.setText("Confirm and back to menu");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +117,38 @@ public class WinPanel extends javax.swing.JPanel {
                 backButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(backButton);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuLogo.png")); // NOI18N
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(168, Short.MAX_VALUE)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
+                    .add(backButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(nameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(subtitle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(congratulations, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel2))
+                .add(163, 163, 163))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .add(0, 63, Short.MAX_VALUE)
+                .add(jLabel2)
+                .add(18, 18, 18)
+                .add(congratulations, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(subtitle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(nameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(backButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(33, 33, 33))
+        );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -135,11 +169,11 @@ public class WinPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        scoreWriter= new FileWriter();
+        scoreWriter = new FileWriter();
         insertPlayer(place);
         //printData();
         scoreWriter.writeScores(data);
-        
+
         MainWindow main = new MainWindow();
         main.setVisible(true);
         main.requestFocus();
@@ -150,11 +184,11 @@ public class WinPanel extends javax.swing.JPanel {
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameFieldActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JLabel congratulations;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel subtitle;
