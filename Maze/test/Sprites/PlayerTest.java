@@ -23,24 +23,19 @@ public class PlayerTest extends TestCase {
     
     public PlayerTest(String testName) {
         super(testName);
-        
-        
     }
      
     @Override
     protected void setUp() throws Exception {
         super.setUp();
        main.startGame();
-        instance = main.game.player;; 
-       
+        instance = main.game.player;
     }
     
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
-
-
     /**
      * Test of move method, of class Player.
      */
@@ -56,10 +51,7 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            //System.out.println("Moved!");
-           // System.out.println("START"+start.toString());
         }
-         //System.out.println("FOUNDWALL");
          expected.setLocation(1+steps, 1);
          this.assertEquals(expected, main.game.player.getPosition());
     }
@@ -75,10 +67,7 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            //System.out.println("Moved!");
-           // System.out.println("START"+start.toString());
         }
-         //System.out.println("FOUNDWALL");
          expected.setLocation(1, 1+steps);
          this.assertEquals(expected, main.game.player.getPosition());
     }
@@ -94,10 +83,7 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-            //System.out.println("Moved!");
-           // System.out.println("START"+start.toString());
         }
-        // System.out.println("FOUNDWALL");
          expected.setLocation(1-steps, 1);
          this.assertEquals(expected, main.game.player.getPosition());
     }
@@ -112,10 +98,7 @@ public class PlayerTest extends TestCase {
             instance.move();
             steps++;           
             this.assertEquals(expected, main.game.player.getPosition());
-           // System.out.println("Moved!");
-            //System.out.println("START"+start.toString());
         }
-         //System.out.println("FOUNDWALL");
          expected.setLocation(1, 1-steps);
          this.assertEquals(expected, main.game.player.getPosition());
     }  

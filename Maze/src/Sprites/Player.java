@@ -24,8 +24,7 @@ public class Player extends Sprite {
     private SoundEffect tmpickup;
     private SoundEffect shoot;
     private SoundEffect sfb;
-    public Stack<Point> steps;
-    public Stack<Position> steps2;
+    public Stack<Position> steps;
 
     public Player(Point p, GamePanel pan) {
 
@@ -34,9 +33,9 @@ public class Player extends Sprite {
         setDirection(1);
         panel.maze.nodes[position.y][position.x].addOccupant(this);
 
-        steps2 = new Stack<>();
-        steps2.push(new Position(new Point(1, 1), getDirection()));
-                this.setImage(panel.playerImage);
+        steps = new Stack<>();
+        steps.push(new Position(new Point(1, 1), getDirection()));
+        this.setImage(panel.playerImage1);
 
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
         portalpickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
@@ -108,32 +107,36 @@ public class Player extends Sprite {
         g.setColor(Color.CYAN);
 
         if (getDirection() == 0) {
-
+            this.setImage(panel.playerImage0);
             //getImage()
-            g.drawLine((getX()) + (panel.blockSize / 2),
+            g.drawLine((getX()) + (panel.blockSize / 2),                 
                     (getY()) + (panel.blockSize / 2),
                     //This second vertex shows the direction
                     (getX()) + (panel.blockSize / 2),
                     getY());
         } else if (getDirection() == 1) {
+            this.setImage(panel.playerImage1);
             g.drawLine((getX()) + (panel.blockSize / 2),
                     (getY()) + (panel.blockSize / 2),
                     //This second vertex shows the direction
                     (getX()) + (panel.blockSize),
                     getY() + (panel.blockSize / 2));
         } else if (getDirection() == 2) {
+            this.setImage(panel.playerImage2);
             g.drawLine((getX()) + (panel.blockSize / 2),
                     (getY()) + (panel.blockSize / 2),
                     //This second vertex shows the direction
                     (getX()) + (panel.blockSize / 2),
                     getY() + (panel.blockSize));
         } else if (getDirection() == 3) {
+            this.setImage(panel.playerImage3);
             g.drawLine((getX()) + (panel.blockSize / 2),
                     (getY()) + (panel.blockSize / 2),
                     //This second vertex shows the direction
                     (getX()),
                     getY() + (panel.blockSize / 2));
         }
+        panel.repaint();
         checkGoal();
         checkPortalGun();
         checkTimeMachine();
@@ -252,16 +255,11 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
-
-
-            steps2.push(new Position(new Point(position), getDirection()));
+            steps.push(new Position(new Point(position), getDirection()));
             panel.maze.getNode(position).trimOccupants(1);
-            //System.out.println("MOVING");
             panel.maze.getNode(facing).addOccupant(this);
             parent = panel.maze.nodes[facing.y][facing.x];
             position.setLocation(parent.xInd, parent.yInd);
-            //System.out.println("Player" + position);
-            //System.out.println("STOPPED");
             stepsTaken++;
             updateFacing();
         } else {
@@ -270,11 +268,11 @@ public class Player extends Sprite {
     }
 
     public void undoMove() {
-        if (!steps2.isEmpty()) {
+        if (!steps.isEmpty()) {
             panel.maze.getNode(position).trimOccupants(1);
             System.out.println("UNDO");
-            int dir = steps2.peek().direction;
-            Point lastPosition = steps2.pop().point;
+            int dir = steps.peek().direction;
+            Point lastPosition = steps.pop().point;
             System.out.println(lastPosition);
             panel.maze.getNode(lastPosition).addOccupant(this);
             parent = panel.maze.nodes[lastPosition.y][lastPosition.x];

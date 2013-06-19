@@ -52,8 +52,10 @@ public class GamePanel extends javax.swing.JPanel {
     public float volume;
     public Image floorImage;
     public Image wallImage;
-
-    public Image playerImage;
+    public Image playerImage0;
+    public Image playerImage1;
+    public Image playerImage2;
+    public Image playerImage3;
     public Image portalImage;
     public Image timeMachineImage;
     public Image goalImage;
@@ -76,7 +78,14 @@ public class GamePanel extends javax.swing.JPanel {
         try {
             floorImage = ImageIO.read(loader.getImageFile("Floor"));
             wallImage = ImageIO.read(loader.getImageFile("Wall2"));
-            playerImage = ImageIO.read(loader.getImageFile("Player"));
+            playerImage0 = ImageIO.read(loader.getImageFile("Player0"));
+            
+            playerImage1 = ImageIO.read(loader.getImageFile("Player1"));
+            
+            playerImage2 = ImageIO.read(loader.getImageFile("Player2"));
+            
+            playerImage3 = ImageIO.read(loader.getImageFile("Player3"));         
+           
             portalImage = ImageIO.read(loader.getImageFile("Portal"));
             timeMachineImage = ImageIO.read(loader.getImageFile("TimeMachine"));
             goalImage = ImageIO.read(loader.getImageFile("Goal"));
@@ -149,7 +158,7 @@ public class GamePanel extends javax.swing.JPanel {
         while (!level.positions.isEmpty()) {
             pos.push(level.positions.pop());
         }
-        player.steps2 = pos;
+        player.steps = pos;
         counter = new StepCounter((maze.nodes.length * blockSize) + blockSize, 0, this);
         scoreboard = new ScoreBoard((maze.nodes.length * blockSize) + blockSize, 0, this);
         cursor = new Cursor(maze.nodes.length - 1, 0, this);

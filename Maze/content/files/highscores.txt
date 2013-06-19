@@ -1,4 +1,4 @@
-Tuk:10
+:124
 Kevin:23
 Nels:34
 Yasen:48

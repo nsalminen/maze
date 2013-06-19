@@ -81,10 +81,8 @@ public class ScoreBoard {
                     scoreList.remove(i);
                     nameList.remove(i);
                     
-                    System.out.println("sortinglist");
                 }
             }
-            System.out.println("A sorting run");
             
         }
         for(String string : boardList){
