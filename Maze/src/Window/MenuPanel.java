@@ -63,7 +63,7 @@ public class MenuPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         fullScreenButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        menuPanel = new javax.swing.JPanel();
         continueGame = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
         loadGameButton = new javax.swing.JButton();
@@ -71,7 +71,7 @@ public class MenuPanel extends javax.swing.JPanel {
         highScoreButton = new javax.swing.JButton();
         optionsButtons = new javax.swing.JButton();
         exitButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
         mainMenuBackground = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
@@ -93,9 +93,9 @@ public class MenuPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(29, 19, 19, 19);
         add(fullScreenButton, gridBagConstraints);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(666, 513));
-        jPanel1.setOpaque(false);
-        jPanel1.setPreferredSize(new java.awt.Dimension(666, 513));
+        menuPanel.setMinimumSize(new java.awt.Dimension(666, 513));
+        menuPanel.setOpaque(false);
+        menuPanel.setPreferredSize(new java.awt.Dimension(666, 513));
 
         continueGame.setText("Continue");
         continueGame.addActionListener(new java.awt.event.ActionListener() {
@@ -146,16 +146,16 @@ public class MenuPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuLogo.png")); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuLogo.png"))); // NOI18N
 
-        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
+        org.jdesktop.layout.GroupLayout menuPanelLayout = new org.jdesktop.layout.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+            menuPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(menuPanelLayout.createSequentialGroup()
                 .addContainerGap(279, Short.MAX_VALUE)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
-                    .add(jLabel1)
+                .add(menuPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
+                    .add(logo)
                     .add(continueGame, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(startButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(loadGameButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -165,11 +165,11 @@ public class MenuPanel extends javax.swing.JPanel {
                     .add(exitButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(268, 268, 268))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
+        menuPanelLayout.setVerticalGroup(
+            menuPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(menuPanelLayout.createSequentialGroup()
                 .add(71, 71, 71)
-                .add(jLabel1)
+                .add(logo)
                 .add(56, 56, 56)
                 .add(continueGame, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
@@ -194,9 +194,9 @@ public class MenuPanel extends javax.swing.JPanel {
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.ipadx = 180;
         gridBagConstraints.ipady = 100;
-        add(jPanel1, gridBagConstraints);
+        add(menuPanel, gridBagConstraints);
 
-        mainMenuBackground.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        mainMenuBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuBackground.png"))); // NOI18N
         mainMenuBackground.setText("jLabel1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -265,10 +265,10 @@ public class MenuPanel extends javax.swing.JPanel {
     private javax.swing.JButton exitButton2;
     private javax.swing.JButton fullScreenButton;
     private javax.swing.JButton highScoreButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton loadGameButton;
+    private javax.swing.JLabel logo;
     private javax.swing.JLabel mainMenuBackground;
+    private javax.swing.JPanel menuPanel;
     private javax.swing.JButton optionsButtons;
     private javax.swing.JButton saveGame;
     private javax.swing.JButton startButton;

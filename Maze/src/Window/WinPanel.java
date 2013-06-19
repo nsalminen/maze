@@ -78,12 +78,12 @@ public class WinPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        congratulations = new javax.swing.JLabel();
+        congratulationsText = new javax.swing.JLabel();
         subtitle = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         backButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -91,11 +91,11 @@ public class WinPanel extends javax.swing.JPanel {
         jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 380));
 
-        congratulations.setFont(new java.awt.Font("Myriad Pro", 0, 24)); // NOI18N
-        congratulations.setForeground(new java.awt.Color(51, 51, 51));
-        congratulations.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        congratulations.setText("Congratulations!");
-        congratulations.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        congratulationsText.setFont(new java.awt.Font("Myriad Pro", 0, 24)); // NOI18N
+        congratulationsText.setForeground(new java.awt.Color(51, 51, 51));
+        congratulationsText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        congratulationsText.setText("Congratulations!");
+        congratulationsText.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         subtitle.setFont(new java.awt.Font("Myriad Pro", 0, 14)); // NOI18N
         subtitle.setForeground(new java.awt.Color(51, 51, 51));
@@ -118,7 +118,7 @@ public class WinPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuLogo.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuLogo.png"))); // NOI18N
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -130,7 +130,7 @@ public class WinPanel extends javax.swing.JPanel {
                     .add(backButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(nameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(subtitle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(congratulations, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(congratulationsText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 549, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel2))
                 .add(163, 163, 163))
         );
@@ -140,7 +140,7 @@ public class WinPanel extends javax.swing.JPanel {
                 .add(0, 63, Short.MAX_VALUE)
                 .add(jLabel2)
                 .add(18, 18, 18)
-                .add(congratulations, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(congratulationsText, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(10, 10, 10)
                 .add(subtitle, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(10, 10, 10)
@@ -158,14 +158,14 @@ public class WinPanel extends javax.swing.JPanel {
         gridBagConstraints.ipady = 100;
         add(jPanel1, gridBagConstraints);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
-        jLabel1.setText("jLabel1");
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuBackground.png"))); // NOI18N
+        background.setText("jLabel1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(jLabel1, gridBagConstraints);
+        add(background, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -186,8 +186,8 @@ public class WinPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_nameFieldActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JLabel congratulations;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel background;
+    private javax.swing.JLabel congratulationsText;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nameField;

@@ -36,10 +36,10 @@ public class SavePanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         saveFileName = new javax.swing.JTextField();
         saveButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        saveTitle = new javax.swing.JLabel();
         cancel = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -56,8 +56,8 @@ public class SavePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Myriad Pro", 0, 18)); // NOI18N
-        jLabel1.setText("Please enter a name for your save file");
+        saveTitle.setFont(new java.awt.Font("Myriad Pro", 0, 18)); // NOI18N
+        saveTitle.setText("Please enter a name for your save file");
 
         cancel.setText("Cancel");
         cancel.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +66,7 @@ public class SavePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuLogo.png")); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuLogo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -77,8 +77,8 @@ public class SavePanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1)
+                            .addComponent(logo)
+                            .addComponent(saveTitle)
                             .addComponent(saveFileName)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -92,9 +92,9 @@ public class SavePanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel3)
+                .addComponent(logo)
                 .addGap(45, 45, 45)
-                .addComponent(jLabel1)
+                .addComponent(saveTitle)
                 .addGap(31, 31, 31)
                 .addComponent(saveFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -106,11 +106,11 @@ public class SavePanel extends javax.swing.JPanel {
 
         add(jPanel1, new java.awt.GridBagConstraints());
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuBackground.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        add(jLabel2, gridBagConstraints);
+        add(background, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -122,12 +122,12 @@ public class SavePanel extends javax.swing.JPanel {
         parent.goToMenu();       // TODO add your handling code here:
     }//GEN-LAST:event_cancelActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel background;
     private javax.swing.JButton cancel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel logo;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField saveFileName;
+    private javax.swing.JLabel saveTitle;
     // End of variables declaration//GEN-END:variables
 }

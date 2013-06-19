@@ -68,7 +68,7 @@ public class OptionPanel extends javax.swing.JPanel {
         add(soundToggleButton);
         soundToggleButton.setBounds(290, 180, 140, 29);
 
-        mainMenuBackground.setIcon(new javax.swing.ImageIcon("/Users/Nels/Dropbox/maze/Maze/content/images/menuBackground.png")); // NOI18N
+        mainMenuBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuBackground.png"))); // NOI18N
         mainMenuBackground.setText("jLabel1");
         add(mainMenuBackground);
         mainMenuBackground.setBounds(0, 0, 945, 751);
