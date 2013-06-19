@@ -1,5 +1,6 @@
 package Window;
 
+import Utilities.FileLoader;
 import Utilities.Level;
 import Utilities.SoundEffect;
 import java.awt.Dimension;
@@ -20,6 +21,7 @@ import javax.swing.JFrame;
  */
 public class MainWindow extends JFrame {
 
+    private FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
     static MainWindow mazeWindow = new MainWindow();
     public OptionPanel setting = new OptionPanel(this);
@@ -30,7 +32,7 @@ public class MainWindow extends JFrame {
     private Dimension windowDimension;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
-    SoundEffect music;
+    SoundEffect button;
 
     public MainWindow() {
         initComponents();
@@ -42,7 +44,7 @@ public class MainWindow extends JFrame {
         setSize(windowDimension);
         setContentPane(menu);
         setLocationRelativeTo(null);
-       
+        button = new SoundEffect(loader.getSoundEffect("menu"));
         
     }
 
@@ -78,6 +80,7 @@ public class MainWindow extends JFrame {
         menu.setFocusable(true);
         menu.requestFocus();
         menu.setSize(this.getSize());
+        button.play();
     }
 
     public void unPauseGame() {
