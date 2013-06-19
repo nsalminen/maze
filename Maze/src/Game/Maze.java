@@ -45,7 +45,7 @@ public class Maze {
      * @param p The parent panel of the generateMaze object
      */
     public Maze(GamePanel panel, Level level) {
-        dimension = new Dimension(31, 19);
+        dimension = new Dimension(level.layout.length, level.layout[0].length);
         this.panel = panel;
         nodes = new Node[level.layout.length][level.layout[0].length];
         buildMaze(level);

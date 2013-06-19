@@ -36,7 +36,7 @@ public class Player extends Sprite {
 
         steps2 = new Stack<>();
         steps2.push(new Position(new Point(1, 1), getDirection()));
-                this.setImage(panel.playerImage);
+                this.setImage(panel.playerImage1);
 
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
         portalpickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
@@ -89,7 +89,17 @@ public class Player extends Sprite {
     }
 
     public void paintSelf(Graphics g) {
-        g.setColor(Color.blue);
+        
+        
+         if (hasPortalGun) {
+            int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
+            int[] yp = {getY(), getY() + panel.blockSize, getY() + panel.blockSize};
+
+            g.setColor(Color.GREEN);
+            g.fillPolygon(xp, yp, 3);
+        }
+                 
+       
         g.drawImage(this.getImage(), getX(), getY(), panel.blockSize, panel.blockSize, null);
 
 
@@ -97,43 +107,23 @@ public class Player extends Sprite {
         g.setColor(Color.blue);
         //g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
 
-        if (hasPortalGun) {
-            int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
-            int[] yp = {getY(), getY() + panel.blockSize, getY() + panel.blockSize};
+       
 
-            g.setColor(Color.green);
-            g.fillPolygon(xp, yp, 3);
-        }
-
-        g.setColor(Color.CYAN);
+        
 
         if (getDirection() == 0) {
-
-            //getImage()
-            g.drawLine((getX()) + (panel.blockSize / 2),
-                    (getY()) + (panel.blockSize / 2),
-                    //This second vertex shows the direction
-                    (getX()) + (panel.blockSize / 2),
-                    getY());
+            this.setImage(panel.playerImage0);
+            
         } else if (getDirection() == 1) {
-            g.drawLine((getX()) + (panel.blockSize / 2),
-                    (getY()) + (panel.blockSize / 2),
-                    //This second vertex shows the direction
-                    (getX()) + (panel.blockSize),
-                    getY() + (panel.blockSize / 2));
+             this.setImage(panel.playerImage1);
+           
         } else if (getDirection() == 2) {
-            g.drawLine((getX()) + (panel.blockSize / 2),
-                    (getY()) + (panel.blockSize / 2),
-                    //This second vertex shows the direction
-                    (getX()) + (panel.blockSize / 2),
-                    getY() + (panel.blockSize));
+             this.setImage(panel.playerImage2);
+           
         } else if (getDirection() == 3) {
-            g.drawLine((getX()) + (panel.blockSize / 2),
-                    (getY()) + (panel.blockSize / 2),
-                    //This second vertex shows the direction
-                    (getX()),
-                    getY() + (panel.blockSize / 2));
+             this.setImage(panel.playerImage3);
         }
+        panel.repaint();
         checkGoal();
         checkPortalGun();
         checkTimeMachine();
@@ -252,8 +242,7 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
-
-
+            
             steps2.push(new Position(new Point(position), getDirection()));
             panel.maze.getNode(position).trimOccupants(1);
             //System.out.println("MOVING");
