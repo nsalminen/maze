@@ -46,8 +46,9 @@ public class FileReader {
         
         
         levelReader = new Scanner(loader.getSettings());
-        String[] string = levelReader.nextLine().split(";");
-        
+        String[] string = new String[2];
+        string[0] = levelReader.nextLine();
+        string[1] = levelReader.nextLine();
         return string;
     }
     

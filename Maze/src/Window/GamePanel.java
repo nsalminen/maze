@@ -108,10 +108,16 @@ public class GamePanel extends javax.swing.JPanel {
         printLevel(maze.level);
     }
 
-    public void setVolume() {        
+    public void setVolume() {       
         player.getSfb().setVolume(parent.setting.volume/10);
-        parent.menu.music.setVolume(parent.setting.volume/10);       
+        
     }
+    
+    public void setMusicVolume() {        
+
+        parent.menu.music.setVolume(parent.setting.music/10);
+    }
+
 
     public void volumeOn() {
         player.getSfb().volumeOn();

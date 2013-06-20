@@ -18,32 +18,36 @@ public class OptionPanel extends javax.swing.JPanel {
     public FileReader reader = new FileReader();
     public FileWriter writer = new FileWriter();
     public int volume;
-
+    public int music;
     public OptionPanel(MainWindow p) throws FileNotFoundException{
         initComponents();
      
-        String[] settings = reader.readSettings();
+        String[] settings = reader.readSettings();        
         
-        //volumeSlider.setExtent(100);
+        System.out.println(settings.toString());
         
         int vol = Integer.parseInt(settings[0].split(":")[1]);
+        int mus = Integer.parseInt(settings[1].split(":")[1]);
+        
+        System.out.println("fasdfasdfasdfasdf");
         
         volume = vol;
         this.setFocusable(true);
         parent = p;
-        
-        
+        musicSlider.setMaximum(60);
+        musicSlider.setMinimum(-800);
+        musicSlider.setValue(mus);
         volumeSlider.setMaximum(60);
         volumeSlider.setMinimum(-800);
         volumeSlider.setValue(vol);
         
-            System.out.println("ppfaosdasd");
-
+        System.out.println("ppfaosdasd");
     }
     
     public String buildSettings(){
         
-        return "masterVolume:"+volume+";\n";               
+        return "masterVolume:"+volume+"\n"+
+               "musicVolume:"+music+"\n";               
         
     }
 
@@ -57,8 +61,12 @@ public class OptionPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         backButton = new javax.swing.JButton();
+        musicSlider = new javax.swing.JSlider();
         volumeSlider = new javax.swing.JSlider();
         soundToggleButton = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         mainMenuBackground = new javax.swing.JLabel();
 
         setLayout(null);
@@ -70,7 +78,21 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
         add(backButton);
-        backButton.setBounds(400, 490, 75, 29);
+        backButton.setBounds(350, 510, 130, 23);
+
+        musicSlider.setMajorTickSpacing(100);
+        musicSlider.setMaximum(60);
+        musicSlider.setMinimum(-800);
+        musicSlider.setPaintTicks(true);
+        musicSlider.setToolTipText("");
+        musicSlider.setValue(0);
+        musicSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                musicSliderStateChanged(evt);
+            }
+        });
+        add(musicSlider);
+        musicSlider.setBounds(270, 320, 380, 31);
 
         volumeSlider.setMajorTickSpacing(100);
         volumeSlider.setMaximum(60);
@@ -84,7 +106,7 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
         add(volumeSlider);
-        volumeSlider.setBounds(280, 340, 380, 38);
+        volumeSlider.setBounds(270, 400, 380, 31);
 
         soundToggleButton.setSelected(true);
         soundToggleButton.setText("ON");
@@ -94,7 +116,19 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
         add(soundToggleButton);
-        soundToggleButton.setBounds(290, 180, 140, 29);
+        soundToggleButton.setBounds(270, 270, 70, 23);
+
+        jLabel1.setText("Sound Volume");
+        add(jLabel1);
+        jLabel1.setBounds(190, 410, 100, 14);
+
+        jLabel2.setText("Music Volume");
+        add(jLabel2);
+        jLabel2.setBounds(190, 330, 80, 14);
+
+        jLabel3.setText("Sound");
+        add(jLabel3);
+        jLabel3.setBounds(190, 270, 70, 20);
 
         mainMenuBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuBackground.png"))); // NOI18N
         mainMenuBackground.setText("jLabel1");
@@ -114,6 +148,7 @@ public class OptionPanel extends javax.swing.JPanel {
         
         if(parent.game != null){
             parent.game.setVolume();
+            parent.game.setMusicVolume();
         }
         else{
             System.out.println("No game!");
@@ -131,9 +166,20 @@ public class OptionPanel extends javax.swing.JPanel {
             System.out.println("False");
         }
     }//GEN-LAST:event_soundToggleButtonActionPerformed
+
+    private void musicSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_musicSliderStateChanged
+       music = musicSlider.getValue();
+       writer.writeSettings(buildSettings());
+       System.out.println(musicSlider.getValue());
+    }//GEN-LAST:event_musicSliderStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel mainMenuBackground;
+    private javax.swing.JSlider musicSlider;
     private javax.swing.JToggleButton soundToggleButton;
     private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables

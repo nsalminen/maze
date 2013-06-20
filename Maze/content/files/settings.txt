@@ -1,1 +1,2 @@
-masterVolume:-393;
+masterVolume:-572
+musicVolume:-41
