@@ -11,12 +11,7 @@ import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import javax.swing.JFrame;
-//import com.apple.eawt.FullScreenUtilities;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author Nels
@@ -37,7 +32,10 @@ public class MainWindow extends JFrame {
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
     SoundEffect button;
-
+    
+    /**
+     * Creates new MainWindow
+     */
     public MainWindow() {
         initComponents();
         if (System.getProperty("os.name").equals("Mac OS X")) {
@@ -50,7 +48,10 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         button = new SoundEffect(loader.getSoundEffect("menu"));
     }
-
+    
+    /**
+     * opens a new SavePanel
+     */
     public void saveGame() {
         SavePanel savepanel = new SavePanel(this);
         setContentPane(savepanel);
@@ -60,7 +61,10 @@ public class MainWindow extends JFrame {
         savepanel.setSize(this.getSize());
     }
 
-    public void showSettings() {
+    /**
+     * opens a new OptionPanel
+     */
+    public void showOptions() {
         try{
         setting = new OptionPanel(this);
         setContentPane(setting);
@@ -72,7 +76,10 @@ public class MainWindow extends JFrame {
         }
         
     }
-
+    
+    /**
+     * opens a new LoadPanel
+     */
     public void loadGame() {
 
         LoadPanel loadpanel = new LoadPanel(this);
@@ -82,7 +89,10 @@ public class MainWindow extends JFrame {
         loadpanel.requestFocus();
         loadpanel.setSize(this.getSize());
     }
-
+    
+    /**
+     * Returns to the menu
+     */
     public void goToMenu() {
         setContentPane(menu);
         menu.setFocusable(true);
@@ -90,7 +100,9 @@ public class MainWindow extends JFrame {
         menu.setSize(this.getSize());
         button.play();
     }
-
+    /**
+     * Returns to the Active Game
+     */
     public void unPauseGame() {
         setContentPane(game);
         game.setFocusable(true);
@@ -98,12 +110,20 @@ public class MainWindow extends JFrame {
         game.setSize(this.getSize());
     }
 
+    /**
+     * Opens new HighScoreanel
+     */
     public void showHighScores() {
         HighScorePanel scores = new HighScorePanel(this);
         setContentPane(scores);
         scores.setSize(this.getSize());
     }
 
+    /**
+     * This method starts a new game based on a saved Level object
+     * 
+     * @param level pre-built Level object
+     */
     public void loadNewGame(Level level) {
        
         game = new GamePanel(level, this);
@@ -113,6 +133,11 @@ public class MainWindow extends JFrame {
         game.repaint();
         game.setSize(this.getSize());
     }
+    
+    /**
+     * This method starts a new game with a randombly genrated maze
+     * 
+     */
 
     public void startGame() {
         game = new GamePanel(this);
@@ -123,6 +148,9 @@ public class MainWindow extends JFrame {
         game.setSize(this.getSize());
     }
 
+    /**
+     * Opens a new WinPanel
+     */
     public void gameOver() {
         game.setVisible(false);
         win = new WinPanel(this);
@@ -142,30 +170,30 @@ public class MainWindow extends JFrame {
     public void toggleFullscreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         vc = ge.getDefaultScreenDevice();
-        if (vc.isFullScreenSupported()) {
-            System.out.println("Supported");
-            if (!fullscreen) {
-                vc.setFullScreenWindow(mazeWindow);
-                game.setSize(this.getSize());
-                fullscreen = true;
-                setVisible(false);
-                setVisible(true);
-            } else if (fullscreen) {
-                vc.setFullScreenWindow(null);
-                fullscreen = false;
-            }
-        } else {
+//        if (vc.isFullScreenSupported()) {
+//            System.out.println("Supported");
+//            if (!fullscreen) {
+//                vc.setFullScreenWindow(mazeWindow);
+//                game.setSize(this.getSize());
+//                fullscreen = true;
+//                setVisible(false);
+//                setVisible(true);
+//            } else if (fullscreen) {
+//                vc.setFullScreenWindow(null);
+//                fullscreen = false;
+//            }
+//        } else {
             System.out.println("Unsupported");
             if (!fullscreen) {
-                mazeWindow.setExtendedState(MainWindow.MAXIMIZED_BOTH);
-                mazeWindow.setUndecorated(true);
+                setExtendedState(MainWindow.MAXIMIZED_BOTH);
+                //setUndecorated(true);
                 mazeWindow.setResizable(false);
             } else {
                 mazeWindow.setExtendedState(MainWindow.NORMAL);
                 mazeWindow.setUndecorated(false);
                 mazeWindow.setResizable(true);
             }
-        }
+  //      }
     }
 
     /**

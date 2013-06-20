@@ -6,13 +6,14 @@ import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 
 /**
- *
+ *  This class contains controlls to create and use other panels
  * @author Nels
  */
 public class MenuPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MenuPanel
+     *
      */
     MainWindow parent;
     SoundEffect music;
@@ -211,14 +212,13 @@ public class MenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
-        MainWindow.mazeWindow.toggleFullscreen();
-        
+        parent.toggleFullscreen();
         parent.button.play();
     }//GEN-LAST:event_fullScreenButtonActionPerformed
 
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
 
-        parent.showSettings();
+        parent.showOptions();
         parent.button.play();
     }//GEN-LAST:event_optionsButtonsActionPerformed
 

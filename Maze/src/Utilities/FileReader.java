@@ -17,8 +17,9 @@ import java.util.Stack;
 import java.util.TreeMap;
 
 /**
+ *This class is used to take in File obects and translate them into processable data.
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 
         
@@ -31,7 +32,7 @@ public class FileReader {
     public Scanner levelReader;
     
     public FileLoader loader;
-    public Map<String, Integer> scores = new TreeMap<>();
+    
   
     public FileReader()
     {   
@@ -41,17 +42,33 @@ public class FileReader {
         }
         catch(Exception e){}
     }
-    
-    public String[] readSettings()throws FileNotFoundException{
-        
-        
+     
+    /**
+     * Loads the "settings.txt" file through a FileLoader and translates each line
+     * in a string[]. 
+     *
+     * string[0] holds the value for the master volume
+     * string[1] holds the value fot the music volume
+     * 
+     * @return sting A String array object containing the settings data
+     */
+    public String[] readSettings()throws FileNotFoundException{        
         levelReader = new Scanner(loader.getSettings());
         String[] string = new String[2];
         string[0] = levelReader.nextLine();
         string[1] = levelReader.nextLine();
         return string;
     }
-    
+     /**
+      * Reads a given file and formats it into a Level object. A Level object
+      * contains all the data required to build a maze.
+     * 
+     * string[0] holds the value for the master volume
+     * string[1] holds the value fot the music volume
+     * 
+     * @param File a file object for the desired savefile.
+     * @return level A Level object containing all the data needed to (re)build a game
+     */
     public Level readLevel(File f)throws FileNotFoundException{
         int score = 0;
         boolean portalgun;
@@ -108,34 +125,25 @@ public class FileReader {
          
         Level level;
         
-        level = new Level(values, score, portalgun, positions, showPath);
-        
-        //System.out.println("GOT SOMETHING");
-        level.print();        
+        level = new Level(values, score, portalgun, positions, showPath);      
         return level;
        
     }
     
-    public String[] getLevelHeader(){
-        
-        String maxSize = levelReader.nextLine();
-        String filledSize= levelReader.nextLine();
-        //System.out.println("Max Size: "+maxSize);
-        //.out.println("Filled Size: "+filledSize);
-        
-        String line = "";
-        
-        while(levelReader.hasNext()){
-            line = line+levelReader.nextLine();
-        }
-        
-        return line.split("-");
-        
-    }
-    
+    /**
+     * Returns a sorted TreeMap containing the highscores from the high-score file;
+     * Reads the file  containing the high-scores and formats it into a TreeMap.
+     * The keys for this treemap are various player's names and the values contain their scores
+     * 
+     * @return Map A sorted TreeMap where the values of the players are sorted ascending by score
+     */
+     
     public Map<String,Integer> getHighScores(){
         String line;
         String name;
+        
+        Map<String, Integer> scores = new TreeMap<>();
+        
         int score;
             for(int i = 0; i <5; i++){
                 if(scoreReader.hasNext()){
@@ -147,6 +155,13 @@ public class FileReader {
             }
         return sortByComparator(scores);
     }
+    
+    /**
+     * Returns a sorted TreeMap, where the keys are sorted ascendingly by their values.
+     * 
+     * @param unsortMap a raw undorted TreeMap object
+     * @return Map A sorted TreeMap where the keys are sorted ascending by value
+     */
     private static Map sortByComparator(Map unsortMap) {
  
 		List list = new LinkedList(unsortMap.entrySet());
@@ -163,8 +178,14 @@ public class FileReader {
 		}
 		return sortedMap;
 	}
-    public ArrayList<String> printMap(){
-               
+    
+    /**
+     * Returns an ArrayList<Sting> containing sorted highscore values in order serperated by ":"
+     * If there are less than 5 noted highscores, this method fills the empty slots with "****:9999"
+     * 
+     * @return scoreList An ArrayList<Sting> formatted: "PLAYERNAME:SCORE"
+     */
+    public ArrayList<String> printMap(){               
                 Map<String,Integer> map =getHighScores();
                 ArrayList<String> scoreList = new ArrayList<String>();
                 for (Map.Entry entry : map.entrySet()) {
@@ -172,14 +193,14 @@ public class FileReader {
                                    + " Value : " + entry.getValue());
                         scoreList.add(""+entry.getKey()+":"+entry.getValue());
 		}
+                
+                //Fills empty slots
                 if(scoreList.size()<5){
-                    //.out.println("small list");
                     System.out.println(scoreList.size());
                     int remainder = 5-scoreList.size();
                     
                     for(int i = 0 ; i < remainder;i++){
                         scoreList.add(i,"****:9999");
-                        //.out.println("added empty");
                     }
                 }
                 return scoreList;

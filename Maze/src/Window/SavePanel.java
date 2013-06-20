@@ -7,7 +7,7 @@ package Window;
 import Utilities.FileWriter;
 
 /**
- *
+ * A panel where a player can submit a file name and save their current game
  * @author Yasen
  */
 public class SavePanel extends javax.swing.JPanel {

@@ -1,14 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Utilities;
 
 import java.io.*;
 import javax.sound.sampled.*;
 
 /**
- *
+ * This class contains an Audio file and controlls to use it in the game
+ * 
  * @author Yasen
  */
 public class SoundEffect {
@@ -16,7 +13,11 @@ public class SoundEffect {
     private Clip clip;
     private FloatControl gainControl;
     private boolean playing = false;
-
+    /**
+     * Opens an Audio Stream
+     * 
+     * @param file A File object pointing to a sound file
+     */
     public SoundEffect(File file) {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
@@ -30,23 +31,35 @@ public class SoundEffect {
             System.out.println(e);
         }
     }
-
+    
+    /**
+     * turns Volume to 0
+     */
     public void volumeOn(){
         gainControl.setValue(0);
     }
-    
+    /**
+     * turns off the sound
+     */
     public void volumeOff(){
         gainControl.setValue(gainControl.getMinimum());
-    }
-    
+    }    
+    /**
+     * @return Whether this Soundeffect is playing or not
+     */
     public boolean isPlaying(){
        return playing;
     }
-
+    /**
+     * Sets the volume to a certain amount
+     * @param value a Float between -80 and 6 that determines the volume 
+     */        
     public void setVolume(float value) {
         gainControl.setValue(value);
     }
-
+    /**
+     * Activates the soundeffect
+     */
     public void play() {
         if (clip.isRunning()) {
             clip.stop();

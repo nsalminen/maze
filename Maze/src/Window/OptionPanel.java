@@ -5,7 +5,8 @@ import Utilities.FileWriter;
 import java.io.FileNotFoundException;
 
 /**
- *
+ *This panel controlls the volume for all the active SoundEffect objects in the game
+ * and saves its settings to the settings.txt file
  * @author Nels
  */
 public class OptionPanel extends javax.swing.JPanel {
@@ -46,6 +47,9 @@ public class OptionPanel extends javax.swing.JPanel {
         System.out.println("ppfaosdasd");
     }
 
+    /**
+     * Takes settings data and returns a string used to overwrite the settings file
+     */
     public String buildSettings() {
         return "masterVolume:" + volume + "\n"
                 + "musicVolume:" + music + "\n";
