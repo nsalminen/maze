@@ -19,18 +19,19 @@ public class OptionPanel extends javax.swing.JPanel {
     public FileWriter writer = new FileWriter();
     public int volume;
     public int music;
-    public OptionPanel(MainWindow p) throws FileNotFoundException{
+
+    public OptionPanel(MainWindow p) throws FileNotFoundException {
         initComponents();
-     
-        String[] settings = reader.readSettings();        
-        
+
+        String[] settings = reader.readSettings();
+
         System.out.println(settings.toString());
-        
+
         int vol = Integer.parseInt(settings[0].split(":")[1]);
         int mus = Integer.parseInt(settings[1].split(":")[1]);
-        
+
         System.out.println("fasdfasdfasdfasdf");
-        
+
         volume = vol;
         this.setFocusable(true);
         parent = p;
@@ -40,15 +41,14 @@ public class OptionPanel extends javax.swing.JPanel {
         volumeSlider.setMaximum(60);
         volumeSlider.setMinimum(-800);
         volumeSlider.setValue(vol);
-        
+        this.setSize(parent.getSize());
+
         System.out.println("ppfaosdasd");
     }
-    
-    public String buildSettings(){
-        
-        return "masterVolume:"+volume+"\n"+
-               "musicVolume:"+music+"\n";               
-        
+
+    public String buildSettings() {
+        return "masterVolume:" + volume + "\n"
+                + "musicVolume:" + music + "\n";
     }
 
     /**
@@ -59,26 +59,22 @@ public class OptionPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        backButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         musicSlider = new javax.swing.JSlider();
-        volumeSlider = new javax.swing.JSlider();
         soundToggleButton = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        volumeSlider = new javax.swing.JSlider();
+        backButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         mainMenuBackground = new javax.swing.JLabel();
 
-        setLayout(null);
+        setLayout(new java.awt.GridBagLayout());
 
-        backButton.setText("Back");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
-            }
-        });
-        add(backButton);
-        backButton.setBounds(350, 510, 130, 23);
+        jPanel1.setOpaque(false);
 
         musicSlider.setMajorTickSpacing(100);
         musicSlider.setMaximum(60);
@@ -91,8 +87,21 @@ public class OptionPanel extends javax.swing.JPanel {
                 musicSliderStateChanged(evt);
             }
         });
-        add(musicSlider);
-        musicSlider.setBounds(270, 320, 380, 31);
+
+        soundToggleButton.setSelected(true);
+        soundToggleButton.setText("ON");
+        soundToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                soundToggleButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Sound");
+
+        jLabel2.setText("Music Volume");
+
+        jLabel1.setText("Sound Volume");
 
         volumeSlider.setMajorTickSpacing(100);
         volumeSlider.setMaximum(60);
@@ -105,52 +114,81 @@ public class OptionPanel extends javax.swing.JPanel {
                 volumeSliderStateChanged(evt);
             }
         });
-        add(volumeSlider);
-        volumeSlider.setBounds(270, 400, 380, 31);
 
-        soundToggleButton.setSelected(true);
-        soundToggleButton.setText("ON");
-        soundToggleButton.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                soundToggleButtonActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
-        add(soundToggleButton);
-        soundToggleButton.setBounds(270, 270, 70, 23);
 
-        jLabel1.setText("Sound Volume");
-        add(jLabel1);
-        jLabel1.setBounds(190, 410, 100, 14);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuLogo.png"))); // NOI18N
+        jLabel4.setToolTipText("");
 
-        jLabel2.setText("Music Volume");
-        add(jLabel2);
-        jLabel2.setBounds(190, 330, 80, 14);
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
+                    .add(volumeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(soundToggleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(musicSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(backButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel4))
+                .add(0, 0, 0))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jLabel4)
+                .add(56, 56, 56)
+                .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(soundToggleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(42, 42, 42)
+                .add(jLabel2)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(musicSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(47, 47, 47)
+                .add(jLabel1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(volumeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(41, 41, 41)
+                .add(backButton)
+                .add(30, 30, 30))
+        );
 
-        jLabel3.setText("Sound");
-        add(jLabel3);
-        jLabel3.setBounds(190, 270, 70, 20);
+        add(jPanel1, new java.awt.GridBagConstraints());
 
         mainMenuBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuBackground.png"))); // NOI18N
         mainMenuBackground.setText("jLabel1");
-        add(mainMenuBackground);
-        mainMenuBackground.setBounds(0, 0, 945, 751);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        add(mainMenuBackground, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void volumeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_volumeSliderStateChanged
-       volume = volumeSlider.getValue();
-       writer.writeSettings(buildSettings());
-       System.out.println(volumeSlider.getValue());
-       
+        volume = volumeSlider.getValue();
+        writer.writeSettings(buildSettings());
+        System.out.println(volumeSlider.getValue());
+
     }//GEN-LAST:event_volumeSliderStateChanged
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         parent.goToMenu();
-        
-        if(parent.game != null){
+
+        if (parent.game != null) {
             parent.game.setVolume();
             parent.game.setMusicVolume();
-        }
-        else{
+        } else {
             System.out.println("No game!");
         }
     }//GEN-LAST:event_backButtonActionPerformed
@@ -168,16 +206,17 @@ public class OptionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_soundToggleButtonActionPerformed
 
     private void musicSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_musicSliderStateChanged
-       music = musicSlider.getValue();
-       writer.writeSettings(buildSettings());
-       System.out.println(musicSlider.getValue());
+        music = musicSlider.getValue();
+        writer.writeSettings(buildSettings());
+        System.out.println(musicSlider.getValue());
     }//GEN-LAST:event_musicSliderStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mainMenuBackground;
     private javax.swing.JSlider musicSlider;
     private javax.swing.JToggleButton soundToggleButton;
