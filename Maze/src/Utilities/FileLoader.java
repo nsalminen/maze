@@ -34,7 +34,8 @@ public class FileLoader {
 
         if (getOs().equals("Windows 7")) {
             image = new File("content\\images\\"+name+".png");
-        } else if (getOs().equals("Mac OS X")) {
+        } 
+        else{
             image = new File("content/images/"+name+".png");
         }
         return image;
@@ -52,7 +53,8 @@ public class FileLoader {
 
         if (getOs().equals("Windows 7")) {
             effect = new File("content\\sounds\\sfx_" + name + ".wav");
-        } else if (getOs().equals("Mac OS X")) {
+        }
+        else{
             effect = new File("content/sounds/sfx_" + name + ".wav");
         }
         return effect;
@@ -73,7 +75,8 @@ public class FileLoader {
 
             if (getOs().equals("Windows 7")) {
                 level = new File("content\\files\\saves\\" + name + ".txt");
-            } else if (getOs().equals("Mac OS X")) {
+            }
+        else{
                 level = new File("content/files/saves/" + name + ".txt");
             }
             level.createNewFile();
@@ -92,7 +95,8 @@ public class FileLoader {
 
         if (getOs().equals("Windows 7")) {
             file = new File("content\\files\\saves\\" + name + ".txt");
-        } else if (getOs().equals("Mac OS X")) {
+        } 
+        else{
             file = new File("content/files/saves/" + name + ".txt");
         }
         System.out.println(file.toURI().toASCIIString());
@@ -110,7 +114,8 @@ public class FileLoader {
 
         if (getOs().equals("Windows 7")) {
             file = new File("content\\files\\highscores.txt");
-        } else if (getOs().equals("Mac OS X") || getOs().equals("Linux")) {
+        } 
+        else{
             file = new File("content/files/highscores.txt");
         }
 
@@ -129,7 +134,8 @@ public class FileLoader {
 
         if (getOs().equals("Windows 7")) {
             highScore = new File("content\\files\\settings.txt");
-        } else if (getOs().equals("Mac OS X")) {
+        }
+        else{
             highScore = new File("content/files/settings.txt");
         }
         return highScore;

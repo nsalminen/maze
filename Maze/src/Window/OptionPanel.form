@@ -33,7 +33,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="volumeSlider" alignment="2" min="-2" pref="380" max="-2" attributes="0"/>
-                      <Component id="soundToggleButton" alignment="2" min="-2" pref="294" max="-2" attributes="0"/>
+                      <Component id="muteButton" alignment="2" min="-2" pref="294" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="2" min="-2" pref="70" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="musicSlider" alignment="2" min="-2" pref="380" max="-2" attributes="0"/>
@@ -53,7 +53,7 @@
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" pref="20" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="soundToggleButton" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="muteButton" min="-2" pref="47" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -83,13 +83,13 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="musicSliderStateChanged"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="soundToggleButton">
+        <Component class="javax.swing.JToggleButton" name="muteButton">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="ON"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="soundToggleButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="muteButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">

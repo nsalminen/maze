@@ -20,19 +20,29 @@ public class OptionPanel extends javax.swing.JPanel {
     public FileWriter writer = new FileWriter();
     public int volume;
     public int music;
-
+   
     public OptionPanel(MainWindow p) throws FileNotFoundException {
         initComponents();
-
+        boolean mute;
         String[] settings = reader.readSettings();
-
-        System.out.println(settings.toString());
+        System.out.println(settings[0]+settings[1]+settings[1]);
 
         int vol = Integer.parseInt(settings[0].split(":")[1]);
         int mus = Integer.parseInt(settings[1].split(":")[1]);
-
+        
+        if( settings[2].split(":")[1].contains("true")){
+            mute = true;
+            muteButton.setText("ON");
+        }
+        else{
+            mute = false;
+            muteButton.setText("OFF");
+        }
+        
+        //mute = muteButton.isSelected();
+        muteButton.setSelected(mute);
+        
         System.out.println("fasdfasdfasdfasdf");
-
         volume = vol;
         this.setFocusable(true);
         parent = p;
@@ -52,7 +62,8 @@ public class OptionPanel extends javax.swing.JPanel {
      */
     public String buildSettings() {
         return "masterVolume:" + volume + "\n"
-                + "musicVolume:" + music + "\n";
+                + "musicVolume:" + music + "\n"
+                + "mute:"+ muteButton.isSelected();
     }
 
     /**
@@ -67,7 +78,7 @@ public class OptionPanel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         musicSlider = new javax.swing.JSlider();
-        soundToggleButton = new javax.swing.JToggleButton();
+        muteButton = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -92,11 +103,11 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
 
-        soundToggleButton.setSelected(true);
-        soundToggleButton.setText("ON");
-        soundToggleButton.addActionListener(new java.awt.event.ActionListener() {
+        muteButton.setSelected(true);
+        muteButton.setText("ON");
+        muteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                soundToggleButtonActionPerformed(evt);
+                muteButtonActionPerformed(evt);
             }
         });
 
@@ -137,7 +148,7 @@ public class OptionPanel extends javax.swing.JPanel {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
                     .add(volumeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(soundToggleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(muteButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel2)
                     .add(musicSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +165,7 @@ public class OptionPanel extends javax.swing.JPanel {
                 .add(56, 56, 56)
                 .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(soundToggleButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(muteButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(42, 42, 42)
                 .add(jLabel2)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -197,17 +208,15 @@ public class OptionPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void soundToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundToggleButtonActionPerformed
-        System.out.println(soundToggleButton.isSelected());
-        if (soundToggleButton.isSelected()) {
-            soundToggleButton.setText("ON");
-            parent.getGame().volumeOn();
-        } else {
-            soundToggleButton.setText("OFF");
-            parent.getGame().volumeOff();
-            System.out.println("False");
-        }
-    }//GEN-LAST:event_soundToggleButtonActionPerformed
+    private void muteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_muteButtonActionPerformed
+             if( muteButton.isSelected()){
+                    muteButton.setText("ON");
+                }   
+             else{
+                    muteButton.setText("OFF");
+                }
+            writer.writeSettings(buildSettings());
+    }//GEN-LAST:event_muteButtonActionPerformed
 
     private void musicSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_musicSliderStateChanged
         music = musicSlider.getValue();
@@ -223,7 +232,7 @@ public class OptionPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mainMenuBackground;
     private javax.swing.JSlider musicSlider;
-    private javax.swing.JToggleButton soundToggleButton;
+    private javax.swing.JToggleButton muteButton;
     private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables
 }

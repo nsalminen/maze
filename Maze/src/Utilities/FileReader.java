@@ -54,9 +54,10 @@ public class FileReader {
      */
     public String[] readSettings()throws FileNotFoundException{        
         levelReader = new Scanner(loader.getSettings());
-        String[] string = new String[2];
+        String[] string = new String[3];
         string[0] = levelReader.nextLine();
         string[1] = levelReader.nextLine();
+        string[2] = levelReader.nextLine();
         return string;
     }
      /**
@@ -76,7 +77,7 @@ public class FileReader {
         Scanner lvlReader = new Scanner(f);
         String line ="";
         Stack<Position> positions = new Stack<>();
-        
+
         //Get the score
         lvlReader.hasNextLine();
         line = lvlReader.nextLine().split("=")[1];
