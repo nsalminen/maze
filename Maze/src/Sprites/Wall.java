@@ -15,11 +15,11 @@ public class Wall extends Sprite {
         this.panel = panel;
         parent = node;
         position = parent.getPosition();
-        this.setImage(panel.getWallImage());
+        this.setImage(panel.wallImage);
     }
 
     public void paintSelf(int x, int y, Graphics g) {
         g.setColor(Color.red);
-        g.drawImage(this.getImage(), x * panel.getBlockSize(), y * panel.getBlockSize(), panel.getBlockSize(), panel.getBlockSize(), null);
+        g.drawImage(this.getImage(), x * panel.blockSize, y * panel.blockSize, panel.blockSize, panel.blockSize, null);
     }
 }

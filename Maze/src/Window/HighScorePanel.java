@@ -9,11 +9,11 @@ import javax.swing.JLabel;
  * @author Yasen
  */
 public class HighScorePanel extends javax.swing.JPanel {
-    private FileReader scoreReader;
-    private MainWindow parent;
+    FileReader scoreReader;
+    MainWindow parent;
     
-    private JLabel[] names = new JLabel[5];
-    private JLabel[] scores = new JLabel[5];
+    JLabel[] names = new JLabel[5];
+    JLabel[] scores = new JLabel[5];
     /**
      * Creates new form HighScorePanel
      */
@@ -41,10 +41,10 @@ public class HighScorePanel extends javax.swing.JPanel {
      * Builds the scoreboard from the known values
      */
     void buildScoreBoard(){
-        ArrayList<String> data = getScoreReader().printMap();        
+        ArrayList<String> data = scoreReader.printMap();        
         for(int i = 0; i < data.size(); i++){
-            getNames()[i].setText(data.get(i).split(":")[0]);
-            getScores()[i].setText(data.get(i).split(":")[1]);
+            names[i].setText(data.get(i).split(":")[0]);
+            scores[i].setText(data.get(i).split(":")[1]);
         }
     }
     
@@ -226,7 +226,7 @@ public class HighScorePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        getParent().goToMenu();
+        parent.goToMenu();
     }//GEN-LAST:event_backButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -246,60 +246,4 @@ public class HighScorePanel extends javax.swing.JPanel {
     private javax.swing.JLabel score4;
     private javax.swing.JLabel score5;
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the scoreReader
-     */
-    public FileReader getScoreReader() {
-        return scoreReader;
-    }
-
-    /**
-     * @param scoreReader the scoreReader to set
-     */
-    public void setScoreReader(FileReader scoreReader) {
-        this.scoreReader = scoreReader;
-    }
-
-    /**
-     * @return the parent
-     */
-    public MainWindow getParent() {
-        return parent;
-    }
-
-    /**
-     * @param parent the parent to set
-     */
-    public void setParent(MainWindow parent) {
-        this.parent = parent;
-    }
-
-    /**
-     * @return the names
-     */
-    public JLabel[] getNames() {
-        return names;
-    }
-
-    /**
-     * @param names the names to set
-     */
-    public void setNames(JLabel[] names) {
-        this.names = names;
-    }
-
-    /**
-     * @return the scores
-     */
-    public JLabel[] getScores() {
-        return scores;
-    }
-
-    /**
-     * @param scores the scores to set
-     */
-    public void setScores(JLabel[] scores) {
-        this.scores = scores;
-    }
 }

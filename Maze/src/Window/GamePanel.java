@@ -1,5 +1,4 @@
 
-
 package Window;
 
 import Game.*;
@@ -32,33 +31,34 @@ public class GamePanel extends javax.swing.JPanel {
     /**
      * Creates new form MazePanelForm
      */
-    private Goal goal;
-    private Player player;
-    private Maze maze;
-    private PortalGun portalGun;
-    private StepCounter counter;
-    private TimeMachine timeMachine;
-    private Map<String, Integer> highscores;
+    public Goal goal;
+    public Player player;
+    public Maze maze;
+    public Cursor cursor;
+    public PortalGun portalGun;
+    public StepCounter counter;
+    public TimeMachine timeMachine;
+    public Map<String, Integer> highscores;
     
     
     //The size of each block in pixels
-    private int blockSize = 40;
-    private Helper helper;
+    public int blockSize = 40;
+    public Helper helper;
     private MainWindow parent;
-    private FileLoader loader = new FileLoader();
-    private float volume;
-    private Image floorImage;
-    private Image wallImage;
-    private Image playerImage0;
-    private Image playerImage1;
-    private Image playerImage2;
-    private Image playerImage3;
+    public FileLoader loader = new FileLoader();
+    public float volume;
+    public Image floorImage;
+    public Image wallImage;
+    public Image playerImage0;
+    public Image playerImage1;
+    public Image playerImage2;
+    public Image playerImage3;
        
-    private Image portalImage;
-    private Image timeMachineImage;
-    private Image goalImage;
-    private Image helperImage;
-    private Image portalOverlay;
+    public Image portalImage;
+    public Image timeMachineImage;
+    public Image goalImage;
+    public Image helperImage;
+    public Image portalOverlay;
     
     /**
      * Build new Game panel with a random generated maze and set a Frame as a parent
@@ -100,18 +100,18 @@ public class GamePanel extends javax.swing.JPanel {
      */
     private void getGameImages() {
         try {
-            setPlayerImage0(ImageIO.read(getLoader().getImageFile("Player0")));
-            setPlayerImage1(ImageIO.read(getLoader().getImageFile("Player1")));
-            setPlayerImage2(ImageIO.read(getLoader().getImageFile("Player2")));
-            setPlayerImage3(ImageIO.read(getLoader().getImageFile("Player3")));
-            setPortalOverlay(ImageIO.read(getLoader().getImageFile("portalOverlay")));
+            playerImage0 = ImageIO.read(loader.getImageFile("Player0"));
+            playerImage1 = ImageIO.read(loader.getImageFile("Player1"));
+            playerImage2 = ImageIO.read(loader.getImageFile("Player2"));
+            playerImage3 = ImageIO.read(loader.getImageFile("Player3"));
+            portalOverlay = ImageIO.read(loader.getImageFile("portalOverlay"));
 
-            setFloorImage(ImageIO.read(getLoader().getImageFile("Floor")));
-            setWallImage(ImageIO.read(getLoader().getImageFile("Wall2")));
-            setPortalImage(ImageIO.read(getLoader().getImageFile("Portal")));
-            setTimeMachineImage(ImageIO.read(getLoader().getImageFile("TimeMachine")));
-            setGoalImage(ImageIO.read(getLoader().getImageFile("Goal")));
-            setHelperImage(ImageIO.read(getLoader().getImageFile("Helper")));
+            floorImage = ImageIO.read(loader.getImageFile("Floor"));
+            wallImage = ImageIO.read(loader.getImageFile("Wall2"));
+            portalImage = ImageIO.read(loader.getImageFile("Portal"));
+            timeMachineImage = ImageIO.read(loader.getImageFile("TimeMachine"));
+            goalImage = ImageIO.read(loader.getImageFile("Goal"));
+            helperImage = ImageIO.read(loader.getImageFile("Helper"));
         } catch (IOException ex) {
             Logger.getLogger(GamePanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -122,7 +122,7 @@ public class GamePanel extends javax.swing.JPanel {
      * Update the master volume according to the Settings panel
      */
     public void setVolume() {       
-        getPlayer().getSfb().setVolume(parent.getSetting().volume/10);        
+        player.getSfb().setVolume(parent.getSetting().volume/10);        
     }
     
     /**
@@ -137,14 +137,14 @@ public class GamePanel extends javax.swing.JPanel {
      * Turns sound on
      */
     public void volumeOn() {
-        getPlayer().getSfb().volumeOn();
+        player.getSfb().volumeOn();
         parent.getMenu().music.volumeOn();
     }
     /**
      * Turns sound on
      */
     public void volumeOff() {
-        getPlayer().getSfb().volumeOff();
+        player.getSfb().volumeOff();
         parent.getMenu().music.volumeOff();
     }
 
@@ -160,39 +160,39 @@ public class GamePanel extends javax.swing.JPanel {
      /**
      * This method builds a maze from a Level object
      * 
-     * @param level The level objed containing all the needed information
+     * @param level The level object containing all the needed information
      * @param g A Graphics object used to draw the new maze
      */
     public void loadGame(Level level, Graphics g) {
         Stack<Position> pos = new Stack<>();
-        setMaze(new Maze(this, level));
-        setPlayer(new Player(getMaze().getPlayerPoint(), this));
+        maze = new Maze(this, level);
+        player = new Player(maze.playerPoint, this);
         player.stepsTaken = level.score;
-        player.setHasPortalGun(level.portalGun);
-        if (getMaze().getPortalGunPoint() != null) {
-            setPortalGun(new PortalGun(getMaze().getNode(getMaze().getPortalGunPoint()), this));
+        player.hasPortalGun = level.portalGun;
+        if (maze.portalGunPoint != null) {
+            portalGun = new PortalGun(maze.getNode(maze.portalGunPoint), this);
         }
-        if (getMaze().getTimeMachinePoint() != null) {
-            setTimeMachine(new TimeMachine(getMaze().getNode(getMaze().getTimeMachinePoint()), this));
+        if (maze.timeMachinePoint != null) {
+            timeMachine = new TimeMachine(maze.getNode(maze.timeMachinePoint), this);
         }
-        if (getMaze().getHelperPoint() != null) {
-            setHelper(new Helper(getMaze().getNode(getMaze().getHelperPoint()), this));
+        if (maze.helperPoint != null) {
+            helper = new Helper(maze.getNode(maze.helperPoint), this);
         }
-        if (getMaze().getGoalPoint() != null) {
-            setGoal(new Goal(getMaze().getNode(getMaze().getGoalPoint()), this));
+        if (maze.goalPoint != null) {
+            goal = new Goal(maze.getNode(maze.goalPoint), this);
         }
 
         if (level.showPath) {
-            getMaze().findPath(getMaze().getNode(getPlayer().position));
-            maze.setShowPath(true);
+            maze.findPath(maze.getNode(player.position));
+            maze.showPath = true;
         }
 
         while (!level.positions.isEmpty()) {
             pos.push(level.positions.pop());
         }
         player.steps = pos;
-        setCounter(new StepCounter((getMaze().getNodes().length * getBlockSize()) + getBlockSize(), 0, this));
-       
+        counter = new StepCounter((maze.nodes.length * blockSize) + blockSize, 0, this);
+        cursor = new Cursor(maze.nodes.length - 1, 0, this);
     }
 
     /**
@@ -202,17 +202,17 @@ public class GamePanel extends javax.swing.JPanel {
      */
     public final void prepGame(Graphics g) {
         Point pointer = new Point(999, 999);
-        setMaze(new Maze(this));
-        pointer.setLocation(getMaze().getMaze()[0].length - 2, getMaze().getMaze().length - 2);
+        maze = new Maze(this);
+        pointer.setLocation(maze.maze[0].length - 2, maze.maze.length - 2);
         System.out.println("Pointer :" + pointer);
-        setGoal(new Goal(getMaze().getNode(pointer), this));
+        goal = new Goal(maze.getNode(pointer), this);
         pointer.setLocation(1, 1);
-        setPlayer(new Player(pointer, this));
-        setPortalGun(new PortalGun(getMaze().getFloors().get(random() % getMaze().getFloors().size()), this));
-        setTimeMachine(new TimeMachine(getMaze().getFloors().get(random() % getMaze().getFloors().size()), this));
-        setHelper(new Helper(getMaze().getFloors().get(random() % getMaze().getFloors().size()), this));
-        setCounter(new StepCounter((getMaze().getMaze().length * getBlockSize()) + getBlockSize(), 0, this));
-       
+        player = new Player(pointer, this);
+        portalGun = new PortalGun(maze.floors.get(random() % maze.floors.size()), this);
+        timeMachine = new TimeMachine(maze.floors.get(random() % maze.floors.size()), this);
+        helper = new Helper(maze.floors.get(random() % maze.floors.size()), this);
+        counter = new StepCounter((maze.maze.length * blockSize) + blockSize, 0, this);
+        cursor = new Cursor(maze.maze[0].length - 1, 0, this);
     }
 
     /**
@@ -240,7 +240,7 @@ public class GamePanel extends javax.swing.JPanel {
      * Triggers a gameOver in parent
      */
     public void checkGoal() {
-        if (getGoal().getPosition() == (getPlayer().getPosition())) {
+        if (goal.getPosition() == (player.getPosition())) {
             gameOver();
         }
     }
@@ -252,26 +252,40 @@ public class GamePanel extends javax.swing.JPanel {
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_W:
-                getPlayer().moveNorth();
+                player.moveNorth();
                 break;
             case KeyEvent.VK_D:
-                getPlayer().moveEast();
+                player.moveEast();
                 break;
             case KeyEvent.VK_S:
-                getPlayer().moveSouth();
+                player.moveSouth();
                 break;
             case KeyEvent.VK_A:
-                getPlayer().moveWest();
+                player.moveWest();
                 break;
             case KeyEvent.VK_SPACE:
-                getPlayer().shoot();
+                player.shoot();
                 break;
-            
+            case KeyEvent.VK_UP:
+                cursor.move('N');
+                break;
+            case KeyEvent.VK_RIGHT:
+                cursor.move('E');
+                break;
+            case KeyEvent.VK_DOWN:
+                cursor.move('S');
+                break;
+            case KeyEvent.VK_LEFT:
+                cursor.move('W');
+                break;
+            case KeyEvent.VK_CONTROL:
+                cursor.printCurrentNode();
+                break;
             case KeyEvent.VK_ESCAPE:
                 parent.goToMenu();
                 break;
             case KeyEvent.VK_Z:
-                getPlayer().undoMove();
+                player.undoMove();
                 this.repaint();
         }
     }
@@ -291,12 +305,12 @@ public class GamePanel extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        setBlockSize(parent.getSize().height / getMaze().getNodes().length);
+        blockSize = parent.getSize().height / maze.nodes.length;
         super.paintComponent(g);
         g.setColor(Color.black);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        getMaze().paintMaze(g);
-        getCounter().drawSteps(g);
+        maze.paintMaze(g);
+        counter.drawSteps(g);
 
     }
 
@@ -322,307 +336,4 @@ public class GamePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
-    /**
-     * @return the goal
-     */
-    public Goal getGoal() {
-        return goal;
-    }
-
-    /**
-     * @param goal the goal to set
-     */
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
-
-    /**
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
-     * @param player the player to set
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    /**
-     * @return the maze
-     */
-    public Maze getMaze() {
-        return maze;
-    }
-
-    /**
-     * @param maze the maze to set
-     */
-    public void setMaze(Maze maze) {
-        this.maze = maze;
-    }
-
-
-    /**
-     * @return the portalGun
-     */
-    public PortalGun getPortalGun() {
-        return portalGun;
-    }
-
-    /**
-     * @param portalGun the portalGun to set
-     */
-    public void setPortalGun(PortalGun portalGun) {
-        this.portalGun = portalGun;
-    }
-
-    /**
-     * @return the counter
-     */
-    public StepCounter getCounter() {
-        return counter;
-    }
-
-    /**
-     * @param counter the counter to set
-     */
-    public void setCounter(StepCounter counter) {
-        this.counter = counter;
-    }
-
-    /**
-     * @return the timeMachine
-     */
-    public TimeMachine getTimeMachine() {
-        return timeMachine;
-    }
-
-    /**
-     * @param timeMachine the timeMachine to set
-     */
-    public void setTimeMachine(TimeMachine timeMachine) {
-        this.timeMachine = timeMachine;
-    }
-
-    /**
-     * @return the highscores
-     */
-    public Map<String, Integer> getHighscores() {
-        return highscores;
-    }
-
-    /**
-     * @param highscores the highscores to set
-     */
-    public void setHighscores(Map<String, Integer> highscores) {
-        this.highscores = highscores;
-    }
-
-
-    /**
-     * @param blockSize the blockSize to set
-     */
-    public void setBlockSize(int blockSize) {
-        this.blockSize = blockSize;
-    }
-
-    /**
-     * @return the helper
-     */
-    public Helper getHelper() {
-        return helper;
-    }
-
-    /**
-     * @param helper the helper to set
-     */
-    public void setHelper(Helper helper) {
-        this.helper = helper;
-    }
-
-    /**
-     * @return the loader
-     */
-    public FileLoader getLoader() {
-        return loader;
-    }
-
-    /**
-     * @param loader the loader to set
-     */
-    public void setLoader(FileLoader loader) {
-        this.loader = loader;
-    }
-
-    /**
-     * @return the volume
-     */
-    public float getVolume() {
-        return volume;
-    }
-
-    /**
-     * @param volume the volume to set
-     */
-    public void setVolume(float volume) {
-        this.volume = volume;
-    }
-
-    /**
-     * @return the floorImage
-     */
-    public Image getFloorImage() {
-        return floorImage;
-    }
-
-    /**
-     * @param floorImage the floorImage to set
-     */
-    public void setFloorImage(Image floorImage) {
-        this.floorImage = floorImage;
-    }
-
-    /**
-     * @return the wallImage
-     */
-    public Image getWallImage() {
-        return wallImage;
-    }
-
-    /**
-     * @param wallImage the wallImage to set
-     */
-    public void setWallImage(Image wallImage) {
-        this.wallImage = wallImage;
-    }
-
-    /**
-     * @return the playerImage0
-     */
-    public Image getPlayerImage0() {
-        return playerImage0;
-    }
-
-    /**
-     * @param playerImage0 the playerImage0 to set
-     */
-    public void setPlayerImage0(Image playerImage0) {
-        this.playerImage0 = playerImage0;
-    }
-
-    /**
-     * @return the playerImage1
-     */
-    public Image getPlayerImage1() {
-        return playerImage1;
-    }
-
-    /**
-     * @param playerImage1 the playerImage1 to set
-     */
-    public void setPlayerImage1(Image playerImage1) {
-        this.playerImage1 = playerImage1;
-    }
-
-    /**
-     * @return the playerImage2
-     */
-    public Image getPlayerImage2() {
-        return playerImage2;
-    }
-
-    /**
-     * @param playerImage2 the playerImage2 to set
-     */
-    public void setPlayerImage2(Image playerImage2) {
-        this.playerImage2 = playerImage2;
-    }
-
-    /**
-     * @return the playerImage3
-     */
-    public Image getPlayerImage3() {
-        return playerImage3;
-    }
-
-    /**
-     * @param playerImage3 the playerImage3 to set
-     */
-    public void setPlayerImage3(Image playerImage3) {
-        this.playerImage3 = playerImage3;
-    }
-
-    /**
-     * @return the portalImage
-     */
-    public Image getPortalImage() {
-        return portalImage;
-    }
-
-    /**
-     * @param portalImage the portalImage to set
-     */
-    public void setPortalImage(Image portalImage) {
-        this.portalImage = portalImage;
-    }
-
-    /**
-     * @return the timeMachineImage
-     */
-    public Image getTimeMachineImage() {
-        return timeMachineImage;
-    }
-
-    /**
-     * @param timeMachineImage the timeMachineImage to set
-     */
-    public void setTimeMachineImage(Image timeMachineImage) {
-        this.timeMachineImage = timeMachineImage;
-    }
-
-    /**
-     * @return the goalImage
-     */
-    public Image getGoalImage() {
-        return goalImage;
-    }
-
-    /**
-     * @param goalImage the goalImage to set
-     */
-    public void setGoalImage(Image goalImage) {
-        this.goalImage = goalImage;
-    }
-
-    /**
-     * @return the helperImage
-     */
-    public Image getHelperImage() {
-        return helperImage;
-    }
-
-    /**
-     * @param helperImage the helperImage to set
-     */
-    public void setHelperImage(Image helperImage) {
-        this.helperImage = helperImage;
-    }
-
-    /**
-     * @return the portalOverlay
-     */
-    public Image getPortalOverlay() {
-        return portalOverlay;
-    }
-
-    /**
-     * @param portalOverlay the portalOverlay to set
-     */
-    public void setPortalOverlay(Image portalOverlay) {
-        this.portalOverlay = portalOverlay;
-    }
 }

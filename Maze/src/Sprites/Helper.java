@@ -11,13 +11,13 @@ import java.awt.Graphics;
  */
 public class Helper extends Sprite {
 
-    private boolean taken;
+    public boolean taken;
 
     public Helper(Node n, GamePanel pan) {
         parent = n;
         panel = pan;
         parent.addOccupant(this);
-        this.setImage(panel.getHelperImage());
+        this.setImage(panel.helperImage);
     }
 
     /**
@@ -27,20 +27,6 @@ public class Helper extends Sprite {
      */
     public void paintSelf(Graphics g) {
         g.setColor(Color.orange);
-        g.drawImage(this.getImage(), parent.getxInd() * panel.getBlockSize(), parent.getyInd() * panel.getBlockSize(), panel.getBlockSize(), panel.getBlockSize(), null);
-    }
-
-    /**
-     * @return the taken
-     */
-    public boolean isTaken() {
-        return taken;
-    }
-
-    /**
-     * @param taken the taken to set
-     */
-    public void setTaken(boolean taken) {
-        this.taken = taken;
+        g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
     }
 }

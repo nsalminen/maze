@@ -115,8 +115,7 @@ public class SavePanel extends javax.swing.JPanel {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         FileWriter levelWriter = new FileWriter();
-        levelWriter.writeLevel(saveFileName.getText(), parent.getGame().getMaze().buildLevel());
-         parent.goToMenu();    
+        levelWriter.writeLevel(saveFileName.getText(), parent.getGame().maze.buildLevel());
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed

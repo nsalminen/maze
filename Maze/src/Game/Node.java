@@ -10,10 +10,10 @@ import java.util.ArrayList;
  */
 public class Node {
 
-    private ArrayList<Sprite> occupants = new ArrayList<>();
-    private Point position = new Point(999, 999);
-    private int xInd;
-    private int yInd;
+    public ArrayList<Sprite> occupants = new ArrayList<>();
+    public Point position = new Point(999, 999);
+    public int xInd;
+    public int yInd;
     private boolean visited = false;
     private boolean path;
 
@@ -35,9 +35,9 @@ public class Node {
      * @return Whether a Wall object was removed or not
      */
     public boolean removeWall() {
-        for (Sprite p : getOccupants()) {
+        for (Sprite p : occupants) {
             if (p instanceof Wall) {
-                getOccupants().remove(p);
+                occupants.remove(p);
                 return true;
             }
         }
@@ -75,8 +75,8 @@ public class Node {
      * @return Returns Sprite at specified parameter
      */
     public Sprite getOccupant(int index) {
-        if (index <= getOccupants().size()) {
-            return getOccupants().get(index);
+        if (index <= occupants.size()) {
+            return occupants.get(index);
         } else {
             return null;
         }
@@ -89,7 +89,7 @@ public class Node {
      * @param occupant
      */
     public void setOccupant(int index, Sprite occupant) {
-        getOccupants().set(index, occupant);
+        occupants.set(index, occupant);
     }
 
     /**
@@ -98,14 +98,14 @@ public class Node {
      * @param index
      */
     public void removeOccupant(int index) {
-        getOccupants().remove(index);
+        occupants.remove(index);
     }
 
     /**
      * @return Returns occupant on top
      */
     public Sprite peekOccupant() {
-        Sprite sprite = getOccupants().get(getOccupants().size() - 1);
+        Sprite sprite = occupants.get(occupants.size() - 1);
         return sprite;
     }
 
@@ -115,14 +115,14 @@ public class Node {
      * @param sprite
      */
     public void addOccupant(Sprite sprite) {
-        getOccupants().add(sprite);
+        occupants.add(sprite);
     }
 
     @Override
     public String toString() {
         String occ = "";
-        occ = getOccupants().toString();
-        String string = "x = " + getxInd() + "; y = " + getyInd() + "; occupied by: " + occ;
+        occ = occupants.toString();
+        String string = "x = " + xInd + "; y = " + yInd + "; occupied by: " + occ;
         return string;
     }
 
@@ -173,26 +173,5 @@ public class Node {
      */
     public void setPath(boolean path) {
         this.path = path;
-    }
-
-    /**
-     * @return the occupants
-     */
-    public ArrayList<Sprite> getOccupants() {
-        return occupants;
-    }
-
-    /**
-     * @param occupants the occupants to set
-     */
-    public void setOccupants(ArrayList<Sprite> occupants) {
-        this.occupants = occupants;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(Point position) {
-        this.position = position;
     }
 }
