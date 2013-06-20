@@ -28,10 +28,7 @@ public class FileWriter {
     public FileWriter()
     {   
         loader = new FileLoader();
-        try{
-            writer = new PrintWriter(loader.getHighScoreFile());            
-        }
-        catch(Exception e){}
+        
     }
     
     /**
@@ -76,6 +73,10 @@ public class FileWriter {
      */
     
     public void writeScores(ArrayList<String> scores){
+        try{
+           writer = new PrintWriter(loader.getHighScoreFile());            
+        }
+        catch(Exception e){}
         String out ="";
         for(String line : scores){
             out = ( out + line+"\n");

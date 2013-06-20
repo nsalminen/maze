@@ -20,18 +20,18 @@ public class MainWindow extends JFrame {
      * @return the mazeWindow
      */
     public static MainWindow getMazeWindow() {
-        return null;//mazeWindow;
+        return mazeWindow;
     }
 
     /**
      * @param aMazeWindow the mazeWindow to set
      */
     public static void setMazeWindow(MainWindow aMazeWindow) {
-        //mazeWindow = aMazeWindow;
+        mazeWindow = aMazeWindow;
     }
-    private FileLoader loader = new FileLoader();
+    public FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
-    //private static MainWindow mazeWindow = new MainWindow();
+    private static MainWindow mazeWindow;
     private MenuPanel menu = new MenuPanel(this);
     private OptionPanel setting;
     private SoundEffect music = new SoundEffect(getLoader().getSoundEffect("music"));
@@ -53,6 +53,8 @@ public class MainWindow extends JFrame {
             enableOSXFullscreen(this);
         }
 
+        
+    
         windowDimension = new Dimension(1220, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(windowDimension);
@@ -295,7 +297,9 @@ public class MainWindow extends JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new MainWindow().setVisible(true);
+                    mazeWindow = new MainWindow();
+                    
+                    mazeWindow.setVisible(true);
                 } catch (FileNotFoundException e) {
                 }
 

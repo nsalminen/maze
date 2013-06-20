@@ -186,8 +186,9 @@ public class FileReader {
      * 
      * @return scoreList An ArrayList<Sting> formatted: "PLAYERNAME:SCORE"
      */
-    public ArrayList<String> printMap(){               
-                Map<String,Integer> map =getHighScores();
+    public ArrayList<String> printMap(){ 
+                System.out.println("Printing");
+                Map<String,Integer> map = getHighScores();
                 ArrayList<String> scoreList = new ArrayList<String>();
                 for (Map.Entry entry : map.entrySet()) {
 			System.out.println("Key : " + entry.getKey() 

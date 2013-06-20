@@ -230,7 +230,6 @@ public class GamePanel extends javax.swing.JPanel {
                 this.repaint();
         }
     }
-
     @Override
     public void repaint() {
         super.repaint();
