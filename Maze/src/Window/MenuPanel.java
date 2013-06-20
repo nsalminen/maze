@@ -16,6 +16,7 @@ public class MenuPanel extends javax.swing.JPanel {
      */
     MainWindow parent;
     SoundEffect music;
+    private boolean playing;
         
     public MenuPanel(MainWindow p)  {
         initComponents();
@@ -23,6 +24,7 @@ public class MenuPanel extends javax.swing.JPanel {
         this.addKeyListener(listener);
         this.setFocusable(true);
         
+       
         
         
         activeGame(false);
@@ -37,7 +39,7 @@ public class MenuPanel extends javax.swing.JPanel {
     public void activeGame(boolean active){
          continueGame.setVisible(active);
          saveGame.setVisible(active);
-         
+         playing = active;
     }
     
      public void updateGame(KeyEvent e) {
@@ -247,11 +249,13 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         parent.startGame();
+        
+        if(!playing){
+        music = new SoundEffect(parent.loader.getSoundEffect("music"));
+         music.play();
         activeGame(true);
-        continueGame.setVisible(true);
-        saveGame.setVisible(true);
-        music = new SoundEffect(parent.game.loader.getSoundEffect("music"));
-        music.play();
+        }  
+        
         parent.button.play();
     }//GEN-LAST:event_startButtonActionPerformed
 

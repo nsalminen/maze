@@ -15,6 +15,7 @@ public class SoundEffect {
 
     private Clip clip;
     private FloatControl gainControl;
+    private boolean playing = false;
 
     public SoundEffect(File file) {
         try {
@@ -37,6 +38,10 @@ public class SoundEffect {
     public void volumeOff(){
         gainControl.setValue(gainControl.getMinimum());
     }
+    
+    public boolean isPlaying(){
+       return playing;
+    }
 
     public void setVolume(float value) {
         gainControl.setValue(value);
@@ -48,5 +53,6 @@ public class SoundEffect {
         }   // Stop the player if it is still running
         clip.setFramePosition(0); // rewind to the beginning
         clip.start();     // Start playing
+        playing = true;
     }
 }

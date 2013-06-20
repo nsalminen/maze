@@ -25,7 +25,7 @@ public class MainWindow extends JFrame {
     
 
     private FileReader reader = new FileReader();
-    private FileLoader loader = new FileLoader();
+    public FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
     static MainWindow mazeWindow = new MainWindow();
     public OptionPanel setting;
