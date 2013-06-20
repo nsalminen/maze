@@ -71,7 +71,15 @@ public class MainWindow extends JFrame {
         setMusicVolume(setting.music);
         if(setting.isMute()){
             music.play();
-        }        
+        }
+        
+        if(setting.isFullScreen()){
+            this.setExtendedState(this.MAXIMIZED_BOTH);
+            this.removeNotify();
+            this.setUndecorated(true);
+            this.setVisible(true);
+        }
+        
     }
     
     /**

@@ -63,7 +63,6 @@ public class MenuPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        fullScreenButton = new javax.swing.JButton();
         menuPanel = new javax.swing.JPanel();
         continueGame = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
@@ -76,23 +75,6 @@ public class MenuPanel extends javax.swing.JPanel {
         mainMenuBackground = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
-
-        fullScreenButton.setText("Fullscreen");
-        fullScreenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullScreenButtonActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.weightx = 123.0;
-        gridBagConstraints.weighty = 123.0;
-        gridBagConstraints.insets = new java.awt.Insets(29, 19, 19, 19);
-        add(fullScreenButton, gridBagConstraints);
 
         menuPanel.setMinimumSize(new java.awt.Dimension(666, 513));
         menuPanel.setOpaque(false);
@@ -208,11 +190,6 @@ public class MenuPanel extends javax.swing.JPanel {
         add(mainMenuBackground, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
-        parent.toggleFullscreen();
-        parent.getButton().play();
-    }//GEN-LAST:event_fullScreenButtonActionPerformed
-
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
 
         parent.showOptions();
@@ -256,7 +233,6 @@ public class MenuPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton continueGame;
     private javax.swing.JButton exitButton2;
-    private javax.swing.JButton fullScreenButton;
     private javax.swing.JButton highScoreButton;
     private javax.swing.JButton loadGameButton;
     private javax.swing.JLabel logo;

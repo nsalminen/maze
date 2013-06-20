@@ -48,25 +48,25 @@ public class FileReader {
      * in a string[]. 
      *
      * string[0] holds the value for the master volume
-     * string[1] holds the value fot the music volume
+     * string[1] holds the value for the music volume
+     * string[2] holds the value for the global mute
+     * string[3] holds the value for fullscreen
      * 
      * @return sting A String array object containing the settings data
      */
     public String[] readSettings()throws FileNotFoundException{        
         levelReader = new Scanner(loader.getSettings());
-        String[] string = new String[3];
+        String[] string = new String[4];
         string[0] = levelReader.nextLine();
         string[1] = levelReader.nextLine();
         string[2] = levelReader.nextLine();
+        string[3] = levelReader.nextLine();
         return string;
     }
      /**
       * Reads a given file and formats it into a Level object. A Level object
       * contains all the data required to build a maze.
-     * 
-     * string[0] holds the value for the master volume
-     * string[1] holds the value fot the music volume
-     * 
+     *      * 
      * @param File a file object for the desired savefile.
      * @return level A Level object containing all the data needed to (re)build a game
      */
