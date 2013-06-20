@@ -1,12 +1,14 @@
 package Window;
 
 import Utilities.FileLoader;
+import Utilities.FileReader;
 import Utilities.Level;
 import Utilities.SoundEffect;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import javax.swing.JFrame;
 //import com.apple.eawt.FullScreenUtilities;
@@ -20,11 +22,13 @@ import javax.swing.JFrame;
  * @author Nels
  */
 public class MainWindow extends JFrame {
+    
 
+    private FileReader reader = new FileReader();
     private FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
     static MainWindow mazeWindow = new MainWindow();
-    public OptionPanel setting = new OptionPanel(this);
+    public OptionPanel setting;
     public MenuPanel menu = new MenuPanel(this);
     public GamePanel game;
     public OptionPanel option;
@@ -57,11 +61,16 @@ public class MainWindow extends JFrame {
     }
 
     public void showSettings() {
+        try{
+        setting = new OptionPanel(this);
         setContentPane(setting);
         setting.setVisible(true);
         setting.setFocusable(true);
         setting.requestFocus();
         setting.setSize(this.getSize());
+        }catch(Exception e){
+        }
+        
     }
 
     public void loadGame() {

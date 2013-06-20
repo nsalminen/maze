@@ -45,6 +45,17 @@ public class FileWriter {
         catch(Exception e){}
     }
     
+    
+    public void writeSettings(String set){   
+        System.out.println("WRITE SETTINGS");
+        try{
+            PrintWriter levelWriter = new PrintWriter(loader.getSettings());
+            levelWriter.print(set);
+            levelWriter.close();
+         }
+        catch(FileNotFoundException e){}
+    }
+    
      public void writeLevel(String name, Level level){
         loader.newLevel(name);
         try{
@@ -60,13 +71,9 @@ public class FileWriter {
         String out ="";
         for(String line : scores){
             out = ( out + line+"\n");
-            //System.out.println("reading: "+line);
-            //.out.println(out);
-            
         }
         writer.print(out);
         writer.close();
-        //.out.println("PRINTED");
-       }
+    }
 }
    

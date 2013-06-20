@@ -3,6 +3,7 @@ package Window;
 import Utilities.MazeKeyListener;
 import Utilities.SoundEffect;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -214,8 +215,8 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_fullScreenButtonActionPerformed
 
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
+
         parent.showSettings();
-        
         parent.button.play();
     }//GEN-LAST:event_optionsButtonsActionPerformed
 

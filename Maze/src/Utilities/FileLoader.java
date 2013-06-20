@@ -44,6 +44,18 @@ public class FileLoader {
         }
         return effect;
     }
+    
+    public File getSettings() {
+
+        File effect = null;
+
+        if (os.equals("Windows 7")) {
+            effect = new File("content\\files\\settings.txt");
+        } else if (os.equals("Mac OS X")) {
+            effect = new File("content/files/settings.txt");
+        }
+        return effect;
+    }
 
     public void newLevel(String name) {
         try {
@@ -68,7 +80,6 @@ public class FileLoader {
             file = new File("content/files/saves/" + name + ".txt");
         }
         System.out.println(file.toURI().toASCIIString());
-
         return file;
     }
 
