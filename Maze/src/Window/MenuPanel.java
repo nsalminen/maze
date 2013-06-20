@@ -211,8 +211,7 @@ public class MenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
-        MainWindow.mazeWindow.toggleFullscreen();
-        
+        parent.toggleFullscreen();
         parent.button.play();
     }//GEN-LAST:event_fullScreenButtonActionPerformed
 

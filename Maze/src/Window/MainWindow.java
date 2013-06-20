@@ -142,30 +142,30 @@ public class MainWindow extends JFrame {
     public void toggleFullscreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         vc = ge.getDefaultScreenDevice();
-        if (vc.isFullScreenSupported()) {
-            System.out.println("Supported");
-            if (!fullscreen) {
-                vc.setFullScreenWindow(mazeWindow);
-                game.setSize(this.getSize());
-                fullscreen = true;
-                setVisible(false);
-                setVisible(true);
-            } else if (fullscreen) {
-                vc.setFullScreenWindow(null);
-                fullscreen = false;
-            }
-        } else {
+//        if (vc.isFullScreenSupported()) {
+//            System.out.println("Supported");
+//            if (!fullscreen) {
+//                vc.setFullScreenWindow(mazeWindow);
+//                game.setSize(this.getSize());
+//                fullscreen = true;
+//                setVisible(false);
+//                setVisible(true);
+//            } else if (fullscreen) {
+//                vc.setFullScreenWindow(null);
+//                fullscreen = false;
+//            }
+//        } else {
             System.out.println("Unsupported");
             if (!fullscreen) {
-                mazeWindow.setExtendedState(MainWindow.MAXIMIZED_BOTH);
-                mazeWindow.setUndecorated(true);
+                setExtendedState(MainWindow.MAXIMIZED_BOTH);
+                //setUndecorated(true);
                 mazeWindow.setResizable(false);
             } else {
                 mazeWindow.setExtendedState(MainWindow.NORMAL);
                 mazeWindow.setUndecorated(false);
                 mazeWindow.setResizable(true);
             }
-        }
+  //      }
     }
 
     /**
