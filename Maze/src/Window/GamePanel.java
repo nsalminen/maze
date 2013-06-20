@@ -122,7 +122,7 @@ public class GamePanel extends javax.swing.JPanel {
      * Update the master volume according to the Settings panel
      */
     public void setVolume() {       
-        getPlayer().getSfb().setVolume(parent.setting.volume/10);        
+        getPlayer().getSfb().setVolume(parent.getSetting().volume/10);        
     }
     
     /**
@@ -130,7 +130,7 @@ public class GamePanel extends javax.swing.JPanel {
      */    
     public void setMusicVolume() {        
 
-        parent.menu.music.setVolume(parent.setting.music/10);
+        parent.getMenu().music.setVolume(parent.getSetting().music/10);
     }
 
     /**
@@ -138,14 +138,14 @@ public class GamePanel extends javax.swing.JPanel {
      */
     public void volumeOn() {
         getPlayer().getSfb().volumeOn();
-        parent.menu.music.volumeOn();
+        parent.getMenu().music.volumeOn();
     }
     /**
      * Turns sound on
      */
     public void volumeOff() {
         getPlayer().getSfb().volumeOff();
-        parent.menu.music.volumeOff();
+        parent.getMenu().music.volumeOff();
     }
 
     

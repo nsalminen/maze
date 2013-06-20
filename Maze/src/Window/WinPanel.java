@@ -27,7 +27,7 @@ public class WinPanel extends javax.swing.JPanel {
     public WinPanel(MainWindow p) {
         initComponents();
         parent = p;
-        score = p.game.getPlayer().stepsTaken;
+        score = p.getGame().getPlayer().stepsTaken;
         scoreReader = new FileReader();
         if (!isHighScore()) {
 

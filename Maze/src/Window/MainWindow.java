@@ -17,21 +17,35 @@ import javax.swing.JFrame;
  * @author Nels
  */
 public class MainWindow extends JFrame {
+
+    /**
+     * @return the mazeWindow
+     */
+    public static MainWindow getMazeWindow() {
+        return mazeWindow;
+    }
+
+    /**
+     * @param aMazeWindow the mazeWindow to set
+     */
+    public static void setMazeWindow(MainWindow aMazeWindow) {
+        mazeWindow = aMazeWindow;
+    }
     
 
     private FileReader reader = new FileReader();
-    public FileLoader loader = new FileLoader();
+    private FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
-    static MainWindow mazeWindow = new MainWindow();
-    public OptionPanel setting;
-    public MenuPanel menu = new MenuPanel(this);
-    public GamePanel game;
-    public OptionPanel option;
-    WinPanel win;
+    private static MainWindow mazeWindow = new MainWindow();
+    private OptionPanel setting;
+    private MenuPanel menu = new MenuPanel(this);
+    private GamePanel game;
+    private OptionPanel option;
+    private WinPanel win;
     private Dimension windowDimension;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
-    SoundEffect button;
+    private SoundEffect button;
     
     /**
      * Creates new MainWindow
@@ -46,7 +60,7 @@ public class MainWindow extends JFrame {
         setSize(windowDimension);
         setContentPane(menu);
         setLocationRelativeTo(null);
-        button = new SoundEffect(loader.getSoundEffect("menu"));
+        button = new SoundEffect(getLoader().getSoundEffect("menu"));
     }
     
     /**
@@ -66,12 +80,12 @@ public class MainWindow extends JFrame {
      */
     public void showOptions() {
         try{
-        setting = new OptionPanel(this);
-        setContentPane(setting);
-        setting.setVisible(true);
-        setting.setFocusable(true);
-        setting.requestFocus();
-        setting.setSize(this.getSize());
+            setSetting(new OptionPanel(this));
+        setContentPane(getSetting());
+            getSetting().setVisible(true);
+            getSetting().setFocusable(true);
+            getSetting().requestFocus();
+            getSetting().setSize(this.getSize());
         }catch(Exception e){
         }
         
@@ -94,20 +108,20 @@ public class MainWindow extends JFrame {
      * Returns to the menu
      */
     public void goToMenu() {
-        setContentPane(menu);
-        menu.setFocusable(true);
-        menu.requestFocus();
-        menu.setSize(this.getSize());
-        button.play();
+        setContentPane(getMenu());
+        getMenu().setFocusable(true);
+        getMenu().requestFocus();
+        getMenu().setSize(this.getSize());
+        getButton().play();
     }
     /**
      * Returns to the Active Game
      */
     public void unPauseGame() {
-        setContentPane(game);
-        game.setFocusable(true);
-        game.requestFocus();
-        game.setSize(this.getSize());
+        setContentPane(getGame());
+        getGame().setFocusable(true);
+        getGame().requestFocus();
+        getGame().setSize(this.getSize());
     }
 
     /**
@@ -126,12 +140,12 @@ public class MainWindow extends JFrame {
      */
     public void loadNewGame(Level level) {
        
-        game = new GamePanel(level, this);
-        setContentPane(game);
-        game.setFocusable(true);
-        game.requestFocus();
-        game.repaint();
-        game.setSize(this.getSize());
+        setGame(new GamePanel(level, this));
+        setContentPane(getGame());
+        getGame().setFocusable(true);
+        getGame().requestFocus();
+        getGame().repaint();
+        getGame().setSize(this.getSize());
     }
     
     /**
@@ -140,24 +154,24 @@ public class MainWindow extends JFrame {
      */
 
     public void startGame() {
-        game = new GamePanel(this);
-        setContentPane(game);
-        game.setFocusable(true);
-        game.requestFocus();
-        game.repaint();
-        game.setSize(this.getSize());
+        setGame(new GamePanel(this));
+        setContentPane(getGame());
+        getGame().setFocusable(true);
+        getGame().requestFocus();
+        getGame().repaint();
+        getGame().setSize(this.getSize());
     }
 
     /**
      * Opens a new WinPanel
      */
     public void gameOver() {
-        game.setVisible(false);
-        win = new WinPanel(this);
-        setContentPane(win);
-        win.setFocusable(true);
-        win.requestFocus();
-        win.repaint();
+        getGame().setVisible(false);
+        setWin(new WinPanel(this));
+        setContentPane(getWin());
+        getWin().setFocusable(true);
+        getWin().requestFocus();
+        getWin().repaint();
 
         System.out.println("GAME");
     }
@@ -187,11 +201,11 @@ public class MainWindow extends JFrame {
             if (!fullscreen) {
                 setExtendedState(MainWindow.MAXIMIZED_BOTH);
                 //setUndecorated(true);
-                mazeWindow.setResizable(false);
+                getMazeWindow().setResizable(false);
             } else {
-                mazeWindow.setExtendedState(MainWindow.NORMAL);
-                mazeWindow.setUndecorated(false);
-                mazeWindow.setResizable(true);
+                getMazeWindow().setExtendedState(MainWindow.NORMAL);
+                getMazeWindow().setUndecorated(false);
+                getMazeWindow().setResizable(true);
             }
   //      }
     }
@@ -263,4 +277,102 @@ public class MainWindow extends JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the loader
+     */
+    public FileLoader getLoader() {
+        return loader;
+    }
+
+    /**
+     * @param loader the loader to set
+     */
+    public void setLoader(FileLoader loader) {
+        this.loader = loader;
+    }
+
+    /**
+     * @return the setting
+     */
+    public OptionPanel getSetting() {
+        return setting;
+    }
+
+    /**
+     * @param setting the setting to set
+     */
+    public void setSetting(OptionPanel setting) {
+        this.setting = setting;
+    }
+
+    /**
+     * @return the menu
+     */
+    public MenuPanel getMenu() {
+        return menu;
+    }
+
+    /**
+     * @param menu the menu to set
+     */
+    public void setMenu(MenuPanel menu) {
+        this.menu = menu;
+    }
+
+    /**
+     * @return the game
+     */
+    public GamePanel getGame() {
+        return game;
+    }
+
+    /**
+     * @param game the game to set
+     */
+    public void setGame(GamePanel game) {
+        this.game = game;
+    }
+
+    /**
+     * @return the option
+     */
+    public OptionPanel getOption() {
+        return option;
+    }
+
+    /**
+     * @param option the option to set
+     */
+    public void setOption(OptionPanel option) {
+        this.option = option;
+    }
+
+    /**
+     * @return the win
+     */
+    public WinPanel getWin() {
+        return win;
+    }
+
+    /**
+     * @param win the win to set
+     */
+    public void setWin(WinPanel win) {
+        this.win = win;
+    }
+
+    /**
+     * @return the button
+     */
+    public SoundEffect getButton() {
+        return button;
+    }
+
+    /**
+     * @param button the button to set
+     */
+    public void setButton(SoundEffect button) {
+        this.button = button;
+    }
 }

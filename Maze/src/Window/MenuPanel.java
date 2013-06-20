@@ -213,24 +213,24 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
         parent.toggleFullscreen();
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_fullScreenButtonActionPerformed
 
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
 
         parent.showOptions();
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_optionsButtonsActionPerformed
 
     private void highScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highScoreButtonActionPerformed
         parent.showHighScores();
         
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_highScoreButtonActionPerformed
 
     private void exitButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButton2ActionPerformed
       
-        parent.button.play();
+        parent.getButton().play();
         System.exit(0);
       
     }//GEN-LAST:event_exitButton2ActionPerformed
@@ -238,29 +238,29 @@ public class MenuPanel extends javax.swing.JPanel {
     private void saveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameActionPerformed
         parent.saveGame();
         
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_saveGameActionPerformed
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
         parent.loadGame();
         
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_loadGameButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         parent.startGame();
         if(!playing){
-            music = new SoundEffect(parent.loader.getSoundEffect("music"));
+            music = new SoundEffect(parent.getLoader().getSoundEffect("music"));
             music.play();
             activeGame(true);
         }
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed
         parent.unPauseGame();
         
-        parent.button.play();
+        parent.getButton().play();
     }//GEN-LAST:event_continueGameActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

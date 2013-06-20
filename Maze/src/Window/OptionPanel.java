@@ -189,9 +189,9 @@ public class OptionPanel extends javax.swing.JPanel {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         parent.goToMenu();
 
-        if (parent.game != null) {
-            parent.game.setVolume();
-            parent.game.setMusicVolume();
+        if (parent.getGame() != null) {
+            parent.getGame().setVolume();
+            parent.getGame().setMusicVolume();
         } else {
             System.out.println("No game!");
         }
@@ -201,10 +201,10 @@ public class OptionPanel extends javax.swing.JPanel {
         System.out.println(soundToggleButton.isSelected());
         if (soundToggleButton.isSelected()) {
             soundToggleButton.setText("ON");
-            parent.game.volumeOn();
+            parent.getGame().volumeOn();
         } else {
             soundToggleButton.setText("OFF");
-            parent.game.volumeOff();
+            parent.getGame().volumeOff();
             System.out.println("False");
         }
     }//GEN-LAST:event_soundToggleButtonActionPerformed
