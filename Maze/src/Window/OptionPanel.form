@@ -35,7 +35,7 @@
                       <Component id="volumeSlider" alignment="2" min="-2" pref="380" max="-2" attributes="0"/>
                       <Component id="soundToggleButton" alignment="2" min="-2" pref="294" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="2" min="-2" pref="70" max="-2" attributes="0"/>
-                      <Component id="jLabel2" alignment="2" min="-2" pref="80" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="musicSlider" alignment="2" min="-2" pref="380" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="2" min="-2" pref="100" max="-2" attributes="0"/>
                       <Component id="backButton" alignment="2" min="-2" pref="130" max="-2" attributes="0"/>

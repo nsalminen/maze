@@ -1,16 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Sprites;
 
+import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
-import Window.GamePanel;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class Cursor {
 
@@ -19,11 +15,9 @@ public class Cursor {
     private GamePanel panel;
 
     public Cursor(int x, int y, GamePanel p) {
-
         xInd = x;
         yInd = y;
         panel = p;
-
     }
 
     public void paintSelf(Graphics g) {
@@ -38,8 +32,8 @@ public class Cursor {
      * A method that determines what kind of movement is requested of
      * {@link Sprites.Cursor} and executes the movement.
      *
-     * @param direction A variable that is used to determine in which way the user
-     * would like to move the cursor
+     * @param direction A variable that is used to determine in which way the
+     * user would like to move the cursor
      */
     public void move(char direction) {
         switch (direction) {

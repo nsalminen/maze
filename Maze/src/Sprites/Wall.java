@@ -7,11 +7,9 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class Wall extends Sprite {
-
-    public boolean portal;
 
     public Wall(Node node, GamePanel panel) {
         this.panel = panel;

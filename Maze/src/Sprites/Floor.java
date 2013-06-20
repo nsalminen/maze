@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Sprites;
 
 import Game.Node;
@@ -11,11 +7,9 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class Floor extends Sprite {
-
-    boolean path;
 
     public Floor(Node node, GamePanel panel) {
         parent = node;
@@ -24,6 +18,13 @@ public class Floor extends Sprite {
         this.setImage(panel.floorImage);
     }
 
+    /**
+     *
+     * @param g Graphics of JPanel, required to draw onto a panel.
+     * @param path Whether the Floor is a path or not.
+     * @param showPath Whether the path is currently graphically visible for the
+     * user
+     */
     public void paintSelf(Graphics g, boolean path, boolean showPath) {
         g.setColor(Color.lightGray);
         g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);

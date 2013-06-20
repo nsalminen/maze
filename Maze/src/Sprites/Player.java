@@ -1,10 +1,8 @@
 package Sprites;
 
-import Game.*;
 import Utilities.Position;
 import Utilities.SoundEffect;
 import Window.GamePanel;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -28,13 +26,11 @@ public class Player extends Sprite {
     public Stack<Position> steps;
     private Image portalOverlay;
 
-    public Player(Point p, GamePanel pan) {
-
-        position = p;
-        panel = pan;
+    public Player(Point position, GamePanel panel) {
+        this.position = position;
+        this.panel = panel;
         setDirection(1);
         panel.maze.nodes[position.y][position.x].addOccupant(this);
-
         steps = new Stack<>();
         steps.push(new Position(new Point(1, 1), getDirection()));
         this.setImage(panel.playerImage1);
@@ -46,11 +42,12 @@ public class Player extends Sprite {
         shoot = new SoundEffect(panel.loader.getSoundEffect("shoot"));
     }
 
+    /**
+     * Shoots the portal gun if the player has one.
+     */
     public void shoot() {
         if (hasPortalGun) {
-
             boolean shooting = true;
-
             int xOrigin = position.x;
             int yOrigin = position.y;
 
@@ -67,10 +64,9 @@ public class Player extends Sprite {
                 if (getDirection() == 3) {
                     xOrigin--;
                 }
-                if (panel.maze.nodes[yOrigin][xOrigin].popOccupant() instanceof Wall) {
+                if (panel.maze.nodes[yOrigin][xOrigin].peekOccupant() instanceof Wall) {
                     shoot.play();
-                    //System.out.println("BOOM");
-                    panel.maze.nodes[yOrigin][xOrigin].trimOccupants(1);
+                    panel.maze.nodes[yOrigin][xOrigin].removeOccupant(1);
                     shooting = false;
                 }
                 hasPortalGun = false;
@@ -78,9 +74,12 @@ public class Player extends Sprite {
         }
     }
 
+    /**
+     * Paints the Player onto a canvas based on the direction of the Player
+     *
+     * @param g Is required for drawing to a canvas
+     */
     public void paintSelf(Graphics g) {
-
-
         g.drawImage(this.getImage(), getX(), getY(), panel.blockSize, panel.blockSize, null);
 
         if (getDirection() == 0) {
@@ -98,6 +97,7 @@ public class Player extends Sprite {
         if (hasPortalGun) {
             g.drawImage(this.portalOverlay, getX(), getY(), panel.blockSize, panel.blockSize, null);
         }
+
         panel.repaint();
         checkGoal();
         checkPortalGun();
@@ -105,32 +105,40 @@ public class Player extends Sprite {
         checkHelper();
     }
 
+    /**
+     * Checks whether the Player's current position is equal to the position of
+     * the Goal.
+     */
     public void checkGoal() {
         if ((panel.maze.getNode(position).occupants.contains(panel.goal))) {
-            System.out.println("GAME!");
-            panel.maze.getNode(position).trimOccupants(1);
+            panel.maze.getNode(position).removeOccupant(1);
             panel.repaint();
             panel.gameOver();
         }
     }
 
+    /**
+     * Checks whether the Player's current position is equal to the position of
+     * the PortalGun.
+     */
     public void checkPortalGun() {
         if ((panel.maze.getNode(position).occupants.contains(panel.portalGun)) && !panel.portalGun.taken) {
             portalpickup.play();
-            System.out.println("Found PortalGun!");
-            panel.maze.getNode(position).trimOccupants(1);
+            panel.maze.getNode(position).removeOccupant(1);
             this.hasPortalGun = true;
             panel.portalGun.taken = true;
             panel.repaint();
-
         }
     }
 
+    /**
+     * Checks whether the Player's current position is equal to the position of
+     * the TimeMachine.
+     */
     public void checkTimeMachine() {
         if ((panel.maze.getNode(position).occupants.contains(panel.timeMachine)) && !panel.timeMachine.taken) {
             tmpickup.play();
-            System.out.println("Found TimeMachine!");
-            panel.maze.getNode(position).trimOccupants(1);
+            panel.maze.getNode(position).removeOccupant(1);
             for (int n = 0; n < panel.timeMachine.stepsReduced; n++) {
                 if (stepsTaken > 0) {
                     stepsTaken--;
@@ -141,11 +149,14 @@ public class Player extends Sprite {
         }
     }
 
+    /**
+     * Checks whether the Player's current position is equal to the position of
+     * the Helper.
+     */
     private void checkHelper() {
         if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.taken) {
             helperpickup.play();
-            System.out.println("Found Helper!");
-            panel.maze.getNode(position).trimOccupants(1);
+            panel.maze.getNode(position).removeOccupant(1);
             panel.maze.findPath(parent);
             panel.maze.showPath = true;
             panel.repaint();
@@ -158,46 +169,61 @@ public class Player extends Sprite {
         }
     }
 
+    /**
+     * This method moves the Player north, when the Player's direction is facing
+     * east.
+     */
     public void moveNorth() {
         if (getDirection() == 0) {
             move();
-
         } else {
             setDirection(0);
         }
     }
 
+    /**
+     * This method moves the Player east, when the Player's direction is facing
+     * east.
+     */
     public void moveEast() {
         if (getDirection() == 1) {
             move();
-
         } else {
             setDirection(1);
         }
     }
 
+    /**
+     * This method moves the Player south, when the Player's direction is facing
+     * south.
+     */
     public void moveSouth() {
         if (getDirection() == 2) {
             move();
-
         } else {
             setDirection(2);
         }
     }
 
+    /**
+     * This method moves the Player west, when the Player's direction is facing
+     * west.
+     */
     public void moveWest() {
         if (getDirection() == 3) {
             move();
-
         } else {
             setDirection(3);
         }
-
     }
 
+    /**
+     * This method determines whether the Player is allowed to move or not.
+     *
+     * @return Returns whether the Player is allowed to move or not.
+     */
     public boolean canMove() {
         boolean canMove = false;
-
         if (!(facing.x < 0) && !(facing.y < 0)) {
             if (!(facing.x + 1 > panel.maze.nodes[0].length) && !(facing.y + 1 > panel.maze.nodes.length)) {
                 if (!panel.maze.getNode(facing).isWall()) {
@@ -217,15 +243,11 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
-
             steps.push(new Position(new Point(position), getDirection()));
-            panel.maze.getNode(position).trimOccupants(1);
-            //System.out.println("MOVING");
+            panel.maze.getNode(position).removeOccupant(1);
             panel.maze.getNode(facing).addOccupant(this);
             parent = panel.maze.nodes[facing.y][facing.x];
             position.setLocation(parent.xInd, parent.yInd);
-            //System.out.println("Player" + position);
-            //System.out.println("STOPPED");
             stepsTaken++;
             updateFacing();
         } else {
@@ -233,10 +255,12 @@ public class Player extends Sprite {
         }
     }
 
+    /**
+     * Undoes the last move of the Player.
+     */
     public void undoMove() {
         if (!steps.isEmpty()) {
-            panel.maze.getNode(position).trimOccupants(1);
-            System.out.println("UNDO");
+            panel.maze.getNode(position).removeOccupant(1);
             int dir = steps.peek().direction;
             Point lastPosition = steps.pop().point;
             System.out.println(lastPosition);
@@ -257,29 +281,36 @@ public class Player extends Sprite {
         return string;
     }
 
+    /**
+     * @return the current direction
+     */
     public int getDirection() {
         return direction;
     }
 
+    /**
+     * When the Player turns this method updates the facing Point
+     */
     private void updateFacing() {
         if (getDirection() == 0) {
             facing.setLocation(position.getX(), position.getY() - 1);
         }
         if (getDirection() == 1) {
             facing.setLocation(position.getX() + 1, position.getY());
-
         }
         if (getDirection() == 2) {
             facing.setLocation(position.getX(), position.getY() + 1);
-
         }
         if (getDirection() == 3) {
             facing.setLocation(position.getX() - 1, position.getY());
         }
-
-        //System.out.println("--------------");
     }
 
+    /**
+     * Sets the direction to the specified parameter.
+     *
+     * @param dir
+     */
     public void setDirection(int dir) {
         direction = dir;
         updateFacing();

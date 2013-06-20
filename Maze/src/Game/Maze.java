@@ -1,8 +1,8 @@
 package Game;
 
 import Sprites.*;
-import Window.*;
 import Utilities.Level;
+import Window.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -11,10 +11,10 @@ import java.util.Collections;
 import java.util.Random;
 
 /**
- * This class builds an array of Nodes based on a given 2D integer Array. It
- * also sets the occupants of these nodes to create the generateMaze.
+ * This class builds an array of Nodes based on a given two dimensional integer
+ * Array. It also sets the occupants of these nodes to create the generateMaze.
  *
- * @author Yasen Dinkov and Nels Salminen
+ * @author Yasen and Nels
  */
 public class Maze {
 
@@ -22,17 +22,15 @@ public class Maze {
      * The parent panel of this generateMaze
      */
     GamePanel panel;
-    public ArrayList<Node> floors = new ArrayList<Node>();
+    public ArrayList<Node> floors = new ArrayList<>();
     /**
      * The array of Node objects that makeup the generateMaze's structure
      */
     public Node[][] nodes;
     public int[][] maze;
-    private int pathFindertotalSteps;
     public boolean showPath;
-    private Random random;
     private Dimension dimension;
-    public ArrayList<String[]> level = new ArrayList<String[]>();
+    public ArrayList<String[]> level = new ArrayList<>();
     public Point playerPoint;
     public Point portalGunPoint;
     public Point timeMachinePoint;
@@ -40,8 +38,7 @@ public class Maze {
     public Point goalPoint;
 
     /**
-     * @param generateMaze A 2D integer Array that is used as a blueprint for
-     * the generateMaze
+     * @param level The level object that will be turned into a playable level
      * @param p The parent panel of the generateMaze object
      */
     public Maze(GamePanel panel, Level level) {
@@ -50,9 +47,9 @@ public class Maze {
         nodes = new Node[level.layout.length][level.layout[0].length];
         buildMaze(level);
     }
+
     public Maze(GamePanel panel) {
         dimension = new Dimension(31, 19);
-        random = new Random();
         this.panel = panel;
         generateMaze();
         nodes = new Node[maze.length][maze[0].length];
@@ -60,11 +57,10 @@ public class Maze {
     }
 
     /**
-     * Takes a given 2D integer array and sets the occupants for the 2D Node
-     * array accordingly. 0 = wall 'w' `1 = empty 'e'
+     * Initializes all elements needed to generate the maze. This method will
+     * start the series of recursive calls to generate()
      *
-     * @param generateMaze A 2D integer Array that is used as a blueprint for
-     * the generateMaze
+     * @return Returns finished integer array.
      */
     private int[][] generateMaze() {
         maze = new int[dimension.height][dimension.width];
@@ -73,39 +69,46 @@ public class Maze {
                 maze[i][j] = 0;
             }
         }
-
         Random rand = new Random();
-        // r for row、c for column
-        // Generate random r
+
+        //Random row
         int r = rand.nextInt(dimension.height);
         while (r % 2 == 0) {
             r = rand.nextInt(dimension.height);
         }
-        // Generate random c
+
+        //Random column
         int c = rand.nextInt(dimension.width);
         while (c % 2 == 0) {
             c = rand.nextInt(dimension.width);
         }
+
         // Starting cell
         maze[r][c] = 0;
 
         //　Allocate the mazeGrid with recursive method
         generate(r, c);
         level.ensureCapacity(maze[0].length);
-        String[] line = new String[maze[0].length];
-        
+
         return maze;
     }
 
+    /**
+     * This method is the recursive part of the maze generation. It keeps
+     * repeating itself until it exhausted all cells.
+     *
+     * @param r This parameter specifies the current y position in the two
+     * dimensional array
+     * @param c This parameter specifies the current x position in the two
+     * dimensional array
+     */
     public void generate(int r, int c) {
-        // 4 random directions
-        Integer[] randDirs = generateRandomDirections();
-        // Examine each direction
-        for (int i = 0; i < randDirs.length; i++) {
+        //Generates four random directions and assigns them to an Integer array
+        Integer[] directions = generateRandomDirections();
 
-            switch (randDirs[i]) {
-                case 1: // Up
-                    //　Whether 2 cells up is out or not
+        for (int i = 0; i < directions.length; i++) {
+            switch (directions[i]) {
+                case 1: // North
                     if (r - 1 <= 1) {
                         continue;
                     }
@@ -115,8 +118,7 @@ public class Maze {
                         generate(r - 2, c);
                     }
                     break;
-                case 2: // Right
-                    // Whether 2 cells to the right is out or not
+                case 2: // East
                     if (c + 1 >= dimension.width - 1) {
                         continue;
                     }
@@ -126,8 +128,7 @@ public class Maze {
                         generate(r, c + 2);
                     }
                     break;
-                case 3: // Down
-                    // Whether 2 cells down is out or not
+                case 3: // South
                     if (r + 1 >= dimension.height - 1) {
                         continue;
                     }
@@ -137,8 +138,7 @@ public class Maze {
                         generate(r + 2, c);
                     }
                     break;
-                case 4: // Left
-                    // Whether 2 cells to the left is out or not
+                case 4: // West
                     if (c - 1 <= 1) {
                         continue;
                     }
@@ -154,9 +154,11 @@ public class Maze {
     }
 
     /**
-     * Generate an array with random directions 1-4
+     * Generates an Integer array of integers from one to four and randomizes
+     * the order of the array.
      *
-     * @return Array containing 4 directions in random order
+     * @return An Integer array containing numbers from one to four, in a random
+     * order
      */
     public Integer[] generateRandomDirections() {
         ArrayList<Integer> randoms = new ArrayList<>();
@@ -176,8 +178,9 @@ public class Maze {
      * when the current location in the generateMaze is the exit or if the
      * algorithm exhausted all possible paths in the maze.
      *
-     * @param current
-     * @return
+     * @param current The current Node.
+     * @return Returns whether the cell in a specific direction is a valid move
+     * or not. Or returns true when the exit is found.
      * @author Nels Salminen
      */
     public boolean findPath(Node current) {
@@ -198,6 +201,12 @@ public class Maze {
         return false;
     }
 
+    /**
+     * Determines whether a Node has the position of an exit or not.
+     *
+     * @param node The location from this Node will be used
+     * @return
+     */
     private boolean isExit(Node node) {
         if (node.getyInd() == nodes.length - 2 && node.getxInd() == nodes[0].length - 2) {
             return true;
@@ -206,16 +215,30 @@ public class Maze {
         }
     }
 
+    /**
+     * Sets a Node to path status true
+     *
+     * @param node
+     */
     private void enterNode(Node node) {
         nodes[node.getyInd()][node.getxInd()].setPath(true);
-        pathFindertotalSteps++;
     }
 
+    /**
+     * Sets a Node to path status false
+     *
+     * @param node
+     */
     private void exitNode(Node node) {
         nodes[node.getyInd()][node.getxInd()].setPath(false);
-        pathFindertotalSteps--;
     }
 
+    /**
+     * Checks whether a specific Node is free to enter or not.
+     *
+     * @param node This node will be examined by the method
+     * @return Returns whether a specific Node is free to enter or not
+     */
     private boolean nodeClear(Node node) {
         if (node.getyInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getxInd() >= nodes[node.getyInd()].length || node.isVisited()) {
             return false;
@@ -223,6 +246,12 @@ public class Maze {
         return (!(nodes[node.getyInd()][node.getxInd()]).isWall() || isExit(nodes[node.getyInd()][node.getxInd()]));
     }
 
+    /**
+     *
+     * @param node The method checks for any adjacent nodes around this
+     * parameter
+     * @return Returns an ArrayList of nodes that are adjacent to the parameter
+     */
     public ArrayList<Node> getAdjacentNodes(Node node) {
         ArrayList<Node> adjacencies = new ArrayList<>();
         //West
@@ -245,11 +274,10 @@ public class Maze {
     }
 
     /**
-     * Takes a given 2D integer array and sets the occupants for the 2D Node
-     * array accordingly. 0 = wall 'w' `1 = empty 'e'
+     * Takes a given two dimensional integer array and sets the occupants for
+     * the two dimensional Node array accordingly.
      *
-     * @param maze A 2D integer Array that is used as a blueprint for the
-     * generateMaze
+     * @param level A Level object that has all values needed to build a maze
      */
     private void buildMaze(Level level) {
         Point pointer = new Point();
@@ -263,28 +291,30 @@ public class Maze {
                 }
                 if (level.layout[y][x] == 2) {
                     playerPoint = new Point(x, y);
-                    System.out.println("check player");
                 }
                 if (level.layout[y][x] == 3) {
                     portalGunPoint = new Point(x, y);
-                    System.out.println("check gun");
                 }
                 if (level.layout[y][x] == 4) {
                     timeMachinePoint = new Point(x, y);
-                    System.out.println("check tm");
                 }
                 if (level.layout[y][x] == 5) {
                     helperPoint = new Point(x, y);
-                    System.out.println("check helper");
                 }
                 if (level.layout[y][x] == 6) {
                     goalPoint = new Point(x, y);
-                    System.out.println("check goal");
                 }
             }
         }
     }
 
+    /**
+     * Takes a given two dimensional integer array and sets the occupants for
+     * the two dimensional Node array accordingly.
+     *
+     * @param maze A two dimensional integer Array that is used as a blueprint
+     * for the generateMaze
+     */
     protected void buildMaze(int[][] maze) {
         Point pointer = new Point();
 
@@ -301,52 +331,44 @@ public class Maze {
                 }
             }
         }
-        System.out.println(nodes.length + " " + nodes[0].length);
-
     }
 
     /**
-     * Goes through the Node array and paints a wall for every Node occupied by
-     * a wall
+     * Loops through the Node array and paints a wall for every Node occupied by
+     * a Wall object.
      *
      * @param g A Graphics object
      */
     public void paintMaze(Graphics g) {
         for (int y = 0; y < nodes.length; y++) {
             for (int x = 0; x < nodes[0].length; x++) {
-                
                 ((Floor) nodes[y][x].getOccupant(0)).paintSelf(g, nodes[y][x].isPath(), showPath);
-                
-                if ((nodes[y][x].popOccupant()) instanceof Wall) {
-                    ((Wall) getNode(x, y).popOccupant()).paintSelf(x, y, g);
+                if ((nodes[y][x].peekOccupant()) instanceof Wall) {
+                    ((Wall) getNode(new Point(x, y)).peekOccupant()).paintSelf(x, y, g);
                 }
-                
-
             }
         }
+
         for (int y = 0; y < nodes.length; y++) {
             for (int x = 0; x < nodes[0].length; x++) {
-
-                if ((nodes[y][x].popOccupant()) instanceof Player) {
-
-                    ((Player) nodes[y][x].popOccupant()).paintSelf(g);
+                if ((nodes[y][x].peekOccupant()) instanceof Player) {
+                    ((Player) nodes[y][x].peekOccupant()).paintSelf(g);
                 }
 
-                if ((nodes[y][x].popOccupant()) instanceof PortalGun) {
-                    ((PortalGun) nodes[y][x].popOccupant()).paintSelf(g);
+                if ((nodes[y][x].peekOccupant()) instanceof PortalGun) {
+                    ((PortalGun) nodes[y][x].peekOccupant()).paintSelf(g);
                 }
 
-                if ((nodes[y][x].popOccupant()) instanceof Goal) {
-
-                    ((Goal) nodes[y][x].popOccupant()).paintSelf(g);
+                if ((nodes[y][x].peekOccupant()) instanceof Goal) {
+                    ((Goal) nodes[y][x].peekOccupant()).paintSelf(g);
                 }
 
-
-                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
-                    ((TimeMachine) nodes[y][x].popOccupant()).paintSelf(g);
+                if (nodes[y][x].peekOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
+                    ((TimeMachine) nodes[y][x].peekOccupant()).paintSelf(g);
                 }
-                if (nodes[y][x].popOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
-                    ((Helper) nodes[y][x].popOccupant()).paintSelf(g);
+
+                if (nodes[y][x].peekOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
+                    ((Helper) nodes[y][x].peekOccupant()).paintSelf(g);
                 }
             }
         }
@@ -354,17 +376,10 @@ public class Maze {
     }
 
     /**
-     * @return the nodes
+     * @return the nodes array
      */
     public Node[][] getNodes() {
         return nodes;
-    }
-
-    /**
-     * @param nodes the nodes to set
-     */
-    public void setNodes(Node[][] nodes) {
-        this.nodes = nodes;
     }
 
     /**
@@ -388,66 +403,59 @@ public class Maze {
         return floors;
     }
 
-    public Node getNode(Point p) {
-        //System.out.println(p.y+p.x);
-
-        Node node = nodes[p.y][p.x];
-        return node;
-    }
-
-    public Node getNode(int x, int y) {
-        Node node = nodes[y][x];
+    /**
+     * @return A Node at a specified point
+     */
+    public Node getNode(Point point) {
+        Node node = nodes[point.y][point.x];
         return node;
     }
 
     /**
-     * @param floors the floors to set
+     * @return the dimension of the maze
      */
-    public void setFloors(ArrayList<Node> floors) {
-        this.floors = floors;
-    }
-
     public Dimension getDimension() {
         return dimension;
     }
 
+    /**
+     * @param dimension sets the dimension of the maze
+     */
     public void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
 
     public Level buildLevel() {
-
         int[][] layout = new int[nodes.length][nodes[0].length];
 
         for (int y = 0; y < nodes.length; y++) {
             for (int x = 0; x < nodes[0].length; x++) {
 
-                if (nodes[y][x].popOccupant() instanceof Wall) {
+                if (nodes[y][x].peekOccupant() instanceof Wall) {
                     layout[y][x] = 0;
                 }
-                if (nodes[y][x].popOccupant() instanceof Floor) {
+                if (nodes[y][x].peekOccupant() instanceof Floor) {
                     layout[y][x] = 1;
                 }
-                if (nodes[y][x].popOccupant() instanceof Player) {
+                if (nodes[y][x].peekOccupant() instanceof Player) {
                     layout[y][x] = 2;
                 }
-                if (nodes[y][x].popOccupant() instanceof PortalGun) {
+                if (nodes[y][x].peekOccupant() instanceof PortalGun) {
                     layout[y][x] = 3;
                 }
-                if (nodes[y][x].popOccupant() instanceof TimeMachine) {
+                if (nodes[y][x].peekOccupant() instanceof TimeMachine) {
                     layout[y][x] = 4;
                 }
-                if (nodes[y][x].popOccupant() instanceof Helper) {
+                if (nodes[y][x].peekOccupant() instanceof Helper) {
                     layout[y][x] = 5;
                 }
-                if (nodes[y][x].popOccupant() instanceof Goal) {
+                if (nodes[y][x].peekOccupant() instanceof Goal) {
                     layout[y][x] = 6;
                 }
             }
         }
 
         Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun, panel.player.steps, showPath);
-
         return leveler;
     }
 }

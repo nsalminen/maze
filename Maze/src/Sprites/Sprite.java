@@ -1,19 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Sprites;
 
 import Game.Node;
 import Window.GamePanel;
-import java.awt.Graphics2D;
-import java.awt.*;
+import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public abstract class Sprite {
 
@@ -23,22 +17,23 @@ public abstract class Sprite {
     public Node parent;
     private Image image;
 
-    public Sprite() {
-    }
-
     public Point getPosition() {
         return position;
     }
 
+    /**
+     * @return the x position of the Sprite
+     */
     public int getX() {
         int xPos = position.x * panel.getBlockSize();
-        //System.out.print(xPos);
         return xPos;
     }
 
+    /**
+     * @return the y position of the Sprite
+     */
     public int getY() {
         int yPos = position.y * panel.getBlockSize();
-        // System.out.print(yPos);
         return yPos;
     }
 

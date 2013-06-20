@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Game;
 
 import Sprites.*;
@@ -14,14 +10,30 @@ import java.util.ArrayList;
  */
 public class Node {
 
-    public ArrayList<Sprite> occupants = new ArrayList<Sprite>();
+    public ArrayList<Sprite> occupants = new ArrayList<>();
     public Point position = new Point(999, 999);
     public int xInd;
     public int yInd;
     private boolean visited = false;
-    private boolean open;
     private boolean path;
 
+    public Node(Point position) {
+        this.position = position;
+        xInd = position.x;
+        yInd = position.y;
+    }
+
+    public Node(int xInd, int yInd) {
+        this.xInd = xInd;
+        this.yInd = yInd;
+        position.setLocation(xInd, yInd);
+    }
+
+    /**
+     * Removes the wall that is placed on this Node.
+     *
+     * @return Whether a Wall object was removed or not
+     */
     public boolean removeWall() {
         for (Sprite p : occupants) {
             if (p instanceof Wall) {
@@ -32,34 +44,36 @@ public class Node {
         return false;
     }
 
+    /**
+     * @return return visited
+     */
     public boolean isVisited() {
         return visited;
     }
 
+    /**
+     * @param visited Sets visited to this value
+     */
     public void setVisited(boolean visited) {
         this.visited = visited;
     }
 
+    /**
+     * @return Returns whether the Node has a Wall occupant or not
+     */
     public boolean isWall() {
-        if (popOccupant() instanceof Wall) {
+        if (peekOccupant() instanceof Wall) {
             return true;
         } else {
             return false;
         }
     }
 
-    public Node(Point p) {
-        position = p;
-        xInd = position.x;
-        yInd = position.y;
-    }
-
-    public Node(int x, int y) {
-        xInd = x;
-        yInd = y;
-        position.setLocation(xInd, yInd);
-    }
-
+    /**
+     *
+     * @param index
+     * @return Returns Sprite at specified parameter
+     */
     public Sprite getOccupant(int index) {
         if (index <= occupants.size()) {
             return occupants.get(index);
@@ -68,45 +82,47 @@ public class Node {
         }
     }
 
+    /**
+     * Sets a Sprite to occupants at the specified parameter
+     *
+     * @param index
+     * @param occupant
+     */
     public void setOccupant(int index, Sprite occupant) {
         occupants.set(index, occupant);
     }
 
-    public void trimOccupants(int trimSize) {
-        //System.out.println("TRIMMING");
-        occupants.remove(trimSize);
-
+    /**
+     * Removes occupant at specified parameter
+     *
+     * @param index
+     */
+    public void removeOccupant(int index) {
+        occupants.remove(index);
     }
 
-    public void removeOccupantType(char type) {
-        for (Sprite occu : occupants) {
-            
-            if ((occu instanceof Player) && type == 'p') {
-                occupants.remove(occu);
-            }
-        }
-    }
-
-    public Sprite popOccupant() {
+    /**
+     * @return Returns occupant on top
+     */
+    public Sprite peekOccupant() {
         Sprite sprite = occupants.get(occupants.size() - 1);
         return sprite;
     }
 
+    /**
+     * Adds a Sprite to occupants
+     *
+     * @param sprite
+     */
     public void addOccupant(Sprite sprite) {
         occupants.add(sprite);
     }
 
     @Override
     public String toString() {
-
         String occ = "";
-
         occ = occupants.toString();
-
         String string = "x = " + xInd + "; y = " + yInd + "; occupied by: " + occ;
-
-
-
         return string;
     }
 
@@ -124,6 +140,9 @@ public class Node {
         this.xInd = xInd;
     }
 
+    /**
+     * @return The position of this Node in Point
+     */
     public Point getPosition() {
         return position;
     }
@@ -154,13 +173,5 @@ public class Node {
      */
     public void setPath(boolean path) {
         this.path = path;
-    }
-
-    public boolean isOpen() {
-        return open;
-    }
-
-    public void setOpen(boolean open) {
-        this.open = open;
     }
 }

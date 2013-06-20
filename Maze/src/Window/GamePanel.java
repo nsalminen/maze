@@ -158,7 +158,7 @@ public class GamePanel extends javax.swing.JPanel {
         }
 
         if (level.showPath) {
-            maze.findPath(maze.getNode(player.position.x, player.position.y));
+            maze.findPath(maze.getNode(player.position));
             maze.showPath = true;
         }
 

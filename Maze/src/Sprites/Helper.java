@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Sprites;
 
 import Game.Node;
@@ -11,7 +7,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class Helper extends Sprite {
 
@@ -21,9 +17,14 @@ public class Helper extends Sprite {
         parent = n;
         panel = pan;
         parent.addOccupant(this);
-          this.setImage(panel.helperImage);
+        this.setImage(panel.helperImage);
     }
 
+    /**
+     * Paints the Helper onto a canvas.
+     *
+     * @param g Is required for drawing onto a canvas
+     */
     public void paintSelf(Graphics g) {
         g.setColor(Color.orange);
         g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
