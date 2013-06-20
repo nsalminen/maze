@@ -81,11 +81,8 @@ public class Player extends Sprite {
         
         
          if (hasPortalGun) {
-            int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
-            int[] yp = {getY(), getY() + panel.blockSize, getY() + panel.blockSize};
-
             g.setColor(Color.GREEN);
-            g.fillPolygon(xp, yp, 3);
+            g.fillOval(getX() , getY(), panel.blockSize, panel.blockSize);
         }
                  
        

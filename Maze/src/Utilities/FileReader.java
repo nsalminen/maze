@@ -42,6 +42,15 @@ public class FileReader {
         catch(Exception e){}
     }
     
+    public String[] readSettings()throws FileNotFoundException{
+        
+        
+        levelReader = new Scanner(loader.getSettings());
+        String[] string = levelReader.nextLine().split(";");
+        
+        return string;
+    }
+    
     public Level readLevel(File f)throws FileNotFoundException{
         int score = 0;
         boolean portalgun;

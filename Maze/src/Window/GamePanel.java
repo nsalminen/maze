@@ -44,6 +44,8 @@ public class GamePanel extends javax.swing.JPanel {
     public TimeMachine timeMachine;
     public Map<String, Integer> highscores;
     public ScoreBoard scoreboard;
+    
+    
     //The size of each block in pixels
     public int blockSize = 40;
     public Helper helper;
@@ -54,9 +56,9 @@ public class GamePanel extends javax.swing.JPanel {
     public Image wallImage;
 
     public Image playerImage0;
-     public Image playerImage1;
-      public Image playerImage2;
-       public Image playerImage3;
+    public Image playerImage1;
+    public Image playerImage2;
+    public Image playerImage3;
        
     public Image portalImage;
     public Image timeMachineImage;
@@ -106,9 +108,9 @@ public class GamePanel extends javax.swing.JPanel {
         printLevel(maze.level);
     }
 
-    public void setVolume(float value) {
-        player.getSfb().setVolume(value);
-        
+    public void setVolume() {        
+        player.getSfb().setVolume(parent.setting.volume/10);
+        parent.menu.music.setVolume(parent.setting.volume/10);       
     }
 
     public void volumeOn() {
@@ -265,7 +267,6 @@ public class GamePanel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g);
     }
-
     public int getBlockSize() {
         return blockSize;
     }

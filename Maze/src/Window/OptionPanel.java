@@ -1,5 +1,9 @@
 package Window;
 
+import Utilities.FileReader;
+import Utilities.FileWriter;
+import java.io.FileNotFoundException;
+
 /**
  *
  * @author Nels
@@ -11,12 +15,36 @@ public class OptionPanel extends javax.swing.JPanel {
      */
     MainWindow parent;
     public boolean activeGame = false;
+    public FileReader reader = new FileReader();
+    public FileWriter writer = new FileWriter();
+    public int volume;
 
-    public OptionPanel(MainWindow p) {
+    public OptionPanel(MainWindow p) throws FileNotFoundException{
         initComponents();
-
+     
+        String[] settings = reader.readSettings();
+        
+        //volumeSlider.setExtent(100);
+        
+        int vol = Integer.parseInt(settings[0].split(":")[1]);
+        
+        volume = vol;
         this.setFocusable(true);
         parent = p;
+        
+        
+        volumeSlider.setMaximum(60);
+        volumeSlider.setMinimum(-800);
+        volumeSlider.setValue(vol);
+        
+            System.out.println("ppfaosdasd");
+
+    }
+    
+    public String buildSettings(){
+        
+        return "masterVolume:"+volume+";\n";               
+        
     }
 
     /**
@@ -75,12 +103,21 @@ public class OptionPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void volumeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_volumeSliderStateChanged
-        float value = volumeSlider.getValue() / 10;
-        parent.game.setVolume(value);
+       volume = volumeSlider.getValue();
+       writer.writeSettings(buildSettings());
+       System.out.println(volumeSlider.getValue());
+       
     }//GEN-LAST:event_volumeSliderStateChanged
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         parent.goToMenu();
+        
+        if(parent.game != null){
+            parent.game.setVolume();
+        }
+        else{
+            System.out.println("No game!");
+        }
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void soundToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundToggleButtonActionPerformed

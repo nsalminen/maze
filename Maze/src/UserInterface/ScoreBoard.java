@@ -35,9 +35,6 @@ public class ScoreBoard {
         y = yPos;
         
     }
-    
-    
-    
     public String printLine(int i){
               String string = scoreList.get(i)+("  \t  "+nameList.get(i));
               System.out.println(string);
