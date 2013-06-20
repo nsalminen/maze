@@ -249,13 +249,11 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         parent.startGame();
-        
         if(!playing){
-        music = new SoundEffect(parent.loader.getSoundEffect("music"));
-         music.play();
-        activeGame(true);
-        }  
-        
+            music = new SoundEffect(parent.loader.getSoundEffect("music"));
+            music.play();
+            activeGame(true);
+        }
         parent.button.play();
     }//GEN-LAST:event_startButtonActionPerformed
 
