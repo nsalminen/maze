@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  */
 public class PlayerTest extends TestCase {
     
-    public MainWindow main = new MainWindow();
+    public MainWindow main;
     public Player instance;
     
     public Point expected;
@@ -30,8 +30,10 @@ public class PlayerTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-       main.startGame();
-        instance = main.game.player;; 
+        
+        main = new MainWindow();
+        main.startGame();
+        instance = main.getGame().player;; 
        
     }
     
@@ -45,78 +47,59 @@ public class PlayerTest extends TestCase {
      * Test of move method, of class Player.
      */
     
-     public void testMoveEast(){
+     public void test1(){
         Point start;
         instance.setDirection(1);
         expected = new Point(999,999);
-        start = main.game.player.getPosition(); 
+        start = main.getGame().player.getPosition(); 
         int steps = 0;
-        while(!(main.game.maze.getNode(instance.facing).isWall())){
+        while(!(main.getGame().maze.getNode(instance.facing).isWall())){
             expected.setLocation(instance.facing);
             instance.move();
             steps++;           
-            this.assertEquals(expected, main.game.player.getPosition());
-            //System.out.println("Moved!");
-           // System.out.println("START"+start.toString());
+            this.assertEquals(expected, main.getGame().player.getPosition());
         }
-         //System.out.println("FOUNDWALL");
          expected.setLocation(1+steps, 1);
-         this.assertEquals(expected, main.game.player.getPosition());
+         this.assertEquals(expected, main.getGame().player.getPosition());
+         instance.moveSouth();
+         this.assertEquals(expected, main.getGame().player.getPosition());
+         this.assertEquals(2, main.getGame().player.direction);
     }
     
-    public void testMoveSouth(){
+    public void test2(){
         Point start;
+        start = main.getGame().player.getPosition(); 
         instance.setDirection(2);
+        instance.moveWest();
+        this.assertEquals(3, main.getGame().player.direction);
+        this.assertEquals(start, main.getGame().player.getPosition());
         expected = new Point(999,999);
-        start = main.game.player.getPosition(); 
+        
         int steps = 0;
-        while(!(main.game.maze.getNode(instance.facing).isWall())){
+        while(!(main.getGame().maze.getNode(instance.facing).isWall())){
             expected.setLocation(instance.facing);
             instance.move();
             steps++;           
-            this.assertEquals(expected, main.game.player.getPosition());
-            //System.out.println("Moved!");
-           // System.out.println("START"+start.toString());
+            this.assertEquals(expected, main.getGame().player.getPosition());
         }
-         //System.out.println("FOUNDWALL");
+         System.out.println("FOUNDWALL"); 
          expected.setLocation(1, 1+steps);
-         this.assertEquals(expected, main.game.player.getPosition());
+         this.assertEquals(expected, main.getGame().player.getPosition());
     }
     
-    public void testMoveWest(){
+    public void test3(){
         Point start;
         instance.setDirection(3);
         expected = new Point(999,999);
-        start = main.game.player.getPosition(); 
+        start = main.getGame().player.getPosition(); 
         int steps = 0;
-        while(!(main.game.maze.getNode(instance.facing).isWall())){
+        while(!(main.getGame().maze.getNode(instance.facing).isWall())){
             expected.setLocation(instance.facing);
             instance.move();
             steps++;           
-            this.assertEquals(expected, main.game.player.getPosition());
-            //System.out.println("Moved!");
-           // System.out.println("START"+start.toString());
+            this.assertEquals(expected, main.getGame().player.getPosition());
         }
-        // System.out.println("FOUNDWALL");
          expected.setLocation(1-steps, 1);
-         this.assertEquals(expected, main.game.player.getPosition());
+         this.assertEquals(expected, main.getGame().player.getPosition());
     }
-    public void testMoveNorth(){
-        Point start;
-        instance.setDirection(0);
-        expected = new Point(999,999);
-        start = main.game.player.getPosition(); 
-        int steps = 0;
-        while(!(main.game.maze.getNode(instance.facing).isWall())){
-            expected.setLocation(instance.facing);
-            instance.move();
-            steps++;           
-            this.assertEquals(expected, main.game.player.getPosition());
-           // System.out.println("Moved!");
-            //System.out.println("START"+start.toString());
-        }
-         //System.out.println("FOUNDWALL");
-         expected.setLocation(1, 1-steps);
-         this.assertEquals(expected, main.game.player.getPosition());
-    }  
 }
