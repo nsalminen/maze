@@ -4,7 +4,6 @@ package Window;
 
 import Game.*;
 import Sprites.*;
-import UserInterface.ScoreBoard;
 import UserInterface.StepCounter;
 import Utilities.FileLoader;
 import Utilities.Level;
@@ -40,7 +39,6 @@ public class GamePanel extends javax.swing.JPanel {
     private StepCounter counter;
     private TimeMachine timeMachine;
     private Map<String, Integer> highscores;
-    private ScoreBoard scoreboard;
     
     
     //The size of each block in pixels
@@ -424,19 +422,6 @@ public class GamePanel extends javax.swing.JPanel {
         this.highscores = highscores;
     }
 
-    /**
-     * @return the scoreboard
-     */
-    public ScoreBoard getScoreboard() {
-        return scoreboard;
-    }
-
-    /**
-     * @param scoreboard the scoreboard to set
-     */
-    public void setScoreboard(ScoreBoard scoreboard) {
-        this.scoreboard = scoreboard;
-    }
 
     /**
      * @param blockSize the blockSize to set

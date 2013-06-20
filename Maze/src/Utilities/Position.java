@@ -15,8 +15,8 @@ import java.awt.Point;
  */
 public class Position{
             
-        public Point point;
-        public int direction;
+        private Point point;
+        private int direction;
 
 
        /**
@@ -45,8 +45,36 @@ public class Position{
          */   
         @Override
         public String toString() {
-            return ""+ point.x + "," + point.y + "," +direction+"-";
+            return ""+ getPoint().x + "," + getPoint().y + "," +getDirection()+"-";
         }
+
+    /**
+     * @return the point
+     */
+    public Point getPoint() {
+        return point;
+    }
+
+    /**
+     * @param point the point to set
+     */
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    /**
+     * @return the direction
+     */
+    public int getDirection() {
+        return direction;
+    }
+
+    /**
+     * @param direction the direction to set
+     */
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
             
             
 

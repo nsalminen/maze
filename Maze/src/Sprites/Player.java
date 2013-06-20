@@ -261,8 +261,8 @@ public class Player extends Sprite {
     public void undoMove() {
         if (!steps.isEmpty()) {
             panel.getMaze().getNode(position).removeOccupant(1);
-            int dir = steps.peek().direction;
-            Point lastPosition = steps.pop().point;
+            int dir = steps.peek().getDirection();
+            Point lastPosition = steps.pop().getPoint();
             System.out.println(lastPosition);
             panel.getMaze().getNode(lastPosition).addOccupant(this);
             parent = panel.getMaze().getNodes()[lastPosition.y][lastPosition.x];

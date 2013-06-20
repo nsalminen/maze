@@ -14,8 +14,8 @@ import java.io.IOException;
      */
 public class FileLoader {
 
-    String os = System.getProperty("os.name");
-    File highScoreFile;
+    private String os = System.getProperty("os.name");
+    private File highScoreFile;
 
     public FileLoader() {
         highScoreFile = getHighScoreFile();
@@ -32,9 +32,9 @@ public class FileLoader {
 
         File image = null;
 
-        if (os.equals("Windows 7")) {
+        if (getOs().equals("Windows 7")) {
             image = new File("content\\images\\"+name+".png");
-        } else if (os.equals("Mac OS X")) {
+        } else if (getOs().equals("Mac OS X")) {
             image = new File("content/images/"+name+".png");
         }
         return image;
@@ -50,9 +50,9 @@ public class FileLoader {
 
         File effect = null;
 
-        if (os.equals("Windows 7")) {
+        if (getOs().equals("Windows 7")) {
             effect = new File("content\\sounds\\sfx_" + name + ".wav");
-        } else if (os.equals("Mac OS X")) {
+        } else if (getOs().equals("Mac OS X")) {
             effect = new File("content/sounds/sfx_" + name + ".wav");
         }
         return effect;
@@ -71,9 +71,9 @@ public class FileLoader {
         try {
             File level = null;
 
-            if (os.equals("Windows 7")) {
+            if (getOs().equals("Windows 7")) {
                 level = new File("content\\files\\saves\\" + name + ".txt");
-            } else if (os.equals("Mac OS X")) {
+            } else if (getOs().equals("Mac OS X")) {
                 level = new File("content/files/saves/" + name + ".txt");
             }
             level.createNewFile();
@@ -90,9 +90,9 @@ public class FileLoader {
     public File getLevel(String name) {
         File file = null;
 
-        if (os.equals("Windows 7")) {
+        if (getOs().equals("Windows 7")) {
             file = new File("content\\files\\saves\\" + name + ".txt");
-        } else if (os.equals("Mac OS X")) {
+        } else if (getOs().equals("Mac OS X")) {
             file = new File("content/files/saves/" + name + ".txt");
         }
         System.out.println(file.toURI().toASCIIString());
@@ -108,9 +108,9 @@ public class FileLoader {
     public File getHighScoreFile() {
         File file = null;
 
-        if (os.equals("Windows 7")) {
+        if (getOs().equals("Windows 7")) {
             file = new File("content\\files\\highscores.txt");
-        } else if (os.equals("Mac OS X") || os.equals("Linux")) {
+        } else if (getOs().equals("Mac OS X") || getOs().equals("Linux")) {
             file = new File("content/files/highscores.txt");
         }
 
@@ -127,11 +127,32 @@ public class FileLoader {
 
         File highScore = null;
 
-        if (os.equals("Windows 7")) {
+        if (getOs().equals("Windows 7")) {
             highScore = new File("content\\files\\settings.txt");
-        } else if (os.equals("Mac OS X")) {
+        } else if (getOs().equals("Mac OS X")) {
             highScore = new File("content/files/settings.txt");
         }
         return highScore;
+    }
+
+    /**
+     * @return the os
+     */
+    public String getOs() {
+        return os;
+    }
+
+    /**
+     * @param os the os to set
+     */
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    /**
+     * @param highScoreFile the highScoreFile to set
+     */
+    public void setHighScoreFile(File highScoreFile) {
+        this.highScoreFile = highScoreFile;
     }
 }

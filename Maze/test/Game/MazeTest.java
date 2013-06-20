@@ -34,27 +34,27 @@ public class MazeTest extends TestCase {
 
     public void testBuildMaze1() {
         int[][] integers = {{}};
-        main.game.maze.setNodes(new Node[1][1]);
-        main.game.getMaze().buildMaze(integers);
-        if (main.game.getMaze().getNodes()[0][0] != null) {
+        main.getGame().maze.setNodes(new Node[1][1]);
+        main.getGame().getMaze().buildMaze(integers);
+        if (main.getGame().getMaze().getNodes()[0][0] != null) {
             fail("testBuildMaze1 failed.");
         }
     }
 
     public void testBuildMaze2() {
         int[][] integers = {{1}, {0}};
-        main.game.maze.setNodes(new Node[2][2]);
-        main.game.getMaze().buildMaze(integers);
-        if (main.game.getMaze().getNodes()[0][0].isWall()) {
+        main.getGame().maze.setNodes(new Node[2][2]);
+        main.getGame().getMaze().buildMaze(integers);
+        if (main.getGame().getMaze().getNodes()[0][0].isWall()) {
             fail("testBuildMaze2 failed.");
         }
-        if (main.game.getMaze().getNodes()[0][0].getOccupant(0) == null) {
+        if (main.getGame().getMaze().getNodes()[0][0].getOccupant(0) == null) {
             fail("testBuildMaze2 failed.");
         }
-        if (main.game.getMaze().getNodes()[0][0].isWall()) {
+        if (main.getGame().getMaze().getNodes()[0][0].isWall()) {
             fail("testBuildMaze2 failed.");
         }
-        if (main.game.getMaze().getNodes()[1][0].getOccupant(0) == null) {
+        if (main.getGame().getMaze().getNodes()[1][0].getOccupant(0) == null) {
             fail("testBuildMaze2 failed.");
         }
     }
