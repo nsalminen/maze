@@ -52,18 +52,16 @@ public class GamePanel extends javax.swing.JPanel {
     public float volume;
     public Image floorImage;
     public Image wallImage;
-
     public Image playerImage0;
-     public Image playerImage1;
-      public Image playerImage2;
-       public Image playerImage3;
-       
+    public Image playerImage1;
+    public Image playerImage2;
+    public Image playerImage3;
     public Image portalImage;
     public Image timeMachineImage;
     public Image goalImage;
     public Image helperImage;
-    
-    
+    public Image portalOverlay;
+
     public GamePanel(MainWindow p) {
         initComponents();
         parent = p;
@@ -82,7 +80,8 @@ public class GamePanel extends javax.swing.JPanel {
             playerImage1 = ImageIO.read(loader.getImageFile("Player1"));
             playerImage2 = ImageIO.read(loader.getImageFile("Player2"));
             playerImage3 = ImageIO.read(loader.getImageFile("Player3"));
-            
+            portalOverlay = ImageIO.read(loader.getImageFile("portalOverlay"));
+
             floorImage = ImageIO.read(loader.getImageFile("Floor"));
             wallImage = ImageIO.read(loader.getImageFile("Wall2"));
             portalImage = ImageIO.read(loader.getImageFile("Portal"));
@@ -108,17 +107,17 @@ public class GamePanel extends javax.swing.JPanel {
 
     public void setVolume(float value) {
         player.getSfb().setVolume(value);
-        
+
     }
 
     public void volumeOn() {
         player.getSfb().volumeOn();
-        
+
     }
 
     public void volumeOff() {
         player.getSfb().volumeOff();
-       
+
     }
 
     private int random() {
@@ -157,9 +156,8 @@ public class GamePanel extends javax.swing.JPanel {
         while (!level.positions.isEmpty()) {
             pos.push(level.positions.pop());
         }
-        player.steps2 = pos;
+        player.steps = pos;
         counter = new StepCounter((maze.nodes.length * blockSize) + blockSize, 0, this);
-        scoreboard = new ScoreBoard((maze.nodes.length * blockSize) + blockSize, 0, this);
         cursor = new Cursor(maze.nodes.length - 1, 0, this);
     }
 
@@ -175,7 +173,6 @@ public class GamePanel extends javax.swing.JPanel {
         timeMachine = new TimeMachine(maze.floors.get(random() % maze.floors.size()), this);
         helper = new Helper(maze.floors.get(random() % maze.floors.size()), this);
         counter = new StepCounter((maze.maze.length * blockSize) + blockSize, 0, this);
-        scoreboard = new ScoreBoard((maze.maze.length * blockSize) + blockSize, 0, this);
         cursor = new Cursor(maze.maze[0].length - 1, 0, this);
     }
 

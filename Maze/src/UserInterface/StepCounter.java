@@ -14,25 +14,22 @@ import java.awt.Graphics;
  * @author Yasen
  */
 public class StepCounter {
-    
-    private int x ;
-    private int y ;
-    private Player player;
-    private int blockSize;
-    
-    public StepCounter(int xPos, int yPos, GamePanel p){
-        
-        player = p.player;
-        blockSize = p.blockSize;
-        x = xPos;
-        y = yPos;
-            
+
+    private int x;
+    private int y;
+    private GamePanel panel;
+
+    public StepCounter(int xPos, int yPos, GamePanel panel) {
+        this.panel = panel;
+        x = 0;
+        y = 0;
     }
-    public void drawSteps(Graphics g)
-    {
-        String steps = ""+player.stepsTaken;        
+
+    public void drawSteps(Graphics g) {
+        String steps = Integer.toString(panel.player.stepsTaken);
+        g.setColor(Color.gray);
+        g.drawRect(x, y, panel.blockSize, panel.blockSize);
         g.setColor(Color.white);
-        g.drawRect(x, y, blockSize, blockSize);
-        g.drawString(steps, x+(blockSize/2)-(3*steps.length()), y+25);   
+        g.drawString(steps, x + (panel.blockSize / 2) - (3 * steps.length()), y + 25);
     }
 }

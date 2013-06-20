@@ -6,6 +6,7 @@ import Utilities.SoundEffect;
 import Window.GamePanel;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.Stack;
 
@@ -24,8 +25,8 @@ public class Player extends Sprite {
     private SoundEffect tmpickup;
     private SoundEffect shoot;
     private SoundEffect sfb;
-    public Stack<Point> steps;
-    public Stack<Position> steps2;
+    public Stack<Position> steps;
+    private Image portalOverlay;
 
     public Player(Point p, GamePanel pan) {
 
@@ -34,10 +35,10 @@ public class Player extends Sprite {
         setDirection(1);
         panel.maze.nodes[position.y][position.x].addOccupant(this);
 
-        steps2 = new Stack<>();
-        steps2.push(new Position(new Point(1, 1), getDirection()));
-                this.setImage(panel.playerImage1);
-
+        steps = new Stack<>();
+        steps.push(new Position(new Point(1, 1), getDirection()));
+        this.setImage(panel.playerImage1);
+        this.portalOverlay = panel.portalOverlay;
         sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
         portalpickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
         helperpickup = new SoundEffect(panel.loader.getSoundEffect("helper"));
@@ -78,39 +79,24 @@ public class Player extends Sprite {
     }
 
     public void paintSelf(Graphics g) {
-        
-        
-         if (hasPortalGun) {
-            int[] xp = {getX() + panel.blockSize, getX() + panel.blockSize, getX()};
-            int[] yp = {getY(), getY() + panel.blockSize, getY() + panel.blockSize};
 
-            g.setColor(Color.GREEN);
-            g.fillPolygon(xp, yp, 3);
-        }
-                 
-       
+
         g.drawImage(this.getImage(), getX(), getY(), panel.blockSize, panel.blockSize, null);
-
-
-
-        g.setColor(Color.blue);
-        //g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
-
-       
-
-        
 
         if (getDirection() == 0) {
             this.setImage(panel.playerImage0);
-            
+
         } else if (getDirection() == 1) {
-             this.setImage(panel.playerImage1);
-           
+            this.setImage(panel.playerImage1);
+
         } else if (getDirection() == 2) {
-             this.setImage(panel.playerImage2);
-           
+            this.setImage(panel.playerImage2);
+
         } else if (getDirection() == 3) {
-             this.setImage(panel.playerImage3);
+            this.setImage(panel.playerImage3);
+        }
+        if (hasPortalGun) {
+            g.drawImage(this.portalOverlay, getX(), getY(), panel.blockSize, panel.blockSize, null);
         }
         panel.repaint();
         checkGoal();
@@ -231,8 +217,8 @@ public class Player extends Sprite {
      */
     public void move() {
         if (canMove()) {
-            
-            steps2.push(new Position(new Point(position), getDirection()));
+
+            steps.push(new Position(new Point(position), getDirection()));
             panel.maze.getNode(position).trimOccupants(1);
             //System.out.println("MOVING");
             panel.maze.getNode(facing).addOccupant(this);
@@ -248,11 +234,11 @@ public class Player extends Sprite {
     }
 
     public void undoMove() {
-        if (!steps2.isEmpty()) {
+        if (!steps.isEmpty()) {
             panel.maze.getNode(position).trimOccupants(1);
             System.out.println("UNDO");
-            int dir = steps2.peek().direction;
-            Point lastPosition = steps2.pop().point;
+            int dir = steps.peek().direction;
+            Point lastPosition = steps.pop().point;
             System.out.println(lastPosition);
             panel.maze.getNode(lastPosition).addOccupant(this);
             parent = panel.maze.nodes[lastPosition.y][lastPosition.x];
@@ -298,6 +284,7 @@ public class Player extends Sprite {
         direction = dir;
         updateFacing();
     }
+
     /**
      * @return the sfb
      */
