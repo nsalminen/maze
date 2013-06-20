@@ -22,45 +22,56 @@ public class MainWindow extends JFrame {
      * @return the mazeWindow
      */
     public static MainWindow getMazeWindow() {
-        return mazeWindow;
+        return null;//mazeWindow;
     }
 
     /**
      * @param aMazeWindow the mazeWindow to set
      */
     public static void setMazeWindow(MainWindow aMazeWindow) {
-        mazeWindow = aMazeWindow;
+        //mazeWindow = aMazeWindow;
     }
     
 
     private FileReader reader = new FileReader();
     private FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
-    private static MainWindow mazeWindow = new MainWindow();
-    private OptionPanel setting;
+    //private static MainWindow mazeWindow = new MainWindow();
+    
     private MenuPanel menu = new MenuPanel(this);
+    private OptionPanel setting;
+    private SoundEffect music = new SoundEffect(getLoader().getSoundEffect("music"));        
     private GamePanel game;
     private OptionPanel option;
     private WinPanel win;
     private Dimension windowDimension;
     private static GraphicsDevice vc;
     private boolean fullscreen = false;
+    private boolean playing;
     private SoundEffect button;
     
     /**
      * Creates new MainWindow
      */
-    public MainWindow() {
+    public MainWindow()throws FileNotFoundException {
         initComponents();
         if (System.getProperty("os.name").equals("Mac OS X")) {
             enableOSXFullscreen(this);
         }
+        
         windowDimension = new Dimension(1220, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(windowDimension);
         setContentPane(menu);
         setLocationRelativeTo(null);
+        //setSetting(new OptionPanel(this));
+        setting = new OptionPanel(this);   
         button = new SoundEffect(getLoader().getSoundEffect("menu"));
+
+        setMusicVolume(setting.music);
+        if(setting.isMute()){
+            music.play();
+        }        
     }
     
     /**
@@ -80,12 +91,11 @@ public class MainWindow extends JFrame {
      */
     public void showOptions() {
         try{
-            setSetting(new OptionPanel(this));
-        setContentPane(getSetting());
-            getSetting().setVisible(true);
-            getSetting().setFocusable(true);
-            getSetting().requestFocus();
-            getSetting().setSize(this.getSize());
+            setContentPane(setting);
+            setting.setVisible(true);
+            setting.setFocusable(true);
+            setting.requestFocus();
+            setting.setSize(this.getSize());
         }catch(Exception e){
         }
         
@@ -160,6 +170,7 @@ public class MainWindow extends JFrame {
         getGame().requestFocus();
         getGame().repaint();
         getGame().setSize(this.getSize());
+        menu.activeGame(true);
     }
 
     /**
@@ -174,6 +185,43 @@ public class MainWindow extends JFrame {
         getWin().repaint();
 
         System.out.println("GAME");
+    }
+    
+    
+    public boolean isPlaying(){
+        return playing;
+    }
+        /**
+     * Update the master volume according to the Settings panel
+     */
+    public void setVolume(int vol) {               
+        getGame().player.getSfb().setVolume(vol/10);
+        getGame().player.getPortalPickup().setVolume(vol/10);
+        getGame().player.getHelperpickup().setVolume(vol/10);
+        getGame().player.getTmpickup().setVolume(vol/10);                   
+    }
+    
+    /**
+     * Update the music volume according to the Settings panel
+     */    
+    public void setMusicVolume(int vol) {
+        getMusic().setVolume(vol/10);
+    }
+
+    /**
+     * Turns sound on
+     */
+    public void volumeOn() {
+        getGame().player.getSfb().volumeOn();
+        getMenu().music.volumeOn();
+    }
+    /**
+     * Turns sound on
+     */
+    public void volumeOff() {
+        
+        getGame().player.getSfb().volumeOff();
+        getMenu().music.stop();
     }
 
     /**
@@ -270,7 +318,9 @@ public class MainWindow extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                try{
+                    new MainWindow().setVisible(true);
+                }catch(FileNotFoundException e){}
 
             }
         });
@@ -374,5 +424,19 @@ public class MainWindow extends JFrame {
      */
     public void setButton(SoundEffect button) {
         this.button = button;
+    }
+
+    /**
+     * @return the music
+     */
+    public SoundEffect getMusic() {
+        return music;
+    }
+
+    /**
+     * @param music the music to set
+     */
+    public void setMusic(SoundEffect music) {
+        this.music = music;
     }
 }

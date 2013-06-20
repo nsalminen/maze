@@ -24,10 +24,7 @@ public class MenuPanel extends javax.swing.JPanel {
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
-        
-       
-        
-        
+                
         activeGame(false);
         parent = p;        
         //parent.setContentPane(this);
@@ -35,6 +32,8 @@ public class MenuPanel extends javax.swing.JPanel {
         if (System.getProperty("os.name").equals("Mac OS X")) {
             fullScreenButton.setVisible(false);
         }
+       
+        
     }
     
     public void activeGame(boolean active){
@@ -54,8 +53,6 @@ public class MenuPanel extends javax.swing.JPanel {
                 break;
             }
     }
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -237,7 +234,6 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void saveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameActionPerformed
         parent.saveGame();
-        
         parent.getButton().play();
     }//GEN-LAST:event_saveGameActionPerformed
 
@@ -249,17 +245,11 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         parent.startGame();
-        if(!playing){
-            music = new SoundEffect(parent.getLoader().getSoundEffect("music"));
-            music.play();
-            activeGame(true);
-        }
         parent.getButton().play();
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void continueGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueGameActionPerformed
         parent.unPauseGame();
-        
         parent.getButton().play();
     }//GEN-LAST:event_continueGameActionPerformed
 

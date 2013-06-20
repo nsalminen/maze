@@ -79,6 +79,11 @@ public class LoadPanel extends javax.swing.JPanel {
 
             } catch (FileNotFoundException e) {
             }
+        if(!parent.isPlaying()){            
+            parent.getMusic().play();
+            parent.getMenu().activeGame(true);
+        }
+            
         } else if (evt.getActionCommand().equals("CancelSelection")) {
 
             parent.goToMenu();

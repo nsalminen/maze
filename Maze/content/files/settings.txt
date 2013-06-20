@@ -1,3 +1,3 @@
-masterVolume:-572
-musicVolume:-41
+masterVolume:-83
+musicVolume:-513
 mute:false

@@ -26,9 +26,10 @@ public class SoundEffect {
             // Open audio clip and load samples from the audio input stream.
             clip.open(audioInputStream);
             gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            clip.start();
+            //clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.out.println(e);
+          
         }
     }
     
@@ -67,5 +68,11 @@ public class SoundEffect {
         clip.setFramePosition(0); // rewind to the beginning
         clip.start();     // Start playing
         playing = true;
+    }
+    public void stop() {
+        if (clip.isRunning()) {
+            clip.stop();
+        }   // Stop the player if it is still running
+       
     }
 }

@@ -20,10 +20,11 @@ public class OptionPanel extends javax.swing.JPanel {
     public FileWriter writer = new FileWriter();
     public int volume;
     public int music;
+    private boolean mute;
    
     public OptionPanel(MainWindow p) throws FileNotFoundException {
         initComponents();
-        boolean mute;
+        
         String[] settings = reader.readSettings();
         System.out.println(settings[0]+settings[1]+settings[1]);
 
@@ -33,14 +34,16 @@ public class OptionPanel extends javax.swing.JPanel {
         if( settings[2].split(":")[1].contains("true")){
             mute = true;
             muteButton.setText("ON");
+            muteButton.setSelected(true);
         }
         else{
             mute = false;
             muteButton.setText("OFF");
+             muteButton.setSelected(false);
         }
         
         //mute = muteButton.isSelected();
-        muteButton.setSelected(mute);
+       
         
         System.out.println("fasdfasdfasdfasdf");
         volume = vol;
@@ -53,8 +56,8 @@ public class OptionPanel extends javax.swing.JPanel {
         volumeSlider.setMinimum(-800);
         volumeSlider.setValue(vol);
         this.setSize(parent.getSize());
-
-        System.out.println("ppfaosdasd");
+;
+        
     }
 
     /**
@@ -198,22 +201,26 @@ public class OptionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_volumeSliderStateChanged
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        parent.goToMenu();
-
         if (parent.getGame() != null) {
-            parent.getGame().setVolume();
-            parent.getGame().setMusicVolume();
+            parent.setVolume(volume);
+            
         } else {
             System.out.println("No game!");
         }
+        parent.setMusicVolume(music);
+        
+        parent.goToMenu();
+        
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void muteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_muteButtonActionPerformed
              if( muteButton.isSelected()){
                     muteButton.setText("ON");
+                    parent.getMusic().play();
                 }   
              else{
                     muteButton.setText("OFF");
+                    parent.getMusic().stop();
                 }
             writer.writeSettings(buildSettings());
     }//GEN-LAST:event_muteButtonActionPerformed
@@ -235,4 +242,18 @@ public class OptionPanel extends javax.swing.JPanel {
     private javax.swing.JToggleButton muteButton;
     private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the mute
+     */
+    public boolean isMute() {
+        return mute;
+    }
+
+    /**
+     * @param mute the mute to set
+     */
+    public void setMute(boolean mute) {
+        this.mute = mute;
+    }
 }

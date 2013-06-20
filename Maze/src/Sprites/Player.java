@@ -18,11 +18,11 @@ public class Player extends Sprite {
     public int direction;
     public boolean hasPortalGun = false;
     public int stepsTaken = 0;
-    private SoundEffect portalpickup;
+    private SoundEffect portalPickup;
     private SoundEffect helperpickup;
     private SoundEffect tmpickup;
     private SoundEffect shoot;
-    private SoundEffect sfb;
+    private SoundEffect bump;
     public Stack<Position> steps;
     private Image portalOverlay;
 
@@ -35,11 +35,20 @@ public class Player extends Sprite {
         steps.push(new Position(new Point(1, 1), getDirection()));
         this.setImage(panel.playerImage1);
         this.portalOverlay = panel.portalOverlay;
-        sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
-        portalpickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
+        
+        
+        
+        bump = new SoundEffect(panel.loader.getSoundEffect("bump"));
+        portalPickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
         helperpickup = new SoundEffect(panel.loader.getSoundEffect("helper"));
         tmpickup = new SoundEffect(panel.loader.getSoundEffect("timemachine"));
         shoot = new SoundEffect(panel.loader.getSoundEffect("shoot"));
+        
+        bump.setVolume(panel.parent.getSetting().volume/10);
+        portalPickup.setVolume(panel.parent.getSetting().volume/10);
+        helperpickup.setVolume(panel.parent.getSetting().volume/10);
+        tmpickup.setVolume(panel.parent.getSetting().volume/10);
+                    
     }
 
     /**
@@ -65,7 +74,7 @@ public class Player extends Sprite {
                     xOrigin--;
                 }
                 if (panel.maze.nodes[yOrigin][xOrigin].peekOccupant() instanceof Wall) {
-                    shoot.play();
+                    getShoot().play();
                     panel.maze.nodes[yOrigin][xOrigin].removeOccupant(1);
                     shooting = false;
                 }
@@ -123,7 +132,10 @@ public class Player extends Sprite {
      */
     public void checkPortalGun() {
         if ((panel.maze.getNode(position).occupants.contains(panel.portalGun)) && !panel.portalGun.taken) {
-            portalpickup.play();
+             
+            if(panel.parent.getSetting().isMute()){
+                 portalPickup.play();            
+             }
             panel.maze.getNode(position).removeOccupant(1);
             this.hasPortalGun = true;
             panel.portalGun.taken = true;
@@ -137,7 +149,10 @@ public class Player extends Sprite {
      */
     public void checkTimeMachine() {
         if ((panel.maze.getNode(position).occupants.contains(panel.timeMachine)) && !panel.timeMachine.taken) {
-            tmpickup.play();
+            
+            if(panel.parent.getSetting().isMute()){
+                 tmpickup.play();
+             }
             panel.maze.getNode(position).removeOccupant(1);
             for (int n = 0; n < panel.timeMachine.stepsReduced; n++) {
                 if (stepsTaken > 0) {
@@ -155,7 +170,9 @@ public class Player extends Sprite {
      */
     private void checkHelper() {
         if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.taken) {
-            helperpickup.play();
+            if(panel.parent.getSetting().isMute()){
+                helperpickup.play();
+            }
             panel.maze.getNode(position).removeOccupant(1);
             panel.maze.findPath(parent);
             panel.maze.showPath = true;
@@ -251,7 +268,9 @@ public class Player extends Sprite {
             stepsTaken++;
             updateFacing();
         } else {
-            sfb.play();
+            if(panel.parent.getSetting().isMute()){
+                    bump.play();
+                }
         }
     }
 
@@ -320,6 +339,62 @@ public class Player extends Sprite {
      * @return the sfb
      */
     public SoundEffect getSfb() {
-        return sfb;
+        return bump;
+    }
+
+    /**
+     * @return the portalPickup
+     */
+    public SoundEffect getPortalPickup() {
+        return portalPickup;
+    }
+
+    /**
+     * @param portalPickup the portalPickup to set
+     */
+    public void setPortalPickup(SoundEffect portalPickup) {
+        this.portalPickup = portalPickup;
+    }
+
+    /**
+     * @return the helperpickup
+     */
+    public SoundEffect getHelperpickup() {
+        return helperpickup;
+    }
+
+    /**
+     * @param helperpickup the helperpickup to set
+     */
+    public void setHelperpickup(SoundEffect helperpickup) {
+        this.helperpickup = helperpickup;
+    }
+
+    /**
+     * @return the tmpickup
+     */
+    public SoundEffect getTmpickup() {
+        return tmpickup;
+    }
+
+    /**
+     * @param tmpickup the tmpickup to set
+     */
+    public void setTmpickup(SoundEffect tmpickup) {
+        this.tmpickup = tmpickup;
+    }
+
+    /**
+     * @return the shoot
+     */
+    public SoundEffect getShoot() {
+        return shoot;
+    }
+
+    /**
+     * @param shoot the shoot to set
+     */
+    public void setShoot(SoundEffect shoot) {
+        this.shoot = shoot;
     }
 }

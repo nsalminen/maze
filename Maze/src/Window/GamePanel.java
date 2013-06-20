@@ -44,7 +44,7 @@ public class GamePanel extends javax.swing.JPanel {
     //The size of each block in pixels
     public int blockSize = 40;
     public Helper helper;
-    private MainWindow parent;
+    public MainWindow parent;
     public FileLoader loader = new FileLoader();
     public float volume;
     public Image floorImage;
@@ -118,35 +118,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     
-    /**
-     * Update the master volume according to the Settings panel
-     */
-    public void setVolume() {       
-        player.getSfb().setVolume(parent.getSetting().volume/10);        
-    }
-    
-    /**
-     * Update the music volume according to the Settings panel
-     */    
-    public void setMusicVolume() {        
 
-        parent.getMenu().music.setVolume(parent.getSetting().music/10);
-    }
-
-    /**
-     * Turns sound on
-     */
-    public void volumeOn() {
-        player.getSfb().volumeOn();
-        parent.getMenu().music.volumeOn();
-    }
-    /**
-     * Turns sound on
-     */
-    public void volumeOff() {
-        player.getSfb().volumeOff();
-        parent.getMenu().music.volumeOff();
-    }
 
     
     /**
@@ -233,9 +205,7 @@ public class GamePanel extends javax.swing.JPanel {
      */
     public void gameOver() {
         parent.gameOver();
-    }
-
-    
+    }    
     /**
      * Triggers a gameOver in parent
      */
