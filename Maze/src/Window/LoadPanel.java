@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Window;
 
 import Utilities.FileReader;
@@ -10,14 +6,13 @@ import java.io.FileNotFoundException;
 
 /**
  *
- * @author Yasen
+ * @author Yasen and Nels
  */
 public class LoadPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form LoadPanel
      */
-    //size()
     MainWindow parent;
     public String os;
     private File def;
@@ -40,10 +35,6 @@ public class LoadPanel extends javax.swing.JPanel {
         fileChooser.setCurrentDirectory(def);
     }
 
-    private void bla() {
-    }
-
-    //private void
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -80,7 +71,6 @@ public class LoadPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
-
         if (evt.getActionCommand().equals("ApproveSelection")) {
             parent.menu.activeGame(true);
             FileReader levelReader = new FileReader();

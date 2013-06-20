@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package Window;
 
 import Utilities.FileReader;
@@ -15,6 +11,7 @@ import javax.swing.JLabel;
 public class HighScorePanel extends javax.swing.JPanel {
     FileReader scoreReader;
     MainWindow parent;
+    
     JLabel[] names = new JLabel[5];
     JLabel[] scores = new JLabel[5];
     /**
@@ -30,6 +27,7 @@ public class HighScorePanel extends javax.swing.JPanel {
         names[2] = name3;
         names[3] = name4;
         names[4] = name5;
+        
         scores[0] = score1;
         scores[1] = score2;
         scores[2] = score3;
@@ -39,6 +37,9 @@ public class HighScorePanel extends javax.swing.JPanel {
         buildScoreBoard();
     }
     
+    /**
+     * Builds the scoreboard from the known values
+     */
     void buildScoreBoard(){
         ArrayList<String> data = scoreReader.printMap();        
         for(int i = 0; i < data.size(); i++){

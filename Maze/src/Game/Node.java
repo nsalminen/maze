@@ -53,13 +53,11 @@ public class Node {
         xInd = position.x;
         yInd = position.y;
     }
-
     public Node(int x, int y) {
         xInd = x;
         yInd = y;
         position.setLocation(xInd, yInd);
     }
-
     public Sprite getOccupant(int index) {
         if (index <= occupants.size()) {
             return occupants.get(index);
@@ -67,15 +65,12 @@ public class Node {
             return null;
         }
     }
-
     public void setOccupant(int index, Sprite occupant) {
         occupants.set(index, occupant);
     }
 
     public void trimOccupants(int trimSize) {
-        //System.out.println("TRIMMING");
         occupants.remove(trimSize);
-
     }
 
     public void removeOccupantType(char type) {

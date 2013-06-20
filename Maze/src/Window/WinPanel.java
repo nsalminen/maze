@@ -5,7 +5,9 @@ import Utilities.FileWriter;
 import java.util.ArrayList;
 
 /**
- *
+ *  A panel that appears then the player has completed a level.
+ * 
+ * If the player has achieved a highscore he is promted to insert their name
  * @author Nels
  */
 public class WinPanel extends javax.swing.JPanel {
@@ -35,6 +37,9 @@ public class WinPanel extends javax.swing.JPanel {
         this.setSize(parent.getSize());
     }
 
+    /**
+     * This method fills the labels with the sorted highscorers and their respective scores
+     */
     void checkScore() {
         data = scoreReader.printMap();
         for (int i = 0; i < scores.length; i++) {
@@ -43,17 +48,20 @@ public class WinPanel extends javax.swing.JPanel {
         }
     }
 
-    void printData() {
-
-        for (int i = 0; i < data.size(); i++) {
-            System.out.println("" + data.get(i));
-        }
-    }
-
+    /**
+     * This mehod inserts the current player into a certain spot on the high-score board 
+     * 
+     * @param p The current players spot on the leaderboards
+     */    
     private void insertPlayer(int p) {
         data.set(p, nameField.getText() + ":" + score);
     }
-
+    
+    
+    /**
+     * This mehod checks if the current player has achieved a highscore or not and places them in the ranking 
+     * @return boolean returns true if current score is in the leaderboards
+     */ 
     private boolean isHighScore() {
         checkScore();
         boolean isHighScore = false;
@@ -171,18 +179,14 @@ public class WinPanel extends javax.swing.JPanel {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         scoreWriter = new FileWriter();
         insertPlayer(place);
-        //printData();
         scoreWriter.writeScores(data);
-
         MainWindow main = new MainWindow();
         main.setVisible(true);
         main.requestFocus();
         parent.dispose();
-        //MainWindow.mazeWindow.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_nameFieldActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;

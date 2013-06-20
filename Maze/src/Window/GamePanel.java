@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Window;
 
 import Game.*;
@@ -64,7 +61,13 @@ public class GamePanel extends javax.swing.JPanel {
     public Image goalImage;
     public Image helperImage;
     public Image portalOverlay;
-
+    
+    /**
+     * Build new Game panel with a random generated maze and set a Frame as a parent
+     * 
+     * @param p MainWindow Frame as parent
+     */
+    
     public GamePanel(MainWindow p) {
         initComponents();
         parent = p;
@@ -74,9 +77,29 @@ public class GamePanel extends javax.swing.JPanel {
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
-        printLevel(maze.level);
+    }
+    
+    /**
+     * Build new Game panel with a pre-loaded maze and set a Frame as a parent
+     * 
+     * @param level Leven from saveed-file
+     * @param p MainWindow Frame as parent
+     */
+    
+    public GamePanel(Level level, MainWindow p) {
+        initComponents();
+        getGameImages();
+        parent = p;
+        loadGame(level, getGraphics());
+        this.setSize(maze.getDimension().height * blockSize, maze.getDimension().width * blockSize);
+        MazeKeyListener listener = new MazeKeyListener(this);
+        this.addKeyListener(listener);
+        this.setFocusable(true);
     }
 
+    /**
+     * Loads all of the Images needed for the srites
+     */
     private void getGameImages() {
         try {
             playerImage0 = ImageIO.read(loader.getImageFile("Player0"));
@@ -96,54 +119,58 @@ public class GamePanel extends javax.swing.JPanel {
         }
     }
 
-    public GamePanel(Level level, MainWindow p) {
-        initComponents();
-        getGameImages();
-        parent = p;
-        loadGame(level, getGraphics());
-        this.setSize(maze.getDimension().height * blockSize, maze.getDimension().width * blockSize);
-        MazeKeyListener listener = new MazeKeyListener(this);
-        this.addKeyListener(listener);
-        this.setFocusable(true);
-        printLevel(maze.level);
-    }
-
+    
+    /**
+     * Update the master volume according to the Settings panel
+     */
     public void setVolume() {       
-        player.getSfb().setVolume(parent.setting.volume/10);
-        
+        player.getSfb().setVolume(parent.setting.volume/10);        
     }
     
+    /**
+     * Update the music volume according to the Settings panel
+     */    
     public void setMusicVolume() {        
 
         parent.menu.music.setVolume(parent.setting.music/10);
     }
 
-
+    /**
+     * Turns sound on
+     */
     public void volumeOn() {
         player.getSfb().volumeOn();
-
+        parent.menu.music.volumeOn();
     }
-
+    /**
+     * Turns sound on
+     */
     public void volumeOff() {
         player.getSfb().volumeOff();
-
+        parent.menu.music.volumeOff();
     }
 
+    
+    /**
+     * Creates random number
+     */
     private int random() {
         Random random = new Random();
         return Math.abs(random.nextInt());
     }
 
+     /**
+     * This method builds a maze from a Level object
+     * 
+     * @param level The level objed containing all the needed information
+     * @param g A Graphics object used to draw the new maze
+     */
     public void loadGame(Level level, Graphics g) {
         Stack<Position> pos = new Stack<>();
         maze = new Maze(this, level);
-
-
         player = new Player(maze.playerPoint, this);
-
         player.stepsTaken = level.score;
         player.hasPortalGun = level.portalGun;
-
         if (maze.portalGunPoint != null) {
             portalGun = new PortalGun(maze.getNode(maze.portalGunPoint), this);
         }
@@ -170,6 +197,11 @@ public class GamePanel extends javax.swing.JPanel {
         cursor = new Cursor(maze.nodes.length - 1, 0, this);
     }
 
+    /**
+     * This method builds a random maze and places items randomly around
+     * 
+     * @param g A Graphics object used to draw the new maze
+     */
     public final void prepGame(Graphics g) {
         Point pointer = new Point(999, 999);
         maze = new Maze(this);
@@ -195,19 +227,30 @@ public class GamePanel extends javax.swing.JPanel {
         keyInput(e.getKeyCode());
         repaint();
         checkGoal();
-        //checkPortalGun();
     }
 
+    
+    /**
+     * Triggers a gameOver in parent
+     */
     public void gameOver() {
         parent.gameOver();
     }
 
+    
+    /**
+     * Triggers a gameOver in parent
+     */
     public void checkGoal() {
         if (goal.getPosition() == (player.getPosition())) {
             gameOver();
         }
     }
-
+    
+    /**
+     * This method determines the actions based on the key used 
+     *
+     */
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_W:
@@ -248,20 +291,7 @@ public class GamePanel extends javax.swing.JPanel {
                 this.repaint();
         }
     }
-
-    public final void printLevel(ArrayList<String[]> level) {
-
-        System.out.println(
-                level.toString());
-
-        for (String[] line : level) {
-            for (String value : line) {
-                //System.out.print(value);
-            }
-            //System.out.print("\n");
-        }
-    }
-
+    
     @Override
     public void repaint() {
         super.repaint();

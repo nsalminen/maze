@@ -6,11 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
+ * A key listener class that updates a the game when a key is pressed
+ * 
  * @author Yasen and Nels
  */
 public class MazeKeyListener implements KeyListener {
@@ -20,7 +17,6 @@ public class MazeKeyListener implements KeyListener {
     public MazeKeyListener(GamePanel p) {
         panel = p;
     }
-
     public MazeKeyListener(MenuPanel p) {
         panel = p;
     }

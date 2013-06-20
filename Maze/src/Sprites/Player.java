@@ -276,8 +276,6 @@ public class Player extends Sprite {
         if (getDirection() == 3) {
             facing.setLocation(position.getX() - 1, position.getY());
         }
-
-        //System.out.println("--------------");
     }
 
     public void setDirection(int dir) {

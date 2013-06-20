@@ -6,13 +6,14 @@ import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 
 /**
- *
+ *  This class contains controlls to create and use other panels
  * @author Nels
  */
 public class MenuPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MenuPanel
+     *
      */
     MainWindow parent;
     SoundEffect music;
@@ -217,7 +218,7 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
 
-        parent.showSettings();
+        parent.showOptions();
         parent.button.play();
     }//GEN-LAST:event_optionsButtonsActionPerformed
 
