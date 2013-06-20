@@ -158,9 +158,9 @@ public class FileReader {
     }
     
     /**
-     * Returns a sorted TreeMap, where the keys are sorted ascendingly by their values.
+     * Returns a sorted TreeMap, where the keys are sorted ascending by their values.
      * 
-     * @param unsortMap a raw undorted TreeMap object
+     * @param unsortMap a raw unsorted TreeMap object
      * @return Map A sorted TreeMap where the keys are sorted ascending by value
      */
     private static Map sortByComparator(Map unsortMap) {
@@ -181,8 +181,8 @@ public class FileReader {
 	}
     
     /**
-     * Returns an ArrayList<Sting> containing sorted highscore values in order serperated by ":"
-     * If there are less than 5 noted highscores, this method fills the empty slots with "****:9999"
+     * Returns an ArrayList<Sting> containing sorted high score values in order separated by ":"
+     * If there are less than 5 noted high scores, this method fills the empty slots with "****:9999"
      * 
      * @return scoreList An ArrayList<Sting> formatted: "PLAYERNAME:SCORE"
      */
@@ -197,9 +197,7 @@ public class FileReader {
                 
                 //Fills empty slots
                 if(scoreList.size()<5){
-                    System.out.println(scoreList.size());
-                    int remainder = 5-scoreList.size();
-                    
+                    int remainder = 5-scoreList.size();                   
                     for(int i = 0 ; i < remainder;i++){
                         scoreList.add(i,"****:9999");
                     }

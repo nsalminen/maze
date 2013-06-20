@@ -3,18 +3,21 @@ package Window;
 import Utilities.FileReader;
 import Utilities.FileWriter;
 import java.io.FileNotFoundException;
+import javax.swing.JOptionPane;
 
 /**
- *This panel controlls the volume for all the active SoundEffect objects in the game
- * and saves its settings to the settings.txt file
- * @author Nels
+ * This panel controls the volume for all the active SoundEffect objects in the
+ * game and saves its settings to the settings.txt file
+ *
+ * @author Yasen and Nels
  */
 public class OptionPanel extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Creates new form MenuPanel
      */
-    MainWindow parent;
+    private MainWindow parent;
     public boolean activeGame = false;
     public FileReader reader = new FileReader();
     public FileWriter writer = new FileWriter();
@@ -22,42 +25,39 @@ public class OptionPanel extends javax.swing.JPanel {
     public int music;
     private boolean mute;
     private boolean fullScreen;
-   
+
     public OptionPanel(MainWindow p) throws FileNotFoundException {
         initComponents();
-        
+
         String[] settings = reader.readSettings();
-        System.out.println(settings[0]+settings[1]+settings[1]);
 
         int vol = Integer.parseInt(settings[0].split(":")[1]);
         int mus = Integer.parseInt(settings[1].split(":")[1]);
-        
-        if( settings[2].split(":")[1].contains("true")){
+
+        if (settings[2].split(":")[1].contains("true")) {
             mute = true;
             muteButton.setText("ON");
             muteButton.setSelected(true);
-        }
-        else{
+        } else {
             mute = false;
             muteButton.setText("OFF");
             muteButton.setSelected(false);
         }
-        
-        if( settings[3].split(":")[1].contains("true")){
-            fullScreen = true;
-            fullScreenButton.setText("ON");
-            fullScreenButton.setSelected(true);
-        }
-        else{
+        if (!System.getProperty("os.name").equals("Mac OS X")) {
+            if (settings[3].split(":")[1].contains("true")) {
+                fullScreen = true;
+                fullScreenButton.setText("ON");
+                fullScreenButton.setSelected(true);
+            } else {
+                fullScreen = false;
+                fullScreenButton.setText("OFF");
+                fullScreenButton.setSelected(false);
+            }
+        } else {
+            fullScreenButton.setVisible(false);
+            fullscreenLabel.setVisible(false);
             fullScreen = false;
-            fullScreenButton.setText("OFF");
-            fullScreenButton.setSelected(false);
         }
-        
-        //mute = muteButton.isSelected();
-       
-        
-        System.out.println("fasdfasdfasdfasdf");
         volume = vol;
         this.setFocusable(true);
         parent = p;
@@ -68,18 +68,17 @@ public class OptionPanel extends javax.swing.JPanel {
         volumeSlider.setMinimum(-800);
         volumeSlider.setValue(vol);
         this.setSize(parent.getSize());
-;
-        
     }
 
     /**
-     * Takes settings data and returns a string used to overwrite the settings file
+     * Takes settings data and returns a string used to overwrite the settings
+     * file
      */
     public String buildSettings() {
         return "masterVolume:" + volume + "\n"
                 + "musicVolume:" + music + "\n"
-                + "mute:"+ muteButton.isSelected()+"\n"
-                + "fullscreen:"+ fullScreenButton.isSelected()+"\n";
+                + "mute:" + muteButton.isSelected() + "\n"
+                + "fullscreen:" + fullScreenButton.isSelected() + "\n";
     }
 
     /**
@@ -95,7 +94,7 @@ public class OptionPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         musicSlider = new javax.swing.JSlider();
         fullScreenButton = new javax.swing.JToggleButton();
-        jLabel5 = new javax.swing.JLabel();
+        fullscreenLabel = new javax.swing.JLabel();
         muteButton = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -129,7 +128,7 @@ public class OptionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setText("Fullscreen");
+        fullscreenLabel.setText("Fullscreen");
 
         muteButton.setSelected(true);
         muteButton.setText("ON");
@@ -173,35 +172,34 @@ public class OptionPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(76, 76, 76)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
-                    .add(volumeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(muteButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 85, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel2)
                     .add(musicSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(backButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel4)
+                    .add(volumeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 380, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(fullScreenButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel5)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 85, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(147, 147, 147))))
+                    .add(fullscreenLabel)
+                    .add(jLabel4)
+                    .add(backButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 130, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(39, 39, 39)
                 .add(jLabel4)
-                .add(89, 89, 89)
+                .add(39, 39, 39)
+                .add(fullscreenLabel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(fullScreenButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(27, 27, 27)
                 .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(muteButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel5)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(fullScreenButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(42, 42, 42)
+                .add(29, 29, 29)
                 .add(jLabel2)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(musicSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -211,7 +209,7 @@ public class OptionPanel extends javax.swing.JPanel {
                 .add(volumeSlider, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(41, 41, 41)
                 .add(backButton)
-                .add(30, 30, 30))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         add(jPanel1, new java.awt.GridBagConstraints());
@@ -228,59 +226,51 @@ public class OptionPanel extends javax.swing.JPanel {
     private void volumeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_volumeSliderStateChanged
         volume = volumeSlider.getValue();
         writer.writeSettings(buildSettings());
-        System.out.println(volumeSlider.getValue());
-
     }//GEN-LAST:event_volumeSliderStateChanged
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         if (parent.getGame() != null) {
             parent.setVolume(volume);
-            
         } else {
             System.out.println("No game!");
         }
         parent.setMusicVolume(music);
-        
         parent.goToMenu();
-        
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void muteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_muteButtonActionPerformed
-             if( muteButton.isSelected()){
-                    muteButton.setText("ON");
-                    parent.getMusic().play();
-                }   
-             else{
-                    muteButton.setText("OFF");
-                    parent.getMusic().stop();
-                }
-            writer.writeSettings(buildSettings());
+        if (muteButton.isSelected()) {
+            muteButton.setText("ON");
+            parent.getMusic().play();
+        } else {
+            muteButton.setText("OFF");
+            parent.getMusic().stop();
+        }
+        writer.writeSettings(buildSettings());
     }//GEN-LAST:event_muteButtonActionPerformed
 
     private void musicSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_musicSliderStateChanged
         music = musicSlider.getValue();
         writer.writeSettings(buildSettings());
-        System.out.println(musicSlider.getValue());
     }//GEN-LAST:event_musicSliderStateChanged
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
-        if( fullScreenButton.isSelected()){
-                    fullScreenButton.setText("ON");
-                }   
-             else{
-                    fullScreenButton.setText("OFF");
-                }        
+        if (fullScreenButton.isSelected()) {
+            fullScreenButton.setText("ON");
+        } else {
+            fullScreenButton.setText("OFF");
+        }
+        JOptionPane.showInternalMessageDialog(this, "The fullscreen setting will not be taking effect until a restart of the application");
         writer.writeSettings(buildSettings());
     }//GEN-LAST:event_fullScreenButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JToggleButton fullScreenButton;
+    private javax.swing.JLabel fullscreenLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel mainMenuBackground;
     private javax.swing.JSlider musicSlider;

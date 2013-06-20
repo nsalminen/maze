@@ -3,10 +3,10 @@ package Window;
 import Utilities.MazeKeyListener;
 import Utilities.SoundEffect;
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 
 /**
- *  This class contains controlls to create and use other panels
+ * This class contains controls to create and use other panels
+ *
  * @author Nels
  */
 public class MenuPanel extends javax.swing.JPanel {
@@ -15,38 +15,39 @@ public class MenuPanel extends javax.swing.JPanel {
      * Creates new form MenuPanel
      *
      */
-    MainWindow parent;
-    SoundEffect music;
+    private MainWindow parent;
+    public SoundEffect music;
     private boolean playing;
-        
-    public MenuPanel(MainWindow p)  {
+
+    public MenuPanel(MainWindow p) {
         initComponents();
         MazeKeyListener listener = new MazeKeyListener(this);
         this.addKeyListener(listener);
         this.setFocusable(true);
-                
+
         activeGame(false);
-        parent = p;   
-        
+        parent = p;
+
     }
-    
-    public void activeGame(boolean active){
-         continueGame.setVisible(active);
-         saveGame.setVisible(active);
-         playing = active;
+
+    public void activeGame(boolean active) {
+        continueGame.setVisible(active);
+        saveGame.setVisible(active);
+        playing = active;
     }
-    
-     public void updateGame(KeyEvent e) {
+
+    public void updateGame(KeyEvent e) {
         keyInput(e.getKeyCode());
     }
-    
+
     public void keyInput(int key) {
         switch (key) {
             case KeyEvent.VK_ESCAPE:
                 parent.unPauseGame();
                 break;
-            }
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,6 +67,7 @@ public class MenuPanel extends javax.swing.JPanel {
         optionsButtons = new javax.swing.JButton();
         exitButton2 = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
+        instructionButton = new javax.swing.JButton();
         mainMenuBackground = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
@@ -125,6 +127,13 @@ public class MenuPanel extends javax.swing.JPanel {
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UserInterface/menuLogo.png"))); // NOI18N
 
+        instructionButton.setText("Instructions");
+        instructionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instructionButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout menuPanelLayout = new org.jdesktop.layout.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
@@ -132,14 +141,15 @@ public class MenuPanel extends javax.swing.JPanel {
             .add(menuPanelLayout.createSequentialGroup()
                 .addContainerGap(279, Short.MAX_VALUE)
                 .add(menuPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.CENTER)
-                    .add(logo)
                     .add(continueGame, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(startButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(loadGameButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(saveGame, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(instructionButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(highScoreButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(optionsButtons, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(exitButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(exitButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 299, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(logo))
                 .add(268, 268, 268))
         );
         menuPanelLayout.setVerticalGroup(
@@ -147,7 +157,7 @@ public class MenuPanel extends javax.swing.JPanel {
             .add(menuPanelLayout.createSequentialGroup()
                 .add(71, 71, 71)
                 .add(logo)
-                .add(56, 56, 56)
+                .add(44, 44, 44)
                 .add(continueGame, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
                 .add(startButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -156,12 +166,14 @@ public class MenuPanel extends javax.swing.JPanel {
                 .add(0, 0, 0)
                 .add(saveGame, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
+                .add(instructionButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, 0)
                 .add(highScoreButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
                 .add(optionsButtons, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, 0)
                 .add(exitButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -185,22 +197,18 @@ public class MenuPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void optionsButtonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsButtonsActionPerformed
-
         parent.showOptions();
         parent.getButton().play();
     }//GEN-LAST:event_optionsButtonsActionPerformed
 
     private void highScoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highScoreButtonActionPerformed
         parent.showHighScores();
-        
         parent.getButton().play();
     }//GEN-LAST:event_highScoreButtonActionPerformed
 
     private void exitButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButton2ActionPerformed
-      
         parent.getButton().play();
         System.exit(0);
-      
     }//GEN-LAST:event_exitButton2ActionPerformed
 
     private void saveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameActionPerformed
@@ -210,7 +218,7 @@ public class MenuPanel extends javax.swing.JPanel {
 
     private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
         parent.loadGame();
-        
+
         parent.getButton().play();
     }//GEN-LAST:event_loadGameButtonActionPerformed
 
@@ -224,10 +232,15 @@ public class MenuPanel extends javax.swing.JPanel {
         parent.getButton().play();
     }//GEN-LAST:event_continueGameActionPerformed
 
+    private void instructionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructionButtonActionPerformed
+        parent.showInstruction();
+        parent.getButton().play();
+    }//GEN-LAST:event_instructionButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton continueGame;
     private javax.swing.JButton exitButton2;
     private javax.swing.JButton highScoreButton;
+    private javax.swing.JButton instructionButton;
     private javax.swing.JButton loadGameButton;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel mainMenuBackground;

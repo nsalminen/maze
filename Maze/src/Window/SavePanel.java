@@ -15,7 +15,7 @@ public class SavePanel extends javax.swing.JPanel {
     /**
      * Creates new form SavePanel
      */
-    MainWindow parent;
+    private MainWindow parent;
 
     public SavePanel(MainWindow p) {
         initComponents();
@@ -116,10 +116,11 @@ public class SavePanel extends javax.swing.JPanel {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         FileWriter levelWriter = new FileWriter();
         levelWriter.writeLevel(saveFileName.getText(), parent.getGame().maze.buildLevel());
+        parent.goToMenu();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        parent.goToMenu();       // TODO add your handling code here:
+        parent.goToMenu();
     }//GEN-LAST:event_cancelActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;

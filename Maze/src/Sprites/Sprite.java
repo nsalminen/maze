@@ -17,6 +17,9 @@ public abstract class Sprite {
     public Node parent;
     private Image image;
 
+    /**
+     * @return the position of the Sprite
+     */
     public Point getPosition() {
         return position;
     }

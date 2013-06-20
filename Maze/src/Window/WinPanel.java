@@ -5,9 +5,10 @@ import Utilities.FileWriter;
 import java.util.ArrayList;
 
 /**
- *  A panel that appears then the player has completed a level.
- * 
- * If the player has achieved a highscore he is promted to insert their name
+ * A panel that appears then the player has completed a level.
+ *
+ * If the player has achieved a high score he is prompted to insert their name
+ *
  * @author Nels
  */
 public class WinPanel extends javax.swing.JPanel {
@@ -15,14 +16,14 @@ public class WinPanel extends javax.swing.JPanel {
     /**
      * Creates new form MenuPanel
      */
-    FileReader scoreReader;
-    FileWriter scoreWriter;
+    private FileReader scoreReader;
+    private FileWriter scoreWriter;
     private MainWindow parent;
-    public int score;
-    String[] names = new String[5];
-    int[] scores = new int[5];
-    int place;
-    ArrayList<String> data;
+    private int score;
+    private String[] names = new String[5];
+    private int[] scores = new int[5];
+    private int place;
+    private ArrayList<String> data;
 
     public WinPanel(MainWindow p) {
         initComponents();
@@ -38,7 +39,8 @@ public class WinPanel extends javax.swing.JPanel {
     }
 
     /**
-     * This method fills the labels with the sorted highscorers and their respective scores
+     * This method fills the labels with the sorted high scores and their
+     * respective scores
      */
     void checkScore() {
         data = scoreReader.printMap();
@@ -49,19 +51,21 @@ public class WinPanel extends javax.swing.JPanel {
     }
 
     /**
-     * This mehod inserts the current player into a certain spot on the high-score board 
-     * 
+     * This method inserts the current player into a certain spot on the
+     * high-score board
+     *
      * @param p The current players spot on the leaderboards
-     */    
+     */
     private void insertPlayer(int p) {
         data.set(p, nameField.getText() + ":" + score);
     }
-    
-    
+
     /**
-     * This mehod checks if the current player has achieved a highscore or not and places them in the ranking 
+     * This method checks if the current player has achieved a high score or not
+     * and places them in the ranking
+     *
      * @return boolean returns true if current score is in the leaderboards
-     */ 
+     */
     private boolean isHighScore() {
         checkScore();
         boolean isHighScore = false;
@@ -71,7 +75,6 @@ public class WinPanel extends javax.swing.JPanel {
                 place = i;
             }
         }
-        System.out.println(isHighScore + " " + place + " " + score);
         return isHighScore;
     }
 
@@ -180,11 +183,12 @@ public class WinPanel extends javax.swing.JPanel {
         scoreWriter = new FileWriter();
         insertPlayer(place);
         scoreWriter.writeScores(data);
-        try{
-        MainWindow main = new MainWindow();
-        main.setVisible(true);
-        main.requestFocus();
-        }catch(Exception e){}
+        try {
+            MainWindow main = new MainWindow();
+            main.setVisible(true);
+            main.requestFocus();
+        } catch (Exception e) {
+        }
         parent.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 

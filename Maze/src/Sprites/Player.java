@@ -35,21 +35,21 @@ public class Player extends Sprite {
         steps.push(new Position(new Point(1, 1), getDirection()));
         this.setImage(panel.playerImage1);
         this.portalOverlay = panel.portalOverlay;
-        
-        
-        
+
+
+
         bump = new SoundEffect(panel.loader.getSoundEffect("bump"));
         portalPickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
         helperpickup = new SoundEffect(panel.loader.getSoundEffect("helper"));
         tmpickup = new SoundEffect(panel.loader.getSoundEffect("timemachine"));
         shoot = new SoundEffect(panel.loader.getSoundEffect("shoot"));
-        
-        bump.setVolume(panel.parent.getSetting().volume/10);
-        portalPickup.setVolume(panel.parent.getSetting().volume/10);
-        helperpickup.setVolume(panel.parent.getSetting().volume/10);
-        tmpickup.setVolume(panel.parent.getSetting().volume/10);
-        shoot.setVolume(panel.parent.getSetting().volume/10);
-                    
+
+        bump.setVolume(panel.parent.getSetting().volume / 10);
+        portalPickup.setVolume(panel.parent.getSetting().volume / 10);
+        helperpickup.setVolume(panel.parent.getSetting().volume / 10);
+        tmpickup.setVolume(panel.parent.getSetting().volume / 10);
+        shoot.setVolume(panel.parent.getSetting().volume / 10);
+
     }
 
     /**
@@ -75,7 +75,7 @@ public class Player extends Sprite {
                     xOrigin--;
                 }
                 if (panel.maze.nodes[yOrigin][xOrigin].peekOccupant() instanceof Wall) {
-                    if(panel.parent.getSetting().isMute()){
+                    if (panel.parent.getSetting().isMute()) {
                         shoot.play();
                     }
                     panel.maze.nodes[yOrigin][xOrigin].removeOccupant(1);
@@ -135,10 +135,10 @@ public class Player extends Sprite {
      */
     public void checkPortalGun() {
         if ((panel.maze.getNode(position).occupants.contains(panel.portalGun)) && !panel.portalGun.taken) {
-             
-            if(panel.parent.getSetting().isMute()){
-                 portalPickup.play();            
-             }
+
+            if (panel.parent.getSetting().isMute()) {
+                portalPickup.play();
+            }
             panel.maze.getNode(position).removeOccupant(1);
             this.hasPortalGun = true;
             panel.portalGun.taken = true;
@@ -152,10 +152,10 @@ public class Player extends Sprite {
      */
     public void checkTimeMachine() {
         if ((panel.maze.getNode(position).occupants.contains(panel.timeMachine)) && !panel.timeMachine.taken) {
-            
-            if(panel.parent.getSetting().isMute()){
-                 tmpickup.play();
-             }
+
+            if (panel.parent.getSetting().isMute()) {
+                tmpickup.play();
+            }
             panel.maze.getNode(position).removeOccupant(1);
             for (int n = 0; n < panel.timeMachine.stepsReduced; n++) {
                 if (stepsTaken > 0) {
@@ -172,20 +172,14 @@ public class Player extends Sprite {
      * the Helper.
      */
     private void checkHelper() {
-        if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.taken) {
-            if(panel.parent.getSetting().isMute()){
+        if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.isTaken()) {
+            if (panel.parent.getSetting().isMute()) {
                 helperpickup.play();
             }
             panel.maze.getNode(position).removeOccupant(1);
             panel.maze.findPath(parent);
-            panel.maze.showPath = true;
+            panel.maze.setShowPath(true);
             panel.repaint();
-            for (int i = 0; i < panel.maze.nodes.length; i++) {
-                for (int j = 0; j < panel.maze.nodes[i].length; j++) {
-                    System.out.print(panel.maze.nodes[i][j].isPath() + " ");
-                }
-                System.out.println();
-            }
         }
     }
 
@@ -267,13 +261,13 @@ public class Player extends Sprite {
             panel.maze.getNode(position).removeOccupant(1);
             panel.maze.getNode(facing).addOccupant(this);
             parent = panel.maze.nodes[facing.y][facing.x];
-            position.setLocation(parent.xInd, parent.yInd);
+            position.setLocation(parent.getxInd(), parent.getyInd());
             stepsTaken++;
             updateFacing();
         } else {
-            if(panel.parent.getSetting().isMute()){
-                    bump.play();
-                }
+            if (panel.parent.getSetting().isMute()) {
+                bump.play();
+            }
         }
     }
 
@@ -288,7 +282,7 @@ public class Player extends Sprite {
             System.out.println(lastPosition);
             panel.maze.getNode(lastPosition).addOccupant(this);
             parent = panel.maze.nodes[lastPosition.y][lastPosition.x];
-            position.setLocation(parent.xInd, parent.yInd);
+            position.setLocation(parent.getxInd(), parent.getyInd());
             setDirection(dir);
             updateFacing();
             if (stepsTaken > 0) {

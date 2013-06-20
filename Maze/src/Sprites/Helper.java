@@ -11,7 +11,7 @@ import java.awt.Graphics;
  */
 public class Helper extends Sprite {
 
-    public boolean taken;
+    private boolean taken;
 
     public Helper(Node n, GamePanel pan) {
         parent = n;
@@ -27,6 +27,20 @@ public class Helper extends Sprite {
      */
     public void paintSelf(Graphics g) {
         g.setColor(Color.orange);
-        g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
+        g.drawImage(this.getImage(), parent.getxInd() * panel.blockSize, parent.getyInd() * panel.blockSize, panel.blockSize, panel.blockSize, null);
+    }
+
+    /**
+     * @return the taken
+     */
+    public boolean isTaken() {
+        return taken;
+    }
+
+    /**
+     * @param taken the taken to set
+     */
+    public void setTaken(boolean taken) {
+        this.taken = taken;
     }
 }

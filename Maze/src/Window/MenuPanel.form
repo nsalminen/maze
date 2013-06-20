@@ -38,14 +38,15 @@
               <Group type="102" attributes="0">
                   <EmptySpace pref="279" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="logo" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="continueGame" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
                       <Component id="startButton" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
                       <Component id="loadGameButton" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
                       <Component id="saveGame" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
+                      <Component id="instructionButton" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
                       <Component id="highScoreButton" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
                       <Component id="optionsButtons" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
                       <Component id="exitButton2" alignment="2" min="-2" pref="299" max="-2" attributes="0"/>
+                      <Component id="logo" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
               </Group>
@@ -56,7 +57,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                   <Component id="logo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="continueGame" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="startButton" min="-2" pref="43" max="-2" attributes="0"/>
@@ -65,12 +66,14 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="saveGame" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Component id="instructionButton" min="-2" pref="43" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="highScoreButton" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="optionsButtons" min="-2" pref="43" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="exitButton2" min="-2" pref="43" max="-2" attributes="0"/>
-                  <EmptySpace pref="65" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -138,6 +141,14 @@
               <Image iconType="3" name="/UserInterface/menuLogo.png"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="instructionButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Instructions"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="instructionButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

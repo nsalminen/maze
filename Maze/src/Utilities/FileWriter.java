@@ -41,7 +41,6 @@ public class FileWriter {
      * "masteVolume:VALUE\nmusicVolume:VALUE"  
      */    
     public void writeSettings(String settings){   
-        System.out.println("WRITE SETTINGS");
         try{
             PrintWriter levelWriter = new PrintWriter(loader.getSettings());
             levelWriter.print(settings);

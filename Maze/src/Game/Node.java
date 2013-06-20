@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class Node {
 
     public ArrayList<Sprite> occupants = new ArrayList<>();
-    public Point position = new Point(999, 999);
-    public int xInd;
-    public int yInd;
+    private Point position = new Point(999, 999);
+    private int xInd;
+    private int yInd;
     private boolean visited = false;
     private boolean path;
 

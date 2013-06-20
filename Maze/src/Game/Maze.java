@@ -21,21 +21,21 @@ public class Maze {
     /**
      * The parent panel of this generateMaze
      */
-    GamePanel panel;
+    private GamePanel panel;
     public ArrayList<Node> floors = new ArrayList<>();
     /**
-     * The array of Node objects that makeup the generateMaze's structure
+     * The array of Node objects that make up the generateMaze's structure
      */
     public Node[][] nodes;
     public int[][] maze;
-    public boolean showPath;
+    private boolean showPath;
     private Dimension dimension;
-    public ArrayList<String[]> level = new ArrayList<>();
-    public Point playerPoint;
-    public Point portalGunPoint;
-    public Point timeMachinePoint;
-    public Point helperPoint;
-    public Point goalPoint;
+    private ArrayList<String[]> level = new ArrayList<>();
+    private Point playerPoint;
+    private Point portalGunPoint;
+    private Point timeMachinePoint;
+    private Point helperPoint;
+    private Point goalPoint;
 
     /**
      * @param level The level object that will be turned into a playable level
@@ -372,7 +372,6 @@ public class Maze {
                 }
             }
         }
-        panel.cursor.paintSelf(g);
     }
 
     /**
@@ -457,5 +456,89 @@ public class Maze {
 
         Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun, panel.player.steps, showPath);
         return leveler;
+    }
+
+    /**
+     * @return the playerPoint
+     */
+    public Point getPlayerPoint() {
+        return playerPoint;
+    }
+
+    /**
+     * @param playerPoint the playerPoint to set
+     */
+    public void setPlayerPoint(Point playerPoint) {
+        this.playerPoint = playerPoint;
+    }
+
+    /**
+     * @return the portalGunPoint
+     */
+    public Point getPortalGunPoint() {
+        return portalGunPoint;
+    }
+
+    /**
+     * @param portalGunPoint the portalGunPoint to set
+     */
+    public void setPortalGunPoint(Point portalGunPoint) {
+        this.portalGunPoint = portalGunPoint;
+    }
+
+    /**
+     * @return the timeMachinePoint
+     */
+    public Point getTimeMachinePoint() {
+        return timeMachinePoint;
+    }
+
+    /**
+     * @param timeMachinePoint the timeMachinePoint to set
+     */
+    public void setTimeMachinePoint(Point timeMachinePoint) {
+        this.timeMachinePoint = timeMachinePoint;
+    }
+
+    /**
+     * @return the helperPoint
+     */
+    public Point getHelperPoint() {
+        return helperPoint;
+    }
+
+    /**
+     * @param helperPoint the helperPoint to set
+     */
+    public void setHelperPoint(Point helperPoint) {
+        this.helperPoint = helperPoint;
+    }
+
+    /**
+     * @return the goalPoint
+     */
+    public Point getGoalPoint() {
+        return goalPoint;
+    }
+
+    /**
+     * @param goalPoint the goalPoint to set
+     */
+    public void setGoalPoint(Point goalPoint) {
+        this.goalPoint = goalPoint;
+    }
+
+    /**
+     * @return the showPath
+     */
+    public boolean isShowPath() {
+        return showPath;
+    }
+
+    /**
+     * @param showPath the showPath to set
+     */
+    public void setShowPath(boolean showPath) {
+        this.showPath = showPath;
     }
 }

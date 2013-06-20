@@ -25,7 +25,7 @@ public class Goal extends Sprite {
      */
     public void paintSelf(Graphics g) {
         g.setColor(Color.YELLOW);
-        g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
+        g.drawImage(this.getImage(), parent.getxInd() * panel.blockSize, parent.getyInd() * panel.blockSize, panel.blockSize, panel.blockSize, null);
 
     }
 }

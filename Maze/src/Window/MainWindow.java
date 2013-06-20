@@ -1,12 +1,10 @@
 package Window;
 
 import Utilities.FileLoader;
-import Utilities.FileReader;
 import Utilities.Level;
 import Utilities.SoundEffect;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
@@ -31,16 +29,12 @@ public class MainWindow extends JFrame {
     public static void setMazeWindow(MainWindow aMazeWindow) {
         //mazeWindow = aMazeWindow;
     }
-    
-
-    
     private FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
     //private static MainWindow mazeWindow = new MainWindow();
-    
     private MenuPanel menu = new MenuPanel(this);
     private OptionPanel setting;
-    private SoundEffect music = new SoundEffect(getLoader().getSoundEffect("music"));        
+    private SoundEffect music = new SoundEffect(getLoader().getSoundEffect("music"));
     private GamePanel game;
     private OptionPanel option;
     private WinPanel win;
@@ -49,39 +43,39 @@ public class MainWindow extends JFrame {
     private boolean fullscreen = false;
     private boolean playing;
     private SoundEffect button;
-    
+
     /**
      * Creates new MainWindow
      */
-    public MainWindow()throws FileNotFoundException {
+    public MainWindow() throws FileNotFoundException {
         initComponents();
         if (System.getProperty("os.name").equals("Mac OS X")) {
             enableOSXFullscreen(this);
         }
-        
+
         windowDimension = new Dimension(1220, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(windowDimension);
         setContentPane(menu);
         setLocationRelativeTo(null);
         //setSetting(new OptionPanel(this));
-        setting = new OptionPanel(this);   
+        setting = new OptionPanel(this);
         button = new SoundEffect(getLoader().getSoundEffect("menu"));
 
         setMusicVolume(setting.music);
-        if(setting.isMute()){
+        if (setting.isMute()) {
             music.play();
         }
-        
-        if(setting.isFullScreen()){
+
+        if (setting.isFullScreen()) {
             this.setExtendedState(this.MAXIMIZED_BOTH);
             this.removeNotify();
             this.setUndecorated(true);
             this.setVisible(true);
         }
-        
+
     }
-    
+
     /**
      * opens a new SavePanel
      */
@@ -98,17 +92,17 @@ public class MainWindow extends JFrame {
      * opens a new OptionPanel
      */
     public void showOptions() {
-        try{
+        try {
             setContentPane(setting);
             setting.setVisible(true);
             setting.setFocusable(true);
             setting.requestFocus();
             setting.setSize(this.getSize());
-        }catch(Exception e){
+        } catch (Exception e) {
         }
-        
+
     }
-    
+
     /**
      * opens a new LoadPanel
      */
@@ -121,7 +115,7 @@ public class MainWindow extends JFrame {
         loadpanel.requestFocus();
         loadpanel.setSize(this.getSize());
     }
-    
+
     /**
      * Returns to the menu
      */
@@ -132,6 +126,7 @@ public class MainWindow extends JFrame {
         getMenu().setSize(this.getSize());
         getButton().play();
     }
+
     /**
      * Returns to the Active Game
      */
@@ -152,12 +147,21 @@ public class MainWindow extends JFrame {
     }
 
     /**
+     * Opens new HighScoreanel
+     */
+    public void showInstruction() {
+        InstructionPanel instruction = new InstructionPanel(this);
+        setContentPane(instruction);
+        instruction.setSize(this.getSize());
+    }
+
+    /**
      * This method starts a new game based on a saved Level object
-     * 
+     *
      * @param level pre-built Level object
      */
     public void loadNewGame(Level level) {
-       
+
         setGame(new GamePanel(level, this));
         setContentPane(getGame());
         getGame().setFocusable(true);
@@ -165,12 +169,11 @@ public class MainWindow extends JFrame {
         getGame().repaint();
         getGame().setSize(this.getSize());
     }
-    
+
     /**
      * This method starts a new game with a randombly genrated maze
-     * 
+     *
      */
-
     public void startGame() {
         setGame(new GamePanel(this));
         setContentPane(getGame());
@@ -191,29 +194,27 @@ public class MainWindow extends JFrame {
         getWin().setFocusable(true);
         getWin().requestFocus();
         getWin().repaint();
-
-        System.out.println("GAME");
     }
-    
-    
-    public boolean isPlaying(){
+
+    public boolean isPlaying() {
         return playing;
     }
-        /**
+
+    /**
      * Update the master volume according to the Settings panel
      */
-    public void setVolume(int vol) {               
-        getGame().player.getSfb().setVolume(vol/10);
-        getGame().player.getPortalPickup().setVolume(vol/10);
-        getGame().player.getHelperpickup().setVolume(vol/10);
-        getGame().player.getTmpickup().setVolume(vol/10);                   
+    public void setVolume(int vol) {
+        getGame().player.getSfb().setVolume(vol / 10);
+        getGame().player.getPortalPickup().setVolume(vol / 10);
+        getGame().player.getHelperpickup().setVolume(vol / 10);
+        getGame().player.getTmpickup().setVolume(vol / 10);
     }
-    
+
     /**
      * Update the music volume according to the Settings panel
-     */    
+     */
     public void setMusicVolume(int vol) {
-        getMusic().setVolume(vol/10);
+        getMusic().setVolume(vol / 10);
     }
 
     /**
@@ -223,11 +224,12 @@ public class MainWindow extends JFrame {
         getGame().player.getSfb().volumeOn();
         getMenu().music.volumeOn();
     }
+
     /**
      * Turns sound on
      */
     public void volumeOff() {
-        
+
         getGame().player.getSfb().volumeOff();
         getMenu().music.stop();
     }
@@ -292,9 +294,10 @@ public class MainWindow extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try{
+                try {
                     new MainWindow().setVisible(true);
-                }catch(FileNotFoundException e){}
+                } catch (FileNotFoundException e) {
+                }
 
             }
         });

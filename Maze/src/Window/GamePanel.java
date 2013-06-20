@@ -1,4 +1,3 @@
-
 package Window;
 
 import Game.*;
@@ -14,7 +13,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
@@ -34,14 +32,10 @@ public class GamePanel extends javax.swing.JPanel {
     public Goal goal;
     public Player player;
     public Maze maze;
-    public Cursor cursor;
     public PortalGun portalGun;
     public StepCounter counter;
     public TimeMachine timeMachine;
     public Map<String, Integer> highscores;
-    
-    
-    //The size of each block in pixels
     public int blockSize = 40;
     public Helper helper;
     public MainWindow parent;
@@ -53,19 +47,18 @@ public class GamePanel extends javax.swing.JPanel {
     public Image playerImage1;
     public Image playerImage2;
     public Image playerImage3;
-       
     public Image portalImage;
     public Image timeMachineImage;
     public Image goalImage;
     public Image helperImage;
     public Image portalOverlay;
-    
+
     /**
-     * Build new Game panel with a random generated maze and set a Frame as a parent
-     * 
+     * Build new Game panel with a random generated maze and set a Frame as a
+     * parent
+     *
      * @param p MainWindow Frame as parent
      */
-    
     public GamePanel(MainWindow p) {
         initComponents();
         parent = p;
@@ -76,14 +69,13 @@ public class GamePanel extends javax.swing.JPanel {
         this.addKeyListener(listener);
         this.setFocusable(true);
     }
-    
+
     /**
      * Build new Game panel with a pre-loaded maze and set a Frame as a parent
-     * 
+     *
      * @param level Leven from saveed-file
      * @param p MainWindow Frame as parent
      */
-    
     public GamePanel(Level level, MainWindow p) {
         initComponents();
         getGameImages();
@@ -117,10 +109,6 @@ public class GamePanel extends javax.swing.JPanel {
         }
     }
 
-    
-
-
-    
     /**
      * Creates random number
      */
@@ -129,34 +117,34 @@ public class GamePanel extends javax.swing.JPanel {
         return Math.abs(random.nextInt());
     }
 
-     /**
+    /**
      * This method builds a maze from a Level object
-     * 
+     *
      * @param level The level object containing all the needed information
      * @param g A Graphics object used to draw the new maze
      */
     public void loadGame(Level level, Graphics g) {
         Stack<Position> pos = new Stack<>();
         maze = new Maze(this, level);
-        player = new Player(maze.playerPoint, this);
+        player = new Player(maze.getPlayerPoint(), this);
         player.stepsTaken = level.score;
         player.hasPortalGun = level.portalGun;
-        if (maze.portalGunPoint != null) {
-            portalGun = new PortalGun(maze.getNode(maze.portalGunPoint), this);
+        if (maze.getPortalGunPoint() != null) {
+            portalGun = new PortalGun(maze.getNode(maze.getPortalGunPoint()), this);
         }
-        if (maze.timeMachinePoint != null) {
-            timeMachine = new TimeMachine(maze.getNode(maze.timeMachinePoint), this);
+        if (maze.getTimeMachinePoint() != null) {
+            timeMachine = new TimeMachine(maze.getNode(maze.getTimeMachinePoint()), this);
         }
-        if (maze.helperPoint != null) {
-            helper = new Helper(maze.getNode(maze.helperPoint), this);
+        if (maze.getHelperPoint() != null) {
+            helper = new Helper(maze.getNode(maze.getHelperPoint()), this);
         }
-        if (maze.goalPoint != null) {
-            goal = new Goal(maze.getNode(maze.goalPoint), this);
+        if (maze.getGoalPoint() != null) {
+            goal = new Goal(maze.getNode(maze.getGoalPoint()), this);
         }
 
         if (level.showPath) {
             maze.findPath(maze.getNode(player.position));
-            maze.showPath = true;
+            maze.setShowPath(true);
         }
 
         while (!level.positions.isEmpty()) {
@@ -164,12 +152,11 @@ public class GamePanel extends javax.swing.JPanel {
         }
         player.steps = pos;
         counter = new StepCounter((maze.nodes.length * blockSize) + blockSize, 0, this);
-        cursor = new Cursor(maze.nodes.length - 1, 0, this);
     }
 
     /**
      * This method builds a random maze and places items randomly around
-     * 
+     *
      * @param g A Graphics object used to draw the new maze
      */
     public final void prepGame(Graphics g) {
@@ -184,7 +171,6 @@ public class GamePanel extends javax.swing.JPanel {
         timeMachine = new TimeMachine(maze.floors.get(random() % maze.floors.size()), this);
         helper = new Helper(maze.floors.get(random() % maze.floors.size()), this);
         counter = new StepCounter((maze.maze.length * blockSize) + blockSize, 0, this);
-        cursor = new Cursor(maze.maze[0].length - 1, 0, this);
     }
 
     /**
@@ -199,13 +185,13 @@ public class GamePanel extends javax.swing.JPanel {
         checkGoal();
     }
 
-    
     /**
      * Triggers a gameOver in parent
      */
     public void gameOver() {
         parent.gameOver();
-    }    
+    }
+
     /**
      * Triggers a gameOver in parent
      */
@@ -214,9 +200,9 @@ public class GamePanel extends javax.swing.JPanel {
             gameOver();
         }
     }
-    
+
     /**
-     * This method determines the actions based on the key used 
+     * This method determines the actions based on the key used
      *
      */
     public void keyInput(int key) {
@@ -236,21 +222,6 @@ public class GamePanel extends javax.swing.JPanel {
             case KeyEvent.VK_SPACE:
                 player.shoot();
                 break;
-            case KeyEvent.VK_UP:
-                cursor.move('N');
-                break;
-            case KeyEvent.VK_RIGHT:
-                cursor.move('E');
-                break;
-            case KeyEvent.VK_DOWN:
-                cursor.move('S');
-                break;
-            case KeyEvent.VK_LEFT:
-                cursor.move('W');
-                break;
-            case KeyEvent.VK_CONTROL:
-                cursor.printCurrentNode();
-                break;
             case KeyEvent.VK_ESCAPE:
                 parent.goToMenu();
                 break;
@@ -259,7 +230,7 @@ public class GamePanel extends javax.swing.JPanel {
                 this.repaint();
         }
     }
-    
+
     @Override
     public void repaint() {
         super.repaint();
@@ -269,6 +240,7 @@ public class GamePanel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g);
     }
+
     public int getBlockSize() {
         return blockSize;
     }

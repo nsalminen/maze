@@ -40,7 +40,7 @@ public class HighScorePanel extends javax.swing.JPanel {
     /**
      * Builds the scoreboard from the known values
      */
-    void buildScoreBoard(){
+    private void buildScoreBoard(){
         ArrayList<String> data = scoreReader.printMap();        
         for(int i = 0; i < data.size(); i++){
             names[i].setText(data.get(i).split(":")[0]);
