@@ -265,10 +265,10 @@ public class OptionPanel extends javax.swing.JPanel {
 
     private void fullScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullScreenButtonActionPerformed
         if( fullScreenButton.isSelected()){
-                    muteButton.setText("ON");
+                    fullScreenButton.setText("ON");
                 }   
              else{
-                    muteButton.setText("OFF");
+                    fullScreenButton.setText("OFF");
                 }        
         writer.writeSettings(buildSettings());
     }//GEN-LAST:event_fullScreenButtonActionPerformed

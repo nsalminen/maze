@@ -180,9 +180,11 @@ public class WinPanel extends javax.swing.JPanel {
         scoreWriter = new FileWriter();
         insertPlayer(place);
         scoreWriter.writeScores(data);
-        //MainWindow main = new MainWindow();
-        //main.setVisible(true);
-        //main.requestFocus();
+        try{
+        MainWindow main = new MainWindow();
+        main.setVisible(true);
+        main.requestFocus();
+        }catch(Exception e){}
         parent.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 

@@ -33,7 +33,7 @@ public class MainWindow extends JFrame {
     }
     
 
-    private FileReader reader = new FileReader();
+    
     private FileLoader loader = new FileLoader();
     private static final long serialVersionUID = 1L;
     //private static MainWindow mazeWindow = new MainWindow();
@@ -230,40 +230,6 @@ public class MainWindow extends JFrame {
         
         getGame().player.getSfb().volumeOff();
         getMenu().music.stop();
-    }
-
-    /**
-     * This method sets the current {@link javax.swing.JFrame} to full screen
-     * mode It determines whether full screen is supported according to
-     * {@link http://docs.oracle.com/javase/tutorial/extra/fullscreen/}
-     */
-    public void toggleFullscreen() {
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        vc = ge.getDefaultScreenDevice();
-//        if (vc.isFullScreenSupported()) {
-//            System.out.println("Supported");
-//            if (!fullscreen) {
-//                vc.setFullScreenWindow(mazeWindow);
-//                game.setSize(this.getSize());
-//                fullscreen = true;
-//                setVisible(false);
-//                setVisible(true);
-//            } else if (fullscreen) {
-//                vc.setFullScreenWindow(null);
-//                fullscreen = false;
-//            }
-//        } else {
-            System.out.println("Unsupported");
-            if (!fullscreen) {
-                setExtendedState(MainWindow.MAXIMIZED_BOTH);
-                //setUndecorated(true);
-                getMazeWindow().setResizable(false);
-            } else {
-                getMazeWindow().setExtendedState(MainWindow.NORMAL);
-                getMazeWindow().setUndecorated(false);
-                getMazeWindow().setResizable(true);
-            }
-  //      }
     }
 
     /**

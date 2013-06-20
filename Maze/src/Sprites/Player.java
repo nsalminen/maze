@@ -48,6 +48,7 @@ public class Player extends Sprite {
         portalPickup.setVolume(panel.parent.getSetting().volume/10);
         helperpickup.setVolume(panel.parent.getSetting().volume/10);
         tmpickup.setVolume(panel.parent.getSetting().volume/10);
+        shoot.setVolume(panel.parent.getSetting().volume/10);
                     
     }
 
@@ -74,7 +75,9 @@ public class Player extends Sprite {
                     xOrigin--;
                 }
                 if (panel.maze.nodes[yOrigin][xOrigin].peekOccupant() instanceof Wall) {
-                    getShoot().play();
+                    if(panel.parent.getSetting().isMute()){
+                        shoot.play();
+                    }
                     panel.maze.nodes[yOrigin][xOrigin].removeOccupant(1);
                     shooting = false;
                 }

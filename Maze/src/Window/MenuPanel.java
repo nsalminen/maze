@@ -26,13 +26,7 @@ public class MenuPanel extends javax.swing.JPanel {
         this.setFocusable(true);
                 
         activeGame(false);
-        parent = p;        
-        //parent.setContentPane(this);
-        
-        if (System.getProperty("os.name").equals("Mac OS X")) {
-            fullScreenButton.setVisible(false);
-        }
-       
+        parent = p;   
         
     }
     
