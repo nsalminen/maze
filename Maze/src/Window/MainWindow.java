@@ -55,7 +55,7 @@ public class MainWindow extends JFrame {
 
         
     
-        windowDimension = new Dimension(1220, 720);
+        windowDimension = new Dimension(1145, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(windowDimension);
         setContentPane(menu);

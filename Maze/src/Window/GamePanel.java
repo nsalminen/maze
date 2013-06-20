@@ -73,7 +73,7 @@ public class GamePanel extends javax.swing.JPanel {
     /**
      * Build new Game panel with a pre-loaded maze and set a Frame as a parent
      *
-     * @param level Leven from saveed-file
+     * @param level Leven from saved-file
      * @param p MainWindow Frame as parent
      */
     public GamePanel(Level level, MainWindow p) {
@@ -88,7 +88,7 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     /**
-     * Loads all of the Images needed for the srites
+     * Loads all of the Images needed for the sprites
      */
     private void getGameImages() {
         try {
@@ -99,7 +99,7 @@ public class GamePanel extends javax.swing.JPanel {
             portalOverlay = ImageIO.read(loader.getImageFile("portalOverlay"));
 
             floorImage = ImageIO.read(loader.getImageFile("Floor"));
-            wallImage = ImageIO.read(loader.getImageFile("Wall2"));
+            wallImage = ImageIO.read(loader.getImageFile("Wall"));
             portalImage = ImageIO.read(loader.getImageFile("Portal"));
             timeMachineImage = ImageIO.read(loader.getImageFile("TimeMachine"));
             goalImage = ImageIO.read(loader.getImageFile("Goal"));
