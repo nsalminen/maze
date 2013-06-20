@@ -18,12 +18,12 @@ public class PortalGun extends Sprite {
         parent = n;
         panel = pan;
         parent.addOccupant(this);
-        this.setImage(panel.portalImage);
+        this.setImage(panel.getPortalImage());
     }
 
     public void paintSelf(Graphics g) {
         g.setColor(Color.GREEN);
-        g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
+        g.drawImage(this.getImage(), parent.getxInd() * panel.getBlockSize(), parent.getyInd() * panel.getBlockSize(), panel.getBlockSize(), panel.getBlockSize(), null);
 
     }
 }

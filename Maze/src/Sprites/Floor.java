@@ -15,7 +15,7 @@ public class Floor extends Sprite {
         parent = node;
         position = parent.getPosition();
         this.panel = panel;
-        this.setImage(panel.floorImage);
+        this.setImage(panel.getFloorImage());
     }
 
     /**
@@ -27,11 +27,11 @@ public class Floor extends Sprite {
      */
     public void paintSelf(Graphics g, boolean path, boolean showPath) {
         g.setColor(Color.lightGray);
-        g.drawImage(this.getImage(), parent.xInd * panel.blockSize, parent.yInd * panel.blockSize, panel.blockSize, panel.blockSize, null);
+        g.drawImage(this.getImage(), parent.getxInd() * panel.getBlockSize(), parent.getyInd() * panel.getBlockSize(), panel.getBlockSize(), panel.getBlockSize(), null);
 
         if (path && showPath) {
             g.setColor(Color.darkGray);
-            g.fillOval(parent.xInd * panel.blockSize + panel.blockSize / 2 - 7, parent.yInd * panel.blockSize + panel.blockSize / 2 - 7, panel.blockSize / 2, panel.blockSize / 2);
+            g.fillOval(parent.getxInd() * panel.getBlockSize() + panel.getBlockSize() / 2 - 7, parent.getyInd() * panel.getBlockSize() + panel.getBlockSize() / 2 - 7, panel.getBlockSize() / 2, panel.getBlockSize() / 2);
         }
     }
 }

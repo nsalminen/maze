@@ -18,7 +18,7 @@ public class TimeMachine extends Sprite {
         parent = n;
         panel = pan;
         parent.addOccupant(this);
-        this.setImage(panel.timeMachineImage);
+        this.setImage(panel.getTimeMachineImage());
     }
 
     /**
@@ -28,7 +28,7 @@ public class TimeMachine extends Sprite {
      */
     public void paintSelf(Graphics g) {
         g.setColor(Color.MAGENTA);
-        g.drawImage(this.getImage(), parent.getxInd() * panel.blockSize, parent.getyInd() * panel.blockSize, panel.blockSize, panel.blockSize, null);
+        g.drawImage(this.getImage(), parent.getxInd() * panel.getBlockSize(), parent.getyInd() * panel.getBlockSize(), panel.getBlockSize(), panel.getBlockSize(), null);
 
     }
 }

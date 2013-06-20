@@ -14,9 +14,9 @@ import java.util.Stack;
  */
 public class Player extends Sprite {
 
-    public Point facing = new Point(999, 999);
-    public int direction;
-    public boolean hasPortalGun = false;
+    private Point facing = new Point(999, 999);
+    private int direction;
+    private boolean hasPortalGun = false;
     public int stepsTaken = 0;
     private SoundEffect portalpickup;
     private SoundEffect helperpickup;
@@ -30,23 +30,23 @@ public class Player extends Sprite {
         this.position = position;
         this.panel = panel;
         setDirection(1);
-        panel.maze.nodes[position.y][position.x].addOccupant(this);
+        panel.getMaze().getNodes()[position.y][position.x].addOccupant(this);
         steps = new Stack<>();
         steps.push(new Position(new Point(1, 1), getDirection()));
-        this.setImage(panel.playerImage1);
-        this.portalOverlay = panel.portalOverlay;
-        sfb = new SoundEffect(panel.loader.getSoundEffect("bump"));
-        portalpickup = new SoundEffect(panel.loader.getSoundEffect("pickup_portal"));
-        helperpickup = new SoundEffect(panel.loader.getSoundEffect("helper"));
-        tmpickup = new SoundEffect(panel.loader.getSoundEffect("timemachine"));
-        shoot = new SoundEffect(panel.loader.getSoundEffect("shoot"));
+        this.setImage(panel.getPlayerImage1());
+        this.portalOverlay = panel.getPortalOverlay();
+        sfb = new SoundEffect(panel.getLoader().getSoundEffect("bump"));
+        portalpickup = new SoundEffect(panel.getLoader().getSoundEffect("pickup_portal"));
+        helperpickup = new SoundEffect(panel.getLoader().getSoundEffect("helper"));
+        tmpickup = new SoundEffect(panel.getLoader().getSoundEffect("timemachine"));
+        shoot = new SoundEffect(panel.getLoader().getSoundEffect("shoot"));
     }
 
     /**
      * Shoots the portal gun if the player has one.
      */
     public void shoot() {
-        if (hasPortalGun) {
+        if (isHasPortalGun()) {
             boolean shooting = true;
             int xOrigin = position.x;
             int yOrigin = position.y;
@@ -64,12 +64,12 @@ public class Player extends Sprite {
                 if (getDirection() == 3) {
                     xOrigin--;
                 }
-                if (panel.maze.nodes[yOrigin][xOrigin].peekOccupant() instanceof Wall) {
+                if (panel.getMaze().getNodes()[yOrigin][xOrigin].peekOccupant() instanceof Wall) {
                     shoot.play();
-                    panel.maze.nodes[yOrigin][xOrigin].removeOccupant(1);
+                    panel.getMaze().getNodes()[yOrigin][xOrigin].removeOccupant(1);
                     shooting = false;
                 }
-                hasPortalGun = false;
+                setHasPortalGun(false);
             }
         }
     }
@@ -80,22 +80,22 @@ public class Player extends Sprite {
      * @param g Is required for drawing to a canvas
      */
     public void paintSelf(Graphics g) {
-        g.drawImage(this.getImage(), getX(), getY(), panel.blockSize, panel.blockSize, null);
+        g.drawImage(this.getImage(), getX(), getY(), panel.getBlockSize(), panel.getBlockSize(), null);
 
         if (getDirection() == 0) {
-            this.setImage(panel.playerImage0);
+            this.setImage(panel.getPlayerImage0());
 
         } else if (getDirection() == 1) {
-            this.setImage(panel.playerImage1);
+            this.setImage(panel.getPlayerImage1());
 
         } else if (getDirection() == 2) {
-            this.setImage(panel.playerImage2);
+            this.setImage(panel.getPlayerImage2());
 
         } else if (getDirection() == 3) {
-            this.setImage(panel.playerImage3);
+            this.setImage(panel.getPlayerImage3());
         }
-        if (hasPortalGun) {
-            g.drawImage(this.portalOverlay, getX(), getY(), panel.blockSize, panel.blockSize, null);
+        if (isHasPortalGun()) {
+            g.drawImage(this.portalOverlay, getX(), getY(), panel.getBlockSize(), panel.getBlockSize(), null);
         }
 
         panel.repaint();
@@ -110,8 +110,8 @@ public class Player extends Sprite {
      * the Goal.
      */
     public void checkGoal() {
-        if ((panel.maze.getNode(position).occupants.contains(panel.goal))) {
-            panel.maze.getNode(position).removeOccupant(1);
+        if ((panel.getMaze().getNode(position).getOccupants().contains(panel.getGoal()))) {
+            panel.getMaze().getNode(position).removeOccupant(1);
             panel.repaint();
             panel.gameOver();
         }
@@ -122,11 +122,11 @@ public class Player extends Sprite {
      * the PortalGun.
      */
     public void checkPortalGun() {
-        if ((panel.maze.getNode(position).occupants.contains(panel.portalGun)) && !panel.portalGun.taken) {
+        if ((panel.getMaze().getNode(position).getOccupants().contains(panel.getPortalGun())) && ! panel.getPortalGun().taken) {
             portalpickup.play();
-            panel.maze.getNode(position).removeOccupant(1);
-            this.hasPortalGun = true;
-            panel.portalGun.taken = true;
+            panel.getMaze().getNode(position).removeOccupant(1);
+            this.setHasPortalGun(true);
+            panel.getPortalGun().taken = true;
             panel.repaint();
         }
     }
@@ -136,15 +136,15 @@ public class Player extends Sprite {
      * the TimeMachine.
      */
     public void checkTimeMachine() {
-        if ((panel.maze.getNode(position).occupants.contains(panel.timeMachine)) && !panel.timeMachine.taken) {
+        if ((panel.getMaze().getNode(position).getOccupants().contains(panel.getTimeMachine())) && !panel.getTimeMachine().taken) {
             tmpickup.play();
-            panel.maze.getNode(position).removeOccupant(1);
-            for (int n = 0; n < panel.timeMachine.stepsReduced; n++) {
+            panel.getMaze().getNode(position).removeOccupant(1);
+            for (int n = 0; n < panel.getTimeMachine().stepsReduced; n++) {
                 if (stepsTaken > 0) {
                     stepsTaken--;
                 }
             }
-            panel.timeMachine.taken = true;
+            panel.getTimeMachine().taken = true;
             panel.repaint();
         }
     }
@@ -154,15 +154,15 @@ public class Player extends Sprite {
      * the Helper.
      */
     private void checkHelper() {
-        if ((panel.maze.getNode(position).occupants.contains(panel.helper)) && !panel.helper.taken) {
+        if ((panel.getMaze().getNode(position).getOccupants().contains(panel.getHelper())) && !panel.getHelper().isTaken()) {
             helperpickup.play();
-            panel.maze.getNode(position).removeOccupant(1);
-            panel.maze.findPath(parent);
-            panel.maze.showPath = true;
+            panel.getMaze().getNode(position).removeOccupant(1);
+            panel.getMaze().findPath(parent);
+            panel.getMaze().setShowPath(true);
             panel.repaint();
-            for (int i = 0; i < panel.maze.nodes.length; i++) {
-                for (int j = 0; j < panel.maze.nodes[i].length; j++) {
-                    System.out.print(panel.maze.nodes[i][j].isPath() + " ");
+            for (int i = 0; i < panel.getMaze().getNodes().length; i++) {
+                for (int j = 0; j < panel.getMaze().getNodes()[i].length; j++) {
+                    System.out.print(panel.getMaze().getNodes()[i][j].isPath() + " ");
                 }
                 System.out.println();
             }
@@ -225,8 +225,8 @@ public class Player extends Sprite {
     public boolean canMove() {
         boolean canMove = false;
         if (!(facing.x < 0) && !(facing.y < 0)) {
-            if (!(facing.x + 1 > panel.maze.nodes[0].length) && !(facing.y + 1 > panel.maze.nodes.length)) {
-                if (!panel.maze.getNode(facing).isWall()) {
+            if (!(facing.x + 1 > panel.getMaze().getNodes()[0].length) && !(facing.y + 1 > panel.getMaze().getNodes().length)) {
+                if (!panel.getMaze().getNode(facing).isWall()) {
                     canMove = true;
                 }
             }
@@ -244,10 +244,10 @@ public class Player extends Sprite {
     public void move() {
         if (canMove()) {
             steps.push(new Position(new Point(position), getDirection()));
-            panel.maze.getNode(position).removeOccupant(1);
-            panel.maze.getNode(facing).addOccupant(this);
-            parent = panel.maze.nodes[facing.y][facing.x];
-            position.setLocation(parent.xInd, parent.yInd);
+            panel.getMaze().getNode(position).removeOccupant(1);
+            panel.getMaze().getNode(getFacing()).addOccupant(this);
+            parent = panel.getMaze().getNodes()[getFacing().y][getFacing().x];
+            position.setLocation(parent.getxInd(), parent.getyInd());
             stepsTaken++;
             updateFacing();
         } else {
@@ -260,13 +260,13 @@ public class Player extends Sprite {
      */
     public void undoMove() {
         if (!steps.isEmpty()) {
-            panel.maze.getNode(position).removeOccupant(1);
+            panel.getMaze().getNode(position).removeOccupant(1);
             int dir = steps.peek().direction;
             Point lastPosition = steps.pop().point;
             System.out.println(lastPosition);
-            panel.maze.getNode(lastPosition).addOccupant(this);
-            parent = panel.maze.nodes[lastPosition.y][lastPosition.x];
-            position.setLocation(parent.xInd, parent.yInd);
+            panel.getMaze().getNode(lastPosition).addOccupant(this);
+            parent = panel.getMaze().getNodes()[lastPosition.y][lastPosition.x];
+            position.setLocation(parent.getxInd(), parent.getyInd());
             setDirection(dir);
             updateFacing();
             if (stepsTaken > 0) {
@@ -277,7 +277,7 @@ public class Player extends Sprite {
 
     @Override
     public String toString() {
-        String string = "X:" + this.position.x + " Y:" + this.position.y + " DIR:" + this.direction;
+        String string = "X:" + this.position.x + " Y:" + this.position.y + " DIR:" + this.getDirection();
         return string;
     }
 
@@ -293,16 +293,16 @@ public class Player extends Sprite {
      */
     private void updateFacing() {
         if (getDirection() == 0) {
-            facing.setLocation(position.getX(), position.getY() - 1);
+            getFacing().setLocation(position.getX(), position.getY() - 1);
         }
         if (getDirection() == 1) {
-            facing.setLocation(position.getX() + 1, position.getY());
+            getFacing().setLocation(position.getX() + 1, position.getY());
         }
         if (getDirection() == 2) {
-            facing.setLocation(position.getX(), position.getY() + 1);
+            getFacing().setLocation(position.getX(), position.getY() + 1);
         }
         if (getDirection() == 3) {
-            facing.setLocation(position.getX() - 1, position.getY());
+            getFacing().setLocation(position.getX() - 1, position.getY());
         }
     }
 
@@ -321,5 +321,33 @@ public class Player extends Sprite {
      */
     public SoundEffect getSfb() {
         return sfb;
+    }
+
+    /**
+     * @return the facing
+     */
+    public Point getFacing() {
+        return facing;
+    }
+
+    /**
+     * @param facing the facing to set
+     */
+    public void setFacing(Point facing) {
+        this.facing = facing;
+    }
+
+    /**
+     * @return the hasPortalGun
+     */
+    public boolean isHasPortalGun() {
+        return hasPortalGun;
+    }
+
+    /**
+     * @param hasPortalGun the hasPortalGun to set
+     */
+    public void setHasPortalGun(boolean hasPortalGun) {
+        this.hasPortalGun = hasPortalGun;
     }
 }

@@ -26,10 +26,10 @@ public class StepCounter {
     }
 
     public void drawSteps(Graphics g) {
-        String steps = Integer.toString(panel.player.stepsTaken);
+        String steps = Integer.toString(panel.getPlayer().stepsTaken);
         g.setColor(Color.gray);
-        g.drawRect(x, y, panel.blockSize, panel.blockSize);
+        g.drawRect(x, y, panel.getBlockSize(), panel.getBlockSize());
         g.setColor(Color.white);
-        g.drawString(steps, x + (panel.blockSize / 2) - (3 * steps.length()), y + 25);
+        g.drawString(steps, x + (panel.getBlockSize() / 2) - (3 * steps.length()), y + 25);
     }
 }

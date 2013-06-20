@@ -25,7 +25,7 @@ public class ScoreBoard {
     ArrayList<String> boardList = new ArrayList<String>();
 
     public ScoreBoard(int xPos, int yPos, GamePanel p) {
-        blockSize = p.blockSize;
+        blockSize = p.getBlockSize();
         this.xPos = xPos;
         this.yPos = yPos;
     }

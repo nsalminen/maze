@@ -21,21 +21,21 @@ public class Maze {
     /**
      * The parent panel of this generateMaze
      */
-    GamePanel panel;
-    public ArrayList<Node> floors = new ArrayList<>();
+    private GamePanel panel;
+    private ArrayList<Node> floors = new ArrayList<>();
     /**
      * The array of Node objects that makeup the generateMaze's structure
      */
-    public Node[][] nodes;
-    public int[][] maze;
-    public boolean showPath;
+    private Node[][] nodes;
+    private int[][] maze;
+    private boolean showPath;
     private Dimension dimension;
-    public ArrayList<String[]> level = new ArrayList<>();
-    public Point playerPoint;
-    public Point portalGunPoint;
-    public Point timeMachinePoint;
-    public Point helperPoint;
-    public Point goalPoint;
+    private ArrayList<String[]> level = new ArrayList<>();
+    private Point playerPoint;
+    private Point portalGunPoint;
+    private Point timeMachinePoint;
+    private Point helperPoint;
+    private Point goalPoint;
 
     /**
      * @param level The level object that will be turned into a playable level
@@ -63,10 +63,10 @@ public class Maze {
      * @return Returns finished integer array.
      */
     private int[][] generateMaze() {
-        maze = new int[dimension.height][dimension.width];
+        setMaze(new int[dimension.height][dimension.width]);
         for (int i = 0; i < dimension.height; i++) {
             for (int j = 0; j < dimension.width; j++) {
-                maze[i][j] = 0;
+                getMaze()[i][j] = 0;
             }
         }
         Random rand = new Random();
@@ -84,13 +84,13 @@ public class Maze {
         }
 
         // Starting cell
-        maze[r][c] = 0;
+        getMaze()[r][c] = 0;
 
         //　Allocate the mazeGrid with recursive method
         generate(r, c);
-        level.ensureCapacity(maze[0].length);
+        getLevel().ensureCapacity(getMaze()[0].length);
 
-        return maze;
+        return getMaze();
     }
 
     /**
@@ -112,9 +112,9 @@ public class Maze {
                     if (r - 1 <= 1) {
                         continue;
                     }
-                    if (maze[r - 2][c] != 1) {
-                        maze[r - 2][c] = 1;
-                        maze[r - 1][c] = 1;
+                    if (getMaze()[r - 2][c] != 1) {
+                        getMaze()[r - 2][c] = 1;
+                        getMaze()[r - 1][c] = 1;
                         generate(r - 2, c);
                     }
                     break;
@@ -122,9 +122,9 @@ public class Maze {
                     if (c + 1 >= dimension.width - 1) {
                         continue;
                     }
-                    if (maze[r][c + 2] != 1) {
-                        maze[r][c + 2] = 1;
-                        maze[r][c + 1] = 1;
+                    if (getMaze()[r][c + 2] != 1) {
+                        getMaze()[r][c + 2] = 1;
+                        getMaze()[r][c + 1] = 1;
                         generate(r, c + 2);
                     }
                     break;
@@ -132,9 +132,9 @@ public class Maze {
                     if (r + 1 >= dimension.height - 1) {
                         continue;
                     }
-                    if (maze[r + 2][c] != 1) {
-                        maze[r + 2][c] = 1;
-                        maze[r + 1][c] = 1;
+                    if (getMaze()[r + 2][c] != 1) {
+                        getMaze()[r + 2][c] = 1;
+                        getMaze()[r + 1][c] = 1;
                         generate(r + 2, c);
                     }
                     break;
@@ -142,9 +142,9 @@ public class Maze {
                     if (c - 1 <= 1) {
                         continue;
                     }
-                    if (maze[r][c - 2] != 1) {
-                        maze[r][c - 2] = 1;
-                        maze[r][c - 1] = 1;
+                    if (getMaze()[r][c - 2] != 1) {
+                        getMaze()[r][c - 2] = 1;
+                        getMaze()[r][c - 1] = 1;
                         generate(r, c - 2);
                     }
                     break;
@@ -208,7 +208,7 @@ public class Maze {
      * @return
      */
     private boolean isExit(Node node) {
-        if (node.getyInd() == nodes.length - 2 && node.getxInd() == nodes[0].length - 2) {
+        if (node.getyInd() == getNodes().length - 2 && node.getxInd() == getNodes()[0].length - 2) {
             return true;
         } else {
             return false;
@@ -221,7 +221,7 @@ public class Maze {
      * @param node
      */
     private void enterNode(Node node) {
-        nodes[node.getyInd()][node.getxInd()].setPath(true);
+        getNodes()[node.getyInd()][node.getxInd()].setPath(true);
     }
 
     /**
@@ -230,7 +230,7 @@ public class Maze {
      * @param node
      */
     private void exitNode(Node node) {
-        nodes[node.getyInd()][node.getxInd()].setPath(false);
+        getNodes()[node.getyInd()][node.getxInd()].setPath(false);
     }
 
     /**
@@ -240,10 +240,10 @@ public class Maze {
      * @return Returns whether a specific Node is free to enter or not
      */
     private boolean nodeClear(Node node) {
-        if (node.getyInd() < 0 || node.getyInd() >= nodes.length || node.getyInd() < 0 || node.getxInd() >= nodes[node.getyInd()].length || node.isVisited()) {
+        if (node.getyInd() < 0 || node.getyInd() >= getNodes().length || node.getyInd() < 0 || node.getxInd() >= getNodes()[node.getyInd()].length || node.isVisited()) {
             return false;
         }
-        return (!(nodes[node.getyInd()][node.getxInd()]).isWall() || isExit(nodes[node.getyInd()][node.getxInd()]));
+        return (!(nodes[node.getyInd()][node.getxInd()]).isWall() || isExit(getNodes()[node.getyInd()][node.getxInd()]));
     }
 
     /**
@@ -256,19 +256,19 @@ public class Maze {
         ArrayList<Node> adjacencies = new ArrayList<>();
         //West
         if (node.getxInd() != 0) {
-            adjacencies.add(nodes[node.getyInd()][node.getxInd() - 1]);
+            adjacencies.add(getNodes()[node.getyInd()][node.getxInd() - 1]);
         }
         //East
-        if (node.getxInd() < nodes[node.getyInd()].length - 1) {
-            adjacencies.add(nodes[node.getyInd()][node.getxInd() + 1]);
+        if (node.getxInd() < getNodes()[node.getyInd()].length - 1) {
+            adjacencies.add(getNodes()[node.getyInd()][node.getxInd() + 1]);
         }
         //North
         if (node.getyInd() != 0) {
-            adjacencies.add(nodes[node.getyInd() - 1][node.getxInd()]);
+            adjacencies.add(getNodes()[node.getyInd() - 1][node.getxInd()]);
         }
         //South
-        if (node.getyInd() < nodes.length - 1) {
-            adjacencies.add(nodes[node.getyInd() + 1][node.getxInd()]);
+        if (node.getyInd() < getNodes().length - 1) {
+            adjacencies.add(getNodes()[node.getyInd() + 1][node.getxInd()]);
         }
         return adjacencies;
     }
@@ -284,25 +284,25 @@ public class Maze {
         for (int y = 0; y < level.layout.length; y++) {
             for (int x = 0; x < level.layout[0].length; x++) {
                 pointer.setLocation(x, y);
-                nodes[y][x] = new Node(pointer);
-                nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
+                getNodes()[y][x] = new Node(pointer);
+                getNodes()[y][x].addOccupant(new Floor(getNodes()[y][x], getPanel()));
                 if (level.layout[y][x] == 0) {
-                    getNode(pointer).addOccupant(new Wall(nodes[y][x], panel));
+                    getNode(pointer).addOccupant(new Wall(getNodes()[y][x], getPanel()));
                 }
                 if (level.layout[y][x] == 2) {
-                    playerPoint = new Point(x, y);
+                    setPlayerPoint(new Point(x, y));
                 }
                 if (level.layout[y][x] == 3) {
-                    portalGunPoint = new Point(x, y);
+                    setPortalGunPoint(new Point(x, y));
                 }
                 if (level.layout[y][x] == 4) {
-                    timeMachinePoint = new Point(x, y);
+                    setTimeMachinePoint(new Point(x, y));
                 }
                 if (level.layout[y][x] == 5) {
-                    helperPoint = new Point(x, y);
+                    setHelperPoint(new Point(x, y));
                 }
                 if (level.layout[y][x] == 6) {
-                    goalPoint = new Point(x, y);
+                    setGoalPoint(new Point(x, y));
                 }
             }
         }
@@ -321,13 +321,13 @@ public class Maze {
         for (int y = 0; y < maze.length; y++) {
             for (int x = 0; x < maze[0].length; x++) {
                 pointer.setLocation(x, y);
-                nodes[y][x] = new Node(pointer);
-                nodes[y][x].addOccupant(new Floor(nodes[y][x], panel));
+                getNodes()[y][x] = new Node(pointer);
+                getNodes()[y][x].addOccupant(new Floor(getNodes()[y][x], getPanel()));
                 if (maze[y][x] == 1) {
-                    floors.add(nodes[y][x]);
+                    getFloors().add(getNodes()[y][x]);
                 }
                 if (maze[y][x] == 0) {
-                    getNode(pointer).addOccupant(new Wall(getNode(pointer), panel));
+                    getNode(pointer).addOccupant(new Wall(getNode(pointer), getPanel()));
                 }
             }
         }
@@ -340,39 +340,38 @@ public class Maze {
      * @param g A Graphics object
      */
     public void paintMaze(Graphics g) {
-        for (int y = 0; y < nodes.length; y++) {
-            for (int x = 0; x < nodes[0].length; x++) {
-                ((Floor) nodes[y][x].getOccupant(0)).paintSelf(g, nodes[y][x].isPath(), showPath);
-                if ((nodes[y][x].peekOccupant()) instanceof Wall) {
+        for (int y = 0; y < getNodes().length; y++) {
+            for (int x = 0; x < getNodes()[0].length; x++) {
+                ((Floor) getNodes()[y][x].getOccupant(0)).paintSelf(g, getNodes()[y][x].isPath(), isShowPath());
+                if ((getNodes()[y][x].peekOccupant()) instanceof Wall) {
                     ((Wall) getNode(new Point(x, y)).peekOccupant()).paintSelf(x, y, g);
                 }
             }
         }
 
-        for (int y = 0; y < nodes.length; y++) {
-            for (int x = 0; x < nodes[0].length; x++) {
-                if ((nodes[y][x].peekOccupant()) instanceof Player) {
-                    ((Player) nodes[y][x].peekOccupant()).paintSelf(g);
+        for (int y = 0; y < getNodes().length; y++) {
+            for (int x = 0; x < getNodes()[0].length; x++) {
+                if ((getNodes()[y][x].peekOccupant()) instanceof Player) {
+                    ((Player) getNodes()[y][x].peekOccupant()).paintSelf(g);
                 }
 
-                if ((nodes[y][x].peekOccupant()) instanceof PortalGun) {
-                    ((PortalGun) nodes[y][x].peekOccupant()).paintSelf(g);
+                if ((getNodes()[y][x].peekOccupant()) instanceof PortalGun) {
+                    ((PortalGun) getNodes()[y][x].peekOccupant()).paintSelf(g);
                 }
 
-                if ((nodes[y][x].peekOccupant()) instanceof Goal) {
-                    ((Goal) nodes[y][x].peekOccupant()).paintSelf(g);
+                if ((getNodes()[y][x].peekOccupant()) instanceof Goal) {
+                    ((Goal) getNodes()[y][x].peekOccupant()).paintSelf(g);
                 }
 
-                if (nodes[y][x].peekOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
-                    ((TimeMachine) nodes[y][x].peekOccupant()).paintSelf(g);
+                if (getNodes()[y][x].peekOccupant().getClass().getCanonicalName().equals("Sprites.TimeMachine")) {
+                    ((TimeMachine) getNodes()[y][x].peekOccupant()).paintSelf(g);
                 }
 
-                if (nodes[y][x].peekOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
-                    ((Helper) nodes[y][x].peekOccupant()).paintSelf(g);
+                if (getNodes()[y][x].peekOccupant().getClass().getCanonicalName().equals("Sprites.Helper")) {
+                    ((Helper) getNodes()[y][x].peekOccupant()).paintSelf(g);
                 }
             }
         }
-        panel.cursor.paintSelf(g);
     }
 
     /**
@@ -407,7 +406,7 @@ public class Maze {
      * @return A Node at a specified point
      */
     public Node getNode(Point point) {
-        Node node = nodes[point.y][point.x];
+        Node node = getNodes()[point.y][point.x];
         return node;
     }
 
@@ -426,36 +425,162 @@ public class Maze {
     }
 
     public Level buildLevel() {
-        int[][] layout = new int[nodes.length][nodes[0].length];
+        int[][] layout = new int[getNodes().length][getNodes()[0].length];
 
-        for (int y = 0; y < nodes.length; y++) {
-            for (int x = 0; x < nodes[0].length; x++) {
+        for (int y = 0; y < getNodes().length; y++) {
+            for (int x = 0; x < getNodes()[0].length; x++) {
 
-                if (nodes[y][x].peekOccupant() instanceof Wall) {
+                if (getNodes()[y][x].peekOccupant() instanceof Wall) {
                     layout[y][x] = 0;
                 }
-                if (nodes[y][x].peekOccupant() instanceof Floor) {
+                if (getNodes()[y][x].peekOccupant() instanceof Floor) {
                     layout[y][x] = 1;
                 }
-                if (nodes[y][x].peekOccupant() instanceof Player) {
+                if (getNodes()[y][x].peekOccupant() instanceof Player) {
                     layout[y][x] = 2;
                 }
-                if (nodes[y][x].peekOccupant() instanceof PortalGun) {
+                if (getNodes()[y][x].peekOccupant() instanceof PortalGun) {
                     layout[y][x] = 3;
                 }
-                if (nodes[y][x].peekOccupant() instanceof TimeMachine) {
+                if (getNodes()[y][x].peekOccupant() instanceof TimeMachine) {
                     layout[y][x] = 4;
                 }
-                if (nodes[y][x].peekOccupant() instanceof Helper) {
+                if (getNodes()[y][x].peekOccupant() instanceof Helper) {
                     layout[y][x] = 5;
                 }
-                if (nodes[y][x].peekOccupant() instanceof Goal) {
+                if (getNodes()[y][x].peekOccupant() instanceof Goal) {
                     layout[y][x] = 6;
                 }
             }
         }
 
-        Level leveler = new Level(layout, panel.player.stepsTaken, panel.player.hasPortalGun, panel.player.steps, showPath);
+        Level leveler = new Level(layout, getPanel().getPlayer().stepsTaken, getPanel().getPlayer().isHasPortalGun(), getPanel().getPlayer().steps, isShowPath());
         return leveler;
+    }
+
+    /**
+     * @param floors the floors to set
+     */
+    public void setFloors(ArrayList<Node> floors) {
+        this.floors = floors;
+    }
+
+    /**
+     * @param nodes the nodes to set
+     */
+    public void setNodes(Node[][] nodes) {
+        this.nodes = nodes;
+    }
+
+    /**
+     * @return the maze
+     */
+    public int[][] getMaze() {
+        return maze;
+    }
+
+    /**
+     * @param maze the maze to set
+     */
+    public void setMaze(int[][] maze) {
+        this.maze = maze;
+    }
+
+    /**
+     * @return the showPath
+     */
+    public boolean isShowPath() {
+        return showPath;
+    }
+
+    /**
+     * @param showPath the showPath to set
+     */
+    public void setShowPath(boolean showPath) {
+        this.showPath = showPath;
+    }
+
+    /**
+     * @return the level
+     */
+    public ArrayList<String[]> getLevel() {
+        return level;
+    }
+
+    /**
+     * @param level the level to set
+     */
+    public void setLevel(ArrayList<String[]> level) {
+        this.level = level;
+    }
+
+    /**
+     * @return the playerPoint
+     */
+    public Point getPlayerPoint() {
+        return playerPoint;
+    }
+
+    /**
+     * @param playerPoint the playerPoint to set
+     */
+    public void setPlayerPoint(Point playerPoint) {
+        this.playerPoint = playerPoint;
+    }
+
+    /**
+     * @return the portalGunPoint
+     */
+    public Point getPortalGunPoint() {
+        return portalGunPoint;
+    }
+
+    /**
+     * @param portalGunPoint the portalGunPoint to set
+     */
+    public void setPortalGunPoint(Point portalGunPoint) {
+        this.portalGunPoint = portalGunPoint;
+    }
+
+    /**
+     * @return the timeMachinePoint
+     */
+    public Point getTimeMachinePoint() {
+        return timeMachinePoint;
+    }
+
+    /**
+     * @param timeMachinePoint the timeMachinePoint to set
+     */
+    public void setTimeMachinePoint(Point timeMachinePoint) {
+        this.timeMachinePoint = timeMachinePoint;
+    }
+
+    /**
+     * @return the helperPoint
+     */
+    public Point getHelperPoint() {
+        return helperPoint;
+    }
+
+    /**
+     * @param helperPoint the helperPoint to set
+     */
+    public void setHelperPoint(Point helperPoint) {
+        this.helperPoint = helperPoint;
+    }
+
+    /**
+     * @return the goalPoint
+     */
+    public Point getGoalPoint() {
+        return goalPoint;
+    }
+
+    /**
+     * @param goalPoint the goalPoint to set
+     */
+    public void setGoalPoint(Point goalPoint) {
+        this.goalPoint = goalPoint;
     }
 }
