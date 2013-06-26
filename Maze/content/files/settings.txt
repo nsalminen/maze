@@ -1,4 +1,4 @@
 masterVolume:-83
-musicVolume:-201
-mute:true
+musicVolume:-88
+mute:false
 fullscreen:false

@@ -1,5 +1,5 @@
-hoopstappen:18
-miauwmiauw:18
-yasen:76
-did i win?:90
-piet:313
+Garry:60
+Bas:80
+Marie:120
+Nels:130
+Yasen:140
